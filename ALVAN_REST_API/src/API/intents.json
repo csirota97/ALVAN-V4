@@ -16,6 +16,5 @@
         "patterns": ["tell me the date", "what is the date", "I need the date"],
         "responses":2,
         "context_set":""
-    },
-
+    }
 ]}

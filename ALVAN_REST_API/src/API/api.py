@@ -1,5 +1,6 @@
 from flask import Flask, request
 from flask_restful import Api, Resource
+import machine_learning.TTW as ML_model
 
 app = Flask(__name__)
 api = Api(app)
@@ -15,7 +16,10 @@ class ALVAN(Resource):
     print(request)
     print(request.form, 69)
     if request.form['query']:
-      tts_response = request.form['query']
+      #TODO get tts response from ML training set
+      print(request.form['query'])
+      print(ML_model.query(request.form['query']))
+      tts_response = ML_model.query(request.form['query'])
     return {"tts": tts_response}
 
 api.add_resource(HelloWorld, '/helloworld')
