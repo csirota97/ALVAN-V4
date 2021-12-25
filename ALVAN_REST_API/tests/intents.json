@@ -1,0 +1,215 @@
+{"intents": [
+    
+    {
+        "tag":"unsure",
+        "patterns": [],
+        "responses":0,
+        "context_set":""
+    },
+    {
+        "tag":"lights_on",
+        "patterns": ["turn on the lights", "turn on the socket", "activate the lights", "activate the socket"],
+        "responses":1,
+        "context_set":""
+    },
+    {
+        "tag":"camera_on",
+        "patterns": ["turn on the camera", "turn on the cam", "activate the camera", "activate the cam", "security camera on", "security cam on", "show the camera"],
+        "responses":2,
+        "context_set":""
+    },
+    {
+        "tag":"lights_off",
+        "patterns": ["turn off the lights", "turn off the socket", "deactivate the lights", "deactivate the socket"],
+        "responses":3,
+        "context_set":""
+    },
+    {
+        "tag":"camera_off",
+        "patterns": ["turn off the camera", "turn off the cam", "deactivate the camera", "deactivate the cam", "security camera off", "security cam off", "hide the camera"],
+        "responses":4,
+        "context_set":""
+    },
+    {
+        "tag":"datetime",
+        "patterns": ["what is the date and time", "tell me the time and date", "I need the datetime"],
+        "responses":5,
+        "context_set":""
+    },
+    {
+        "tag":"date",
+        "patterns": ["tell me the date", "what is the date", "I need the date"],
+        "responses":6,
+        "context_set":""
+    },
+    {
+        "tag":"time",
+        "patterns": ["tell me the time", "what is the time", "I need the time"],
+        "responses":7,
+        "context_set":""
+    },
+    {
+        "tag":"enter",
+        "patterns": ["hit the enter key", "press the enter button", "push the enter button"],
+        "responses":8,
+        "context_set":""
+    },
+    {
+        "tag":"siri/alexa",
+        "patterns": ["how do you feel about alexa","what is your opinion of siri", "do you like alexa", "are you friends with siri"],
+        "responses":9,
+        "context_set":""
+    },
+    {
+        "tag":"siri/alexa",
+        "patterns": ["how do you feel about alexa","what is your opinion of siri", "do you like alexa", "are you friends with siri"],
+        "responses":9,
+        "context_set":""
+    },
+    {
+        "tag":"princeton",
+        "patterns": ["how do you feel about princeton","what is your opinion of princeton", "do you like princeton"],
+        "responses":10,
+        "context_set":""
+    },
+    {
+        "tag":"play neck",
+        "patterns": ["play neck"],
+        "responses":11,
+        "context_set":""
+    },
+    {
+        "tag":"penn state",
+        "patterns": ["how do you feel about penn state","what is your opinion of penn state", "do you like penn state"],
+        "responses":12,
+        "context_set":""
+    },
+    {
+        "tag":"chrome",
+        "patterns": ["open chrome","bring me to the internet", "open my browser", "I want to browse the web", "I want to browse the web with google chrome"],
+        "responses":13,
+        "context_set":""
+    },
+    {
+        "tag":"safari",
+        "patterns": ["open safari", "open my browser", "I want to browse the web with safari"],
+        "responses":14,
+        "context_set":""
+    },
+    {
+        "tag":"term/cmd",
+        "patterns": ["open terminal", "open command prompt", "I want to use the terminal"],
+        "responses":15,
+        "context_set":""
+    },
+    {
+        "tag":"email",
+        "patterns": ["I want to send an email", "I need to send a message", "send mail"],
+        "responses":16,
+        "context_set":""
+    },
+    {
+        "tag":"play_spotify",
+        "patterns": ["play music on spotify", "continue playing music", "continue spotify"],
+        "responses":17,
+        "context_set":""
+    },
+    {
+        "tag":"pause_spotify",
+        "patterns": ["pause music on spotify", "stop playing music", "quiet", "shut up"],
+        "responses":18,
+        "context_set":""
+    },
+    {
+        "tag":"next_spotify",
+        "patterns": ["play the next song", "play the following song on spotify", "skip this song", "i do not want to hear this song"],
+        "responses":19,
+        "context_set":""
+    },
+    {
+        "tag":"prev_spotify",
+        "patterns": ["play the last song", "play the previous song on spotify", "i want to hear that last song again", "go back to the last song"],
+        "responses":20,
+        "context_set":""
+    },
+    {
+        "tag":"replay_spotify",
+        "patterns": ["replay this song", "repeat this song on spotify", "i want to hear this song again", "restart this song"],
+        "responses":21,
+        "context_set":""
+    },
+    {
+        "tag":"volume",
+        "patterns": ["set the volume", "lower the volume", "raise the volume"],
+        "responses":22,
+        "context_set":""
+    },
+    {
+        "tag":"weather",
+        "patterns": ["what is the weather", "what is the forecast for today", "tell me the day's forecast"],
+        "responses":23,
+        "context_set":""
+    },
+    {
+        "tag":"flip",
+        "patterns": ["flip a coin", "heads or tails"],
+        "responses":24,
+        "context_set":""
+    },
+    {
+        "tag":"die",
+        "patterns": ["roll a die", "roll dice", "random number between one and six"],
+        "responses":25,
+        "context_set":""
+    },
+    {
+        "tag":"count",
+        "patterns": ["count to a number from a number", "count for me", "count by fours to four"],
+        "responses":26,
+        "context_set":""
+    },
+    {
+        "tag":"mouse",
+        "patterns": ["enable mouse mode", "activate the mouse", "control my mouse", "move my cursor"],
+        "responses":27,
+        "context_set":""
+    },
+    {
+        "tag":"scroll_left",
+        "patterns": ["scroll left", "move the page left"],
+        "responses":28,
+        "context_set":""
+    },
+    {
+        "tag":"scroll_right",
+        "patterns": ["scroll right", "move the page right"],
+        "responses":29,
+        "context_set":""
+    },
+    {
+        "tag":"scroll_up",
+        "patterns": ["scroll up", "move the page up"],
+        "responses":30,
+        "context_set":""
+    },
+    {
+        "tag":"scroll_down",
+        "patterns": ["scroll down", "move the page down"],
+        "responses":31,
+        "context_set":""
+    },
+    {
+        "tag":"joke",
+        "patterns": ["tell me a joke", "i want to hear something funny", "make me laugh", "tell me something funny"],
+        "responses":32,
+        "context_set":""
+    },
+    {
+        "tag":"quit",
+        "patterns": ["kill yourself", "shut down", "shutdown", "quit", "deactivate alvin", "deactivate alvan"],
+        "responses":33,
+        "context_set":""
+    }
+
+
+]}

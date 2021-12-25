@@ -1,0 +1,21 @@
+{"intents": [
+    {
+        "tag":"unsure",
+        "patterns": [],
+        "responses":0,
+        "context_set":""
+    },
+    {
+        "tag":"time",
+        "patterns": ["tell me the time", "what is the time", "I need the time"],
+        "responses":1,
+        "context_set":""
+    },
+    {
+        "tag":"date",
+        "patterns": ["tell me the date", "what is the date", "I need the date"],
+        "responses":2,
+        "context_set":""
+    },
+
+]}

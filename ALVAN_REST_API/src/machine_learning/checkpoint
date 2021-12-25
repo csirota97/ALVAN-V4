@@ -1,0 +1,2 @@
+model_checkpoint_path: "/Users/craigsirota/Desktop/Projects/LargerProjects/ALVAN/v4/ALVAN_REST_API/src/machine_learning/model.tflearn"
+all_model_checkpoint_paths: "/Users/craigsirota/Desktop/Projects/LargerProjects/ALVAN/v4/ALVAN_REST_API/src/machine_learning/model.tflearn"
