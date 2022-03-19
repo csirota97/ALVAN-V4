@@ -1,7 +1,7 @@
-/* eslint-disable require-jsdoc */
-import React from 'react';
-import Screen from './components/screen.js';
+import Screen from './components/screen';
 
-export default function App() {
+function App() {
   return (<Screen />);
-};
+}
+
+export default App;

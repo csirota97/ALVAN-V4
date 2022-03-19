@@ -1,9 +1,9 @@
 import React from 'react';
-import '../components/card.scss';
+import './card.scss';
 import '../../index.scss';
 import Card from './card';
-import logo from '../ALVAN_LOGO_SMALL.png';
-import logo2 from '../ALVAN_LOGO_SMALL_BLACK.png';
+import logo from '../../resources/images/ALVAN_LOGO_SMALL.png';
+import logo2 from '../../resources/images/ALVAN_LOGO_SMALL_BLACK.png';
 import Clock from './clock';
 import {SpeechRecognizer} from './speechRecognizer.js';
 

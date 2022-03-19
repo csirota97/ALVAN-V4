@@ -1,15 +1,37 @@
 import React, {useState, useEffect} from 'react';
+import { Howl, Howler } from 'howler';
+
 
 const SpeechRecognition = window.SpeechRecognition ||
   window.webkitSpeechRecognition;
 const mic = new SpeechRecognition();
-mic.continuous = true;
 mic.interimResults = true;
+mic.timeout = 10000;
 mic.lang = 'en-US';
+
+const activatedSound = new Howl({src: '../../resources/sounds/confirm1.wav'});
+
+Howler.volume(0.5);
 
 export const SpeechRecognizer = (props) => {
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState('');
+  const [activated, setActivated] = useState(false);
+
+  mic.onspeechend = (e) => {
+    console.log(e);
+    if (transcript.includes('Alvin') && !activated) {
+      setActivated(true);
+      activatedSound.play();
+      console.log("blip");
+    } else if (activated && transcript !== "") {
+      //query api
+      console.log("Query: " + transcript);
+      setActivated(false);  
+    }
+    mic.stop();
+    console.log("RESTART");
+  }
 
   useEffect(() => {
     handleListen();
@@ -36,10 +58,19 @@ export const SpeechRecognizer = (props) => {
           .map((result) => result[0])
           .map((result) => result.transcript)
           .join(''));
+      console.log(event);
+      setTranscript(Array.from(event.results)
+      .map((result) => result[0])
+      .map((result) => result.transcript)
+      .join(''));
       mic.onerror = (event) => console.log(event.error);
+      
     };
   };
 
+  if(!isListening) {
+    setIsListening(true);
+  }
   return (
     <>
       <div className='recognizer'>
@@ -47,9 +78,6 @@ export const SpeechRecognizer = (props) => {
         <p id='transcript'>
           Transcript: {transcript}
         </p>
-        <button onClick={() => setIsListening((prevState) => !prevState)}>
-          Start
-        </button>
       </div>
     </>
   );
