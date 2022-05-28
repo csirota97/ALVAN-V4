@@ -7,3 +7,4 @@
 !/ALVAN_REST_API/src/API/machine_learning/training_data/.gitkeep
 !/ALVAN_REST_API/src/API/training_data/.gitkeep
 /ALVAN_HUB_UI/alvan-hub-ui/package-lock.json
+*pycache*
