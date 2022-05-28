@@ -1,9 +1,12 @@
 from flask import Flask, request
 from flask_restful import Api, Resource
+from flask_cors import CORS
 import machine_learning.TTW as ML_model
 
 app = Flask(__name__)
+app.config.SERVER_NAME = "flask-api:5000"
 api = Api(app)
+CORS(app)
 
 
 class HelloWorld(Resource):
@@ -26,4 +29,4 @@ api.add_resource(HelloWorld, '/helloworld')
 api.add_resource(ALVAN, '/alvan')
 
 if __name__ == '__main__':
-  app.run(debug=True)
+  app.run(host='0.0.0.0', debug=True)

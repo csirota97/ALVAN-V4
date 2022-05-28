@@ -118,17 +118,22 @@ def chat():
         else:
             print("I'm not sure about that. Try again.")
 
-def query(user_query):
-  results = model.predict([bag_of_words(user_query, words)])[0]
-  results_index = numpy.argmax(results)
-  tag = labels[results_index]
+def query(user_query, attempt=0):
+    try:
+        results = model.predict([bag_of_words(user_query, words)])[0]
+        results_index = numpy.argmax(results)
+        tag = labels[results_index]
 
-  if (results[results_index] > 0.7):
-      for tg in data["intents"]:
-          if tg['tag'] == tag:
-              response = tg['responses']
-      return response
-  return -1
+        if (results[results_index] > 0.7):
+            for tg in data["intents"]:
+                    if tg['tag'] == tag:
+                        response = tg['responses']
+            return response
+        return -1
+    except LookupError:
+        nltk.download('punkt')
+        if attempt==0:
+            query(user_query, attempt=1)
 
 if __name__ == '__main__':
   chat()
