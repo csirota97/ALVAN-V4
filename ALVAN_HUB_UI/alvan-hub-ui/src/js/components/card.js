@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 export default function Card (props) {
-  const {name, children, lockedWidth} = props;
+  const {name, children, lockedWidth, posX, posY} = props;
 
-  const [positionX, setPositionX] = useState(0);
-  const [positionY, setPositionY] = useState(110);
+  const [positionX, setPositionX] = useState(posX ? posX + 0 : 0);
+  const [positionY, setPositionY] = useState(posY ? posY + 110 : 110);
   const [mouseDown, setMouseDown] = useState(false);
   const [mouseDownPosX, setMouseDownPosX] = useState(0);
   const [mouseDownPosY, setMouseDownPosY] = useState(0);
@@ -12,7 +12,7 @@ export default function Card (props) {
   const [touchDownPosY, setTouchDownPosY] = useState(0);
   const [zIndex, setZIndex] = useState(50);
   const cardRef = useRef(null);
-  const width = lockedWidth ? "150px" : "fit-content";
+  const width = lockedWidth ? "250px" : "fit-content";
 
   const _onMouseMove = (e) => {
     // e.stopPropagation(); 
