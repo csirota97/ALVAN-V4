@@ -1,13 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import { Howl, Howler } from 'howler';
 import serviceFactory from '../utils/service-factory.js';
+import constants from '../utils/constants.js';
+import useInterval from '../hooks/useInterval.js';
 
 const SpeechRecognition = window.SpeechRecognition ||
   window.webkitSpeechRecognition;
 const mic = new SpeechRecognition();
 mic.interimResults = true;
-mic.timeout = 10000;
-mic.lang = 'en-US';
+mic.timeout = constants.LISTENER_MIC_TIMEOUT;
+mic.lang = constants.LISTENER_MIC_LANG;
 
 const activatedSound = new Howl({src: '../../resources/sounds/confirm1.wav'});
 
@@ -27,6 +29,7 @@ export const SpeechRecognizer = (props) => {
     } else if (activated && transcript !== "") {
       //query api
       console.log("Query: " + transcript);
+      serviceFactory.sendQuery(transcript);
       setActivated(false);  
     }
     mic.stop();
@@ -78,7 +81,7 @@ export const SpeechRecognizer = (props) => {
         <p id='transcript'>
           Transcript: {transcript}
         </p>
-        <button onClick={() => {console.log(serviceFactory.sendQuery("what time is it?"));}} />
+        <button onClick={() => {console.log(serviceFactory.sendQuery(transcript));}} />
       </div>
     </>
   );
