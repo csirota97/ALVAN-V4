@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 const dev = true;
 
 const URL_DEV = "http://localhost:5000";

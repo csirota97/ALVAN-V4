@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-export default function Clock (props) {
-  const [time, setTime] = useState();
+function Clock () {
+  const [time, setTime] = useState(new Date().toLocaleTimeString());
 
   useEffect(() => {
     setInterval(() => {
@@ -12,3 +12,5 @@ export default function Clock (props) {
 
   return (<h1 className="clock">{time}</h1>);
 }
+
+export default Clock;

@@ -1,5 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
-export default function Card (props) {
+import React, { useState, useRef } from "react";
+import PropTypes from 'prop-types';
+
+function Card (props) {
   const {name, children, lockedWidth, posX, posY} = props;
 
   const [positionX, setPositionX] = useState(posX ? posX + 0 : 0);
@@ -12,12 +14,12 @@ export default function Card (props) {
   const [touchDownPosY, setTouchDownPosY] = useState(0);
   const [zIndex, setZIndex] = useState(50);
   const cardRef = useRef(null);
-  const width = lockedWidth ? "250px" : "fit-content";
+  const defaultLockedWidth = lockedWidth === "default" ? "250px" : lockedWidth; 
+  const width = lockedWidth ? defaultLockedWidth : "fit-content";
 
   const _onMouseMove = (e) => {
     // e.stopPropagation(); 
     if (mouseDown) {
-      console.log("mouseMove");
       setPositionX(positionX+e.nativeEvent.offsetX-mouseDownPosX);
       setPositionY(positionY+e.nativeEvent.offsetY-mouseDownPosY);
       setZIndex(75);
@@ -28,19 +30,14 @@ export default function Card (props) {
     setMouseDownPosX(e.nativeEvent.offsetX);
     setMouseDownPosY(e.nativeEvent.offsetY);
     setMouseDown(true);
-    console.log('down');
   }
   const _onMouseUp = (e) => {
     setMouseDown(false);
-    console.log('up');
     setZIndex(50);
   }
 
   const _onTouchMove = (e) => {
-    // console.log(touchDown, touchDownPosY, touchDownPosX);
     if (touchDown) {
-      console.log("touchMove");
-      console.log(positionX, e.targetTouches[0].pageX, touchDownPosX);
       const rect = e.target.getBoundingClientRect();
       setPositionX(positionX+(e.targetTouches[0].pageX - rect.left)-touchDownPosX);
       setPositionY(positionY+(e.targetTouches[0].pageY - rect.top)-touchDownPosY);
@@ -49,18 +46,14 @@ export default function Card (props) {
   }
 
   const _onTouchStart = (e) => {
-    console.log(1234, e.targetTouches[0]);
     const rect = e.target.getBoundingClientRect();
     setTouchDownPosX(e.targetTouches[0].pageX - rect.left);
     setTouchDownPosY(e.targetTouches[0].pageY - rect.top);
     setTouchDown(true);
-    console.log('down');
   }
 
   const _onTouchEnd = (e) => {
-    console.log(4321);
     setTouchDown(false);
-    console.log('up');
     setZIndex(50);
   }
 
@@ -89,3 +82,43 @@ export default function Card (props) {
     </div>
   </div>);
 };
+
+Card.defaultProps = {
+  name: '',
+  children: '',
+  lockedWidth: undefined,
+  posX: undefined,
+  posY: undefined
+}
+
+Card.propTypes = {
+  /**
+   * The name to be displayed at the top of the card
+   */
+  name: PropTypes.string,
+
+  /**
+   * The child object to be displayed on the card
+   */
+  children: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object
+  ]),
+
+  /**
+   * The size at which to lock the width of the card, can be null
+   */
+  lockedWidth: PropTypes.string,
+
+  /**
+   * The relative X position of the card
+   */
+  posX: PropTypes.number,
+
+  /**
+   * The relative Y position of the card
+   */
+  posY: PropTypes.number,
+}
+
+export default Card;
