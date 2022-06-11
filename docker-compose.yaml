@@ -19,3 +19,5 @@ services:
         volumes:
             - ./alvan-hub-ui:/app
             - /app/node_modules
+            - /app/tests
+            - /app/src
