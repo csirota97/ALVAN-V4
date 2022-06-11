@@ -1,6 +1,6 @@
 import 'jsdom-global/register';
 import React from "react";
-import SpeechRecognizer from '../../../src/js/components/speechRecognizer';
+// import SpeechRecognizer from '../../../src/js/components/speechRecognizer';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { mount, configure, EnzymeAdapter } from "enzyme";
 
