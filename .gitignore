@@ -1,10 +1,23 @@
-/ALVAN_REST_API/venv/*
-/ALVAN_HUB_UI/alvan-hub-ui/node_modules/*
-/ALVAN_REST_API/.vscode/*
-!/ALVAN_REST_API/.vscode/tasks.json
-/ALVAN_REST_API/src/API/machine_learning/training_data/*
-/ALVAN_REST_API/src/API/training_data/*
-!/ALVAN_REST_API/src/API/machine_learning/training_data/.gitkeep
-!/ALVAN_REST_API/src/API/training_data/.gitkeep
-/ALVAN_HUB_UI/alvan-hub-ui/package-lock.json
-*pycache*
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
