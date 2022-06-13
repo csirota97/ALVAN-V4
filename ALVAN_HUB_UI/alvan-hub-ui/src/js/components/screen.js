@@ -17,7 +17,7 @@ function Screen(props) {
     <div className="screen-container">
       <Clock />
       {calendarState.map((event, i) =>
-        <Card name={event.summary.substring(0, 30)} lockedWidth="default" posY={i*50 + 1} >
+        <Card name={event.summary.substring(0, 30)} lockedWidth="default" posY={i*50 + 1} key={`${i}${event.summary}`} >
           {event.organizer.displayName}
           <hr />
           {event.start.date}
