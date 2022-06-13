@@ -1,4 +1,3 @@
-version: "4.1"
 services:
     alvan-server:
         build: ./ALVAN_REST_API
