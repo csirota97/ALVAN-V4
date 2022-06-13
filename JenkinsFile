@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+    tools {
+        nodejs '14.15.3'
+    }
+    stages {
+        stage('Clone the repo') {
+            steps {
+                echo 'clone the repo'
+                sh 'rm -fr ALVAN-V4'
+                sh 'git clone https://github.com/csirota97/ALVAN-V4.git'
+            }
+        }
+        stage('Install UI') {
+            steps {
+                echo 'Installing Dependencies'
+                dir ('ALVAN-V4/ALVAN_HUB_UI/alvan-hub-ui') {
+                    sh 'npm install'
+                }
+            }
+        }
+        stage('UI Jest Tests') {
+            steps {
+                echo 'Running UI jest tests'
+                dir ('ALVAN-V4/ALVAN_HUB_UI/alvan-hub-ui') {
+                    sh 'ls'
+                    sh 'npm run test'
+                }
+            }
+        }
+        stage('Build UI') {
+            steps {
+                echo 'building UI for deployment'
+                dir ('ALVAN-V4/ALVAN_HUB_UI/alvan-hub-ui') {
+                    sh 'npm run build'
+                }
+            }
+        }
+        stage('Deploy UI') {
+            steps {
+                echo 'Deploying UI'
+                dir ('ALVAN-V4/ALVAN_HUB_UI/alvan-hub-ui') {
+                    sh 'npm run deploy'
+                }
+            }
+        }
+    }
+}
