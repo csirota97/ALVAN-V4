@@ -1,8 +1,8 @@
 import 'babel-polyfill';
-const dev = true;
+import getConstants from './constants';
 
-const URL_DEV = "http://localhost:5000";
-const url = dev ? URL_DEV : '';
+const url = getConstants().SERVER_URL;
+
 const serviceFactory = {
   sendQuery: async (query) => {
     const formData = new FormData();
@@ -19,7 +19,23 @@ const serviceFactory = {
         return a;
       });
     };
-    console.log(responseString());
+
+    return responseString()
+  },
+
+  calendarRequest: async () => {
+    const response = await fetch(url+"/calendar", {
+      method: "get",
+    }).then(response => response.json());
+
+    const responseString = async () => {
+      response.then((a) => {
+        console.log(a);
+        return a;
+      });
+    };
+
+    return responseString()
   },
 };
 
