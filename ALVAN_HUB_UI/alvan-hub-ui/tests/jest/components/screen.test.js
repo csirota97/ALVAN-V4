@@ -67,6 +67,27 @@ describe("Screen", () => {
       expect(screenWrapper.find('.card-base').first().props().style).toHaveProperty("left", 6);
     });
 
+    it("cards should move to front when selected", () => {
+      screenWrapper.find('.card-base').at(2).invoke("onMouseDown")(
+        {
+          nativeEvent: {
+            offsetX: 4,
+            offsetY: 111
+          }
+        }
+      )
+      screenWrapper.find('.card-base').at(2).invoke("onMouseMove")(
+        {
+          nativeEvent: {
+            offsetX: 10,
+            offsetY: 121
+          }
+        }
+      );
+      screenWrapper.find('.card-base').at(2).invoke("onMouseUp");
+      expect(screenWrapper.find(Card).at(2).props().zIndex[2]).toBe(50);
+    });
+
     it('by touch', () => {
       screenWrapper.find('.card-base').first().invoke("onTouchStart")(
         {

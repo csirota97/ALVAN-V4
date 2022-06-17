@@ -12,19 +12,51 @@ import PropTypes from 'prop-types';
  */
 function Screen(props) {
   const [calendarState, setCalendarState] = useState(props.calendarData.items);
+  const [calendarCardOrder, setCalendarCardOrder] = useState({});
 
-  return (
-    <div className="screen-container">
-      <Clock />
-      {calendarState.map((event, i) =>
-        <Card name={event.summary.substring(0, 30)} lockedWidth="default" posY={i*50 + 1} key={`${i}${event.summary}`} >
+  useEffect(() => {
+    const order = {};
+    calendarState.forEach((event, i) => order[i] = 50 - i)
+    setCalendarCardOrder(order)
+  }, [calendarState]);
+
+  const hasCalendarCardBeenClicked = (id) => {
+    const order = calendarCardOrder;
+    const currentClickedValue = order[id];
+    calendarState.forEach((event, i) => {
+      if (order[i] > currentClickedValue) {
+        order[i] = order[i] - 1
+      }
+    });
+    order[id] = 50;
+    setCalendarCardOrder(order);
+  };
+
+  const createCalendarCards = () => {
+    return calendarState.map((event, i) => {
+      return <Card
+          name={event.summary.substring(0, 30)}
+          lockedWidth="default"
+          posY={i*50 + 1}
+          key={`${i}${event.summary}`}
+          zIndex={calendarCardOrder}
+          id={i}
+          hasBeenClicked={hasCalendarCardBeenClicked}
+        >
           {event.organizer.displayName}
           <hr />
           {event.start.date}
           <br />
           {event.end.date}
-        </Card>
-      )}
+        </Card>;
+      }
+    )
+  };
+
+  return (
+    <div className="screen-container">
+      <Clock />
+      {createCalendarCards()}
 
       <button onClick={() => setCalendarState(mockCalendarCall.items)} />
       <img className='logo' src={logo}></img>
