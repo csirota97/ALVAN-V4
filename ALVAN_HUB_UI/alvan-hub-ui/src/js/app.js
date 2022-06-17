@@ -1,7 +1,9 @@
 import Screen from './components/screen';
+import React, {useState} from 'react';
 
 function App() {
-  return (<Screen />);
+  const [render, forceRerender] = useState(true);
+  return (<Screen render={render} forceRerender={forceRerender}/>);
 }
 
 export default App;
