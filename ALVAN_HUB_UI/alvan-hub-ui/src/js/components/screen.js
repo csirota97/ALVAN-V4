@@ -18,6 +18,7 @@ function Screen(props) {
   useEffect(() => {
     const order = {};
     calendarState.forEach((event, i) => order[i] = 50 - (calendarState.length - 1) + i)
+
     setCalendarCardOrder(order)
   }, [calendarState]);
 
