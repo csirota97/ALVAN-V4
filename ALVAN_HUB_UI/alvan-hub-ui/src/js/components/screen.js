@@ -13,10 +13,12 @@ import PropTypes from 'prop-types';
 function Screen(props) {
   const [calendarState, setCalendarState] = useState(props.calendarData.items);
   const [calendarCardOrder, setCalendarCardOrder] = useState({});
+  const [render, forceRerender] = useState(true);
 
   useEffect(() => {
     const order = {};
-    calendarState.forEach((event, i) => order[i] = 50 - i)
+    calendarState.forEach((event, i) => order[i] = 50 - (calendarState.length - 1) + i)
+
     setCalendarCardOrder(order)
   }, [calendarState]);
 
@@ -30,6 +32,7 @@ function Screen(props) {
     });
     order[id] = 50;
     setCalendarCardOrder(order);
+    forceRerender(!render);
   };
 
   const createCalendarCards = () => {
@@ -41,6 +44,7 @@ function Screen(props) {
           key={`${i}${event.summary}`}
           zIndex={calendarCardOrder}
           id={i}
+          render={render}
           hasBeenClicked={hasCalendarCardBeenClicked}
         >
           {event.organizer.displayName}
@@ -59,8 +63,8 @@ function Screen(props) {
       {createCalendarCards()}
 
       <button onClick={() => setCalendarState(mockCalendarCall.items)} />
-      <img className='logo' src={logo}></img>
-      <img className='logo-back' src={logo2}></img>
+      <img className='logo' src={logo} alt="logo"></img>
+      <img className='logo-back' src={logo2} alt="logo2"></img>
       <SpeechRecognizer></SpeechRecognizer>
     </ div>
   );
