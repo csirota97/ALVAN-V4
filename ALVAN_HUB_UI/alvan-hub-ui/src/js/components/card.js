@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import PropTypes from 'prop-types';
 
 function Card (props) {
@@ -12,10 +12,12 @@ function Card (props) {
   const [touchDown, setTouchDown] = useState(false);
   const [touchDownPosX, setTouchDownPosX] = useState(0);
   const [touchDownPosY, setTouchDownPosY] = useState(0);
-  const [cardZIndex, setCardZIndex] = useState(zIndex && id ? zIndex[id] : 50);
+  const [cardZIndex, setCardZIndex] = useState((zIndex && id) ? zIndex[id] : 50);
   const cardRef = useRef(null);
   const defaultLockedWidth = lockedWidth === "default" ? "250px" : lockedWidth; 
   const width = lockedWidth ? defaultLockedWidth : "fit-content";
+
+  useEffect(()=>{setCardZIndex(zIndex[id])}, [zIndex])
 
   const _onMouseMove = (e) => {
     // e.stopPropagation(); 
@@ -34,6 +36,7 @@ function Card (props) {
   }
   const _onMouseUp = (e) => {
     setMouseDown(false);
+    setCardZIndex(zIndex[id]);
   }
 
   const _onTouchMove = (e) => {
@@ -55,7 +58,7 @@ function Card (props) {
 
   const _onTouchEnd = (e) => {
     setTouchDown(false);
-    setCardZIndex(50);
+    setCardZIndex(zIndex[id]);
   }
   if (positionX < 0) {
     setPositionX(0);
