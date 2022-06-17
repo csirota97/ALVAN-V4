@@ -63,8 +63,8 @@ function Screen(props) {
       {createCalendarCards()}
 
       <button onClick={() => setCalendarState(mockCalendarCall.items)} />
-      <img className='logo' src={logo}></img>
-      <img className='logo-back' src={logo2}></img>
+      <img className='logo' src={logo} alt="logo"></img>
+      <img className='logo-back' src={logo2} alt="logo2"></img>
       <SpeechRecognizer></SpeechRecognizer>
     </ div>
   );

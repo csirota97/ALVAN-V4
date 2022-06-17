@@ -13,11 +13,10 @@ function Card (props) {
   const [touchDownPosX, setTouchDownPosX] = useState(0);
   const [touchDownPosY, setTouchDownPosY] = useState(0);
   const [cardZIndex, setCardZIndex] = useState((zIndex && id) ? zIndex[id] : 50);
-  const cardRef = useRef(null);
   const defaultLockedWidth = lockedWidth === "default" ? "250px" : lockedWidth; 
   const width = lockedWidth ? defaultLockedWidth : "fit-content";
 
-  useEffect(()=>{setCardZIndex(zIndex[id])}, [props.render])
+  useEffect(()=>{setCardZIndex(zIndex[id])}, [props.render, zIndex, id])
 
   const _onMouseMove = (e) => {
     // e.stopPropagation(); 
@@ -60,6 +59,7 @@ function Card (props) {
     setTouchDown(false);
     setCardZIndex(zIndex[id]);
   }
+
   if (positionX < 0) {
     setPositionX(0);
 
