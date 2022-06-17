@@ -17,7 +17,7 @@ function Card (props) {
   const defaultLockedWidth = lockedWidth === "default" ? "250px" : lockedWidth; 
   const width = lockedWidth ? defaultLockedWidth : "fit-content";
 
-  useEffect(()=>{setCardZIndex(zIndex[id])}, [zIndex])
+  useEffect(()=>{setCardZIndex(zIndex[id])}, [props.render])
 
   const _onMouseMove = (e) => {
     // e.stopPropagation(); 
