@@ -7,7 +7,7 @@ const serviceFactory = {
   sendQuery: async (query) => {
     const formData = new FormData();
     formData.append('query', query);
-    const response = await fetch(url+"/alvan", {
+    const response = await fetch(url+"/alvan/api/query", {
       method: "POST",
       mode: 'cors',
       body: formData,
