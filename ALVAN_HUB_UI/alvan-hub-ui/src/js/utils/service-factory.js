@@ -7,7 +7,7 @@ const serviceFactory = {
   sendQuery: async (query) => {
     const formData = new FormData();
     formData.append('query', query);
-    const response = await fetch(url+"/alvan", {
+    const response = await fetch(url+"alvan/api/query", {
       method: "POST",
       mode: 'cors',
       body: formData,
@@ -24,7 +24,7 @@ const serviceFactory = {
   },
 
   calendarRequest: async () => {
-    const response = await fetch(url+"/calendar", {
+    const response = await fetch(url+"alvan/api/calendar", {
       method: "get",
     }).then(response => response.json());
 
@@ -36,6 +36,14 @@ const serviceFactory = {
     };
 
     return responseString()
+  },
+
+  weatherRequest: async (location, setResponseJson) => {
+    const response = await fetch(url+`alvan/api/weather/${location}`, {
+      method: "get",
+    });
+    const resJson = await response.json();
+    setResponseJson(resJson);
   },
 };
 
