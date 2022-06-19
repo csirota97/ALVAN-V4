@@ -40,7 +40,10 @@ describe("Screen", () => {
       expect(screenWrapper.find(SpeechRecognizer).length).toBe(1);
     })
     it('calendar event cards', () => {
-      expect(screenWrapper.find(Card).length).toBe(5);
+      expect(screenWrapper.find('.calendar-card').length).toBe(5);
+    })
+    it('a weather card', () => {
+      expect(screenWrapper.find('.weather-card').length).toBe(1);
     })
   });
 
