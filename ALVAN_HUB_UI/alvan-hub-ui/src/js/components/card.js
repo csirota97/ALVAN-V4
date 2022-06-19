@@ -1,8 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 
 function Card (props) {
-  const {name, children, lockedWidth, posX, posY} = props;
+  const {name, children, lockedWidth, posX, posY, zIndex, hasBeenClicked, id} = props;
 
   const [positionX, setPositionX] = useState(posX ? posX + 0 : 0);
   const [positionY, setPositionY] = useState(posY ? posY + 110 : 110);
@@ -12,17 +12,18 @@ function Card (props) {
   const [touchDown, setTouchDown] = useState(false);
   const [touchDownPosX, setTouchDownPosX] = useState(0);
   const [touchDownPosY, setTouchDownPosY] = useState(0);
-  const [zIndex, setZIndex] = useState(50);
-  const cardRef = useRef(null);
+  const [cardZIndex, setCardZIndex] = useState((zIndex && id) ? zIndex[id] : 50);
   const defaultLockedWidth = lockedWidth === "default" ? "250px" : lockedWidth; 
   const width = lockedWidth ? defaultLockedWidth : "fit-content";
+
+  useEffect(()=>{setCardZIndex(zIndex[id])}, [props.render, zIndex, id])
 
   const _onMouseMove = (e) => {
     // e.stopPropagation(); 
     if (mouseDown) {
       setPositionX(positionX+e.nativeEvent.offsetX-mouseDownPosX);
       setPositionY(positionY+e.nativeEvent.offsetY-mouseDownPosY);
-      setZIndex(75);
+      setCardZIndex(75);
     }
   }
 
@@ -30,10 +31,11 @@ function Card (props) {
     setMouseDownPosX(e.nativeEvent.offsetX);
     setMouseDownPosY(e.nativeEvent.offsetY);
     setMouseDown(true);
+    hasBeenClicked(id);
   }
   const _onMouseUp = (e) => {
     setMouseDown(false);
-    setZIndex(50);
+    setCardZIndex(zIndex[id]);
   }
 
   const _onTouchMove = (e) => {
@@ -41,7 +43,7 @@ function Card (props) {
       const rect = e.target.getBoundingClientRect();
       setPositionX(positionX+(e.targetTouches[0].pageX - rect.left)-touchDownPosX);
       setPositionY(positionY+(e.targetTouches[0].pageY - rect.top)-touchDownPosY);
-      setZIndex(75);
+      setCardZIndex(75);
     }
   }
 
@@ -50,17 +52,23 @@ function Card (props) {
     setTouchDownPosX(e.targetTouches[0].pageX - rect.left);
     setTouchDownPosY(e.targetTouches[0].pageY - rect.top);
     setTouchDown(true);
+    hasBeenClicked(id);
   }
 
   const _onTouchEnd = (e) => {
     setTouchDown(false);
-    setZIndex(50);
+    setCardZIndex(zIndex[id]);
+  }
+
+  if (positionX < 0) {
+    setPositionX(0);
+
   }
 
   return (
   <div
     className="card-base nonselectable"
-    style={{top: positionY, left: positionX, width: width, zIndex: zIndex}}
+    style={{top: positionY, left: positionX, width: width, zIndex: cardZIndex}}
     onMouseMove={_onMouseMove}
     onMouseDown={_onMouseDown}
     onMouseUp={_onMouseUp}
@@ -88,7 +96,10 @@ Card.defaultProps = {
   children: '',
   lockedWidth: undefined,
   posX: undefined,
-  posY: undefined
+  posY: undefined,
+  zIndex: {},
+  id: undefined,
+  hasBeenClicked: () => {}
 }
 
 Card.propTypes = {
@@ -119,6 +130,21 @@ Card.propTypes = {
    * The relative Y position of the card
    */
   posY: PropTypes.number,
+
+  /**
+   * An object containing key value pairs of card-id: z-index
+   */
+  zIndex: PropTypes.object,
+
+  /**
+   * id of card
+   */
+  id: PropTypes.number,
+
+  /**
+   * Callback function to alert parent component if card has been clicked
+   */
+  hasBeenClicked: PropTypes.func
 }
 
 export default Card;

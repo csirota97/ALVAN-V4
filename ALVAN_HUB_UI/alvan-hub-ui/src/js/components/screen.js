@@ -13,6 +13,7 @@ import WeatherContainer from './weatherContainer';
  */
 function Screen(props) {
   const [calendarState, setCalendarState] = useState(props.calendarData.items);
+
   const [weatherQueryTrigger, setWeatherQueryTrigger] = useState(true);
   
   const weatherButtonClick = () => {
@@ -33,6 +34,29 @@ function Screen(props) {
       {event.end.date}
     </Card>
   );
+
+  const [calendarCardOrder, setCalendarCardOrder] = useState({});
+  const [render, forceRerender] = useState(true);
+
+  useEffect(() => {
+    const order = {};
+    calendarState.forEach((event, i) => order[i] = 50 - (calendarState.length - 1) + i)
+
+    setCalendarCardOrder(order)
+  }, [calendarState]);
+
+  const hasCalendarCardBeenClicked = (id) => {
+    const order = calendarCardOrder;
+    const currentClickedValue = order[id];
+    calendarState.forEach((event, i) => {
+      if (order[i] > currentClickedValue) {
+        order[i] = order[i] - 1
+      }
+    });
+    order[id] = 50;
+    setCalendarCardOrder(order);
+    forceRerender(!render);
+  };
 
 
   return (

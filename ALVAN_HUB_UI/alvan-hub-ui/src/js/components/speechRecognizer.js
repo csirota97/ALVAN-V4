@@ -37,10 +37,6 @@ function SpeechRecognizer (props) {
   }
 
   useEffect(() => {
-    handleListen();
-  }, [isListening]);
-
-  const handleListen = () => {
     if (isListening) {
       mic.start();
       mic.onend = () => {
@@ -69,7 +65,7 @@ function SpeechRecognizer (props) {
       mic.onerror = (event) => console.log(event.error);
       
     };
-  };
+  }, [isListening]);
 
   if(!isListening) {
     setIsListening(true);
