@@ -67,7 +67,7 @@ function Card (props) {
 
   return (
   <div
-    className="card-base"
+    className="card-base nonselectable"
     style={{top: positionY, left: positionX, width: width, zIndex: cardZIndex}}
     onMouseMove={_onMouseMove}
     onMouseDown={_onMouseDown}

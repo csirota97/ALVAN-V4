@@ -29,3 +29,7 @@ h1 {
 .clock {
   color: var(--clock-color);
 }
+
+.nonselectable {
+  user-select: none
+}
