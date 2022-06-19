@@ -5,11 +5,11 @@ const constants = {
 };
 
 const prod = {
-  SERVER_URL: 'http://server.ALVANPROJECT.com/',
+  SERVER_URL: 'https://server.ALVANPROJECT.com/',
 };
 
 const dev = {
-  SERVER_URL: 'http://localhost:5000/'
+  SERVER_URL: 'http://localhost:5000/',
 };
 
 const getConstants = () => {
