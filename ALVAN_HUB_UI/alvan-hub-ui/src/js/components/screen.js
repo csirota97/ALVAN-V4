@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from './card';
 import logo from '../../resources/images/ALVAN_LOGO_SMALL.png';
 import logo2 from '../../resources/images/ALVAN_LOGO_SMALL_BLACK.png';
@@ -25,16 +25,6 @@ function Screen(props) {
     <Card name="Current Weather" lockedWidth={"150px"} className={'weather-card'}><WeatherContainer trigger={weatherQueryTrigger} /></Card>
   );
 
-  const calendarEvents = calendarState.map((event, i) =>
-    <Card name={event.summary.substring(0, 30)} lockedWidth="default" posY={i*50 + 1} key={`${i}${event.summary}`} className={'calendar-card'} >
-      {event.organizer.displayName}
-      <hr />
-      {event.start.date}
-      <br />
-      {event.end.date}
-    </Card>
-  );
-
   const [calendarCardOrder, setCalendarCardOrder] = useState({});
   const [render, forceRerender] = useState(true);
 
@@ -58,6 +48,25 @@ function Screen(props) {
     forceRerender(!render);
   };
 
+  const calendarEvents = calendarState.map((event, i) =>
+    <Card
+      name={event.summary.substring(0, 30)}
+      lockedWidth="default"
+      posY={i*50 + 1}
+      key={`${i}${event.summary}`}
+      zIndex={calendarCardOrder}
+      id={i}
+      render={render}
+      hasBeenClicked={hasCalendarCardBeenClicked}
+      className={'calendar-card'}
+    >
+      {event.organizer.displayName}
+      <hr />
+      {event.start.date}
+      <br />
+      {event.end.date}
+    </Card>
+  );
 
   return (
     <div className="screen-container">
