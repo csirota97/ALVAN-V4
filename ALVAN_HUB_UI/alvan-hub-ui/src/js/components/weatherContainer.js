@@ -7,9 +7,9 @@ function WeatherContainer (props) {
   const { trigger, defaultWeather } = props;
   const [response, setResponse] = useState(defaultWeather);
 
-  if (Math.floor(new Date().getTime()/1000) - response?.location?.localtime_epoch >= 600 || response == '') {
+  if (Math.floor(new Date().getTime()/1000) - response?.location?.localtime_epoch >= 600 || response === '') {
     serviceFactory.weatherRequest('philadelphia', setResponse);
-    const _ = trigger;
+    console.log(trigger);
   }
   
   return (

@@ -23,4 +23,4 @@ Building the server without the cache
 ```docker-compose build --no-cache alvan-server```
 
 #### CI/CD
-[Jenkins Pipeline](http://44.206.206.51:8080/job/ALVAN-V4/)
+[Jenkins Pipeline](http://jenkins.alvanproject.com:8080/)

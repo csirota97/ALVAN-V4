@@ -74,8 +74,8 @@ function Screen(props) {
       {calendarEvents}
 
       <button onClick={() => setCalendarState(mockCalendarCall.items)} >show calendar events</button>
-      <img className='logo' src={logo}></img>
-      <img className='logo-back' src={logo2}></img>
+      <img className='logo' alt="logo" src={logo}></img>
+      <img className='logo-back' alt="logo back" src={logo2}></img>
       <SpeechRecognizer></SpeechRecognizer>
       {weatherComponent}
       <button onClick={weatherButtonClick} >trigger weather</button>

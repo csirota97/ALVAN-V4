@@ -3,6 +3,7 @@ pipeline {
     tools {
         nodejs '14.15.3'
     }
+    parameters { choice(name: 'COMPONENTS', choices: ['ALL', 'UI', 'REST API'], description: 'Which Components Should Be Deployed?') }
     stages {
         stage('Clone the repo') {
             steps {
@@ -29,6 +30,12 @@ pipeline {
             }
         }
         stage('Build UI') {
+            when {
+                anyOf{
+                    expression { params.COMPONENTS == 'UI'}
+                    expression { params.COMPONENTS == 'ALL'}
+                }
+            }
             steps {
                 echo 'building UI for deployment'
                 dir ('ALVAN-V4/ALVAN_HUB_UI/alvan-hub-ui') {
@@ -37,11 +44,34 @@ pipeline {
             }
         }
         stage('Deploy UI') {
+            when {
+                anyOf{
+                    expression { params.COMPONENTS == 'UI'}
+                    expression { params.COMPONENTS == 'ALL'}
+                }
+            }
             steps {
                 echo 'Deploying UI'
                 dir ('ALVAN-V4/ALVAN_HUB_UI/alvan-hub-ui') {
                     sh 'npm run deploy'
                 }
+            }
+        }
+        stage('Deploy Hub') {
+            when {
+                anyOf{
+                    expression { params.COMPONENTS == 'REST API'}
+                    expression { params.COMPONENTS == 'ALL'}
+                }
+            }
+            steps {
+                echo 'Deploying API'
+                sh 'sudo ssh -tt -oStrictHostKeyChecking=no -i ~/AWSKey.pem ubuntu@server.alvanproject.com -S'
+                dir ('ALVAN-V4') {
+                    sh 'git checkout dev'
+                    sh 'git pull'
+                }
+                sh 'sudo systemctl restart ALVAN'
             }
         }
     }

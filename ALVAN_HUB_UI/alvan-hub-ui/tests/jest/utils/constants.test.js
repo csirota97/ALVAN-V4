@@ -22,6 +22,6 @@ describe('Constants', () => {
   it('should have the correct prod server url', () => {
     process.env.NODE_ENV = 'production'
     const constants = getConstants();
-    expect(constants.SERVER_URL).toBe('http://server.ALVANPROJECT.com/');
+    expect(constants.SERVER_URL).toBe('https://server.ALVANPROJECT.com/');
   });
 });
