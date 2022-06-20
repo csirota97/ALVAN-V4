@@ -30,17 +30,34 @@ pipeline {
         }
         stage('Build UI') {
             steps {
-                echo 'building UI for deployment'
-                dir ('ALVAN-V4/ALVAN_HUB_UI/alvan-hub-ui') {
-                    sh 'npm run build'
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    echo 'building UI for deployment'
+                    dir ('ALVAN-V4/ALVAN_HUB_UI/alvan-hub-ui') {
+                        sh 'npm run build'
+                    }
                 }
             }
         }
         stage('Deploy UI') {
             steps {
-                echo 'Deploying UI'
-                dir ('ALVAN-V4/ALVAN_HUB_UI/alvan-hub-ui') {
-                    sh 'npm run deploy'
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    echo 'Deploying UI'
+                    dir ('ALVAN-V4/ALVAN_HUB_UI/alvan-hub-ui') {
+                        sh 'npm run deploy'
+                    }
+                }
+            }
+        }
+        stage('Deploy Hub') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    echo 'Deploying API'
+                    sh 'ssh -i ~/AWSKey.pem ubuntu@server.alvanproject.com'
+                    dir ('ALVAN-V4') {
+                        sh 'git checkout dev'
+                        sh 'git pull'
+                    }
+                    sh 'sudo systemctl restart ALVAN'
                 }
             }
         }

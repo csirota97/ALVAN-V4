@@ -27,7 +27,11 @@ class ALVAN(Resource):
       print(ML_model.query(request.form['query']))
       tts_response = ML_model.query(request.form['query'])
     return {"tts": tts_response}
-  
+
+class Calendar(Resource):
+  def get(self):
+    return {"calendar": "yes please"}
+
 class Weather(Resource):
   def get(self, location):
     response = weather_requestor(location).json()
@@ -35,6 +39,7 @@ class Weather(Resource):
 
 api.add_resource(HelloWorld, '/helloworld')
 api.add_resource(ALVAN, '/alvan/api/query')
+api.add_resource(Calendar, '/alvan/api/calendar')
 api.add_resource(Weather, '/alvan/api/weather/<location>')
 
 if __name__ == '__main__':
