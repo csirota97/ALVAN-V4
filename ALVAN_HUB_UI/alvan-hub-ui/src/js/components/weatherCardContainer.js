@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import serviceFactory from "../utils/service-factory";
 import { Watch } from  'react-loader-spinner'
 import PropTypes from 'prop-types';
 
 function WeatherContainer (props) {
-  const { trigger, defaultWeather } = props;
+  const { trigger, defaultWeather, setDefaultWeather } = props;
   const [response, setResponse] = useState(defaultWeather);
 
   if (Math.floor(new Date().getTime()/1000) - response?.location?.localtime_epoch >= 600 || response === '') {
     serviceFactory.weatherRequest('philadelphia', setResponse);
     console.log(trigger);
   }
+
+  useEffect(() => setDefaultWeather(response), [response, setDefaultWeather])
   
   return (
     <div className={'nonselectable'}>

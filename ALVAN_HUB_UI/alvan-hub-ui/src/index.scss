@@ -1,6 +1,10 @@
 :root {
   --background: #2D2D2D;
   --clock-color: #9C9E9B;
+  --emphasis: #606060;
+  --secondary-emphasis: #aeaeae;
+  --card-blue: #0EADFF;
+  color: var(--clock-color);
 }
 
 body {
@@ -32,4 +36,77 @@ h1 {
 
 .nonselectable {
   user-select: none
+}
+
+.view-swap-button {
+  position: absolute;
+  bottom: 0;
+  left: 35%;
+  width: 30%;
+  min-width: 150px;
+  height: 3rem;
+  background-color: var(--clock-color);
+  border-radius: 5px 5px 0 0;
+}
+
+.view-swap-button:active {
+  background-color: var(--emphasis);
+}
+
+.view-swap-button:active > .view-swap-label {
+  color: var(--secondary-emphasis);
+}
+
+.view-swap-label {
+  width: fit-content;
+  color: var(--background);
+  position: relative;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.calendar-separator {
+  position: absolute;
+  top: 15%;
+  height: 75%;
+  width: 2px;
+  background-color: var(--card-blue);
+}
+
+.calendar-weather-view {
+  transform: translate(-50%, -50px);
+  position: absolute;
+  top: 20%;
+  width: fit-content;
+  text-align: center;
+  user-select: none
+}
+
+.weather-1 {
+  left: 12.5%;
+}
+
+.weather-2 {
+  left: 37.5%;
+}
+
+.weather-3 {
+  left: 62.5%;
+}
+
+.weather-4 {
+  left: 87.5%;
+}
+
+.line-1 {
+  left: 25%;
+}
+
+.line-2 {
+  left: 50%;
+}
+
+.line-3 {
+  left: 75%;
 }
