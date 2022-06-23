@@ -1,6 +1,6 @@
 import 'jsdom-global/register';
 import React from "react";
-import WeatherContainer from '../../../src/js/components/weatherContainer';
+import WeatherContainer from '../../../src/js/components/weatherCardContainer';
 import { Watch } from 'react-loader-spinner';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { mount, configure } from "enzyme";
@@ -11,9 +11,16 @@ configure({adapter: new Adapter()});
 jest.mock('../../../src/js/utils/service-factory.js');
 
 describe('WeatherContainer', () => {
+
+  let defaultWeather = '';
+  let setDefaultWeather = () => {};
+  beforeEach(() => {
+    defaultWeather = [];
+    setDefaultWeather = (newWeather) => defaultWeather = newWeather;
+  })
   describe('weather data has not been loaded', () => {
     it('should display a loader', () => {
-      const wrapper = mount(<WeatherContainer defaultWeather='no data'/>)
+      const wrapper = mount(<WeatherContainer defaultWeather='no data' setDefaultWeather={setDefaultWeather}/>)
       expect(wrapper.find(Watch).length).toEqual(1);
     });
   });
@@ -22,7 +29,7 @@ describe('WeatherContainer', () => {
     let wrapper;
 
     beforeEach(() => {
-      wrapper = mount(<WeatherContainer defaultWeather={mockWeatherCall}/>);
+      wrapper = mount(<WeatherContainer defaultWeather={mockWeatherCall} setDefaultWeather={setDefaultWeather}/>);
     });
 
     it('should not display a loader', () => {

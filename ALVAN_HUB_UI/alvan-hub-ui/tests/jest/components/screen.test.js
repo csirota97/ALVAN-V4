@@ -2,14 +2,13 @@ import 'jsdom-global/register';
 import React from "react";
 import { act } from 'react-dom/test-utils';
 import Screen from '../../../src/js/components/screen';
-import Card from "../../../src/js/components/card";
 import SpeechRecognizer from '../../../src/js/components/speechRecognizer';
-import Clock from '../../../src/js/components/clock';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import mockCalendarCall from '../../../src/js/utils/mockCalendarCalls';
 
-import { configure, mount, shallow } from "enzyme";
-import { uniqueNamesGenerator, names } from 'unique-names-generator';
+import { configure, mount } from "enzyme";
+import HomeView from '../../../src/js/components/views/homeView';
+import CalendarView from '../../../src/js/components/views/calendarView';
 
 configure({adapter: new Adapter()});
 
@@ -22,107 +21,56 @@ jest.mock("../../../src/js/components/clock", () => () => {
   const MockClock = "default-clock-mock";
   return <MockClock />;
 });
-let screenWrapper;
+let homeScreenWrapper;
+let calendarScreenWrapper;
 
 describe("Screen", () => {
   beforeEach(() => {
     act(() => {
-    screenWrapper = mount(<Screen calendarData={mockCalendarCall}/>);
+    homeScreenWrapper = mount(<Screen calendarData={mockCalendarCall} home/>);
+    homeScreenWrapper.find('#show-calendar-events').simulate('click');
+    calendarScreenWrapper = mount(<Screen calendarData={mockCalendarCall}/>);
     });
   });
 
   describe("should render", () => {
     it('a clock', () => {
       const MockClock = "default-clock-mock";
-      expect(screenWrapper.find(MockClock).length).toBe(1);
-    })
+      expect(homeScreenWrapper.find(MockClock).length).toBe(1);
+    });
+
     it('a SpeechRecognizer', () => {
-      expect(screenWrapper.find(SpeechRecognizer).length).toBe(1);
-    })
-    it('calendar event cards', () => {
-      expect(screenWrapper.find('.calendar-card').length).toBe(5);
-    })
-    it('a weather card', () => {
-      expect(screenWrapper.find('.weather-card').length).toBe(1);
-    })
-  });
-
-  describe("should move cards when dragged", () => {
-    it('by mouse', () => {
-      screenWrapper.find('.card-base').first().invoke("onMouseDown")(
-        {
-          nativeEvent: {
-            offsetX: 4,
-            offsetY: 111
-          }
-        }
-      );
-      screenWrapper.find('.card-base').first().invoke("onMouseMove")(
-        {
-          nativeEvent: {
-            offsetX: 10,
-            offsetY: 121
-          }
-        }
-      );
-      screenWrapper.find('.card-base').first().invoke("onMouseUp")();
-      expect(screenWrapper.find('.card-base').first().props().style).toHaveProperty("top", 121);
-      expect(screenWrapper.find('.card-base').first().props().style).toHaveProperty("left", 6);
+      expect(homeScreenWrapper.find(SpeechRecognizer).length).toBe(1);
     });
 
-    it("cards should move to front when selected", () => {
-      screenWrapper.find('.card-base').at(2).invoke("onMouseDown")(
-        {
-          nativeEvent: {
-            offsetX: 4,
-            offsetY: 111
-          }
-        }
-      )
-      screenWrapper.find('.card-base').at(2).invoke("onMouseMove")(
-        {
-          nativeEvent: {
-            offsetX: 10,
-            offsetY: 121
-          }
-        }
-      );
-      screenWrapper.find('.card-base').at(2).invoke("onMouseUp");
-      expect(screenWrapper.find(Card).at(2).props().zIndex[2]).toBe(50);
+    describe('the HomeView', () => {
+      it('component', () => {
+        expect(homeScreenWrapper.find(HomeView).length).toBe(1);
+      });
+
+      it('Show Calendar View button', () => {
+        expect(homeScreenWrapper.find(".view-swap-button").text()).toBe("Show Calendar View");
+      });
+
+      it('after the Show Home View button is clicked', () => {
+        calendarScreenWrapper.find('.view-swap-button').simulate('click');
+        expect(calendarScreenWrapper.find(HomeView).length).toBe(1);
+      });
     });
 
-    it('by touch', () => {
-      screenWrapper.find('.card-base').first().invoke("onTouchStart")(
-        {
-          targetTouches: [{
-            pageX: 4,
-            pageY: 111
-          }],
-          target: { getBoundingClientRect: () => { 
-            return {
-              top: 111,
-              left: 0
-            };
-          }}
-        }
-      );
-      screenWrapper.find('.card-base').first().invoke("onTouchMove")(
-        {
-          targetTouches: [{
-            pageX: 10,
-            pageY: 121
-          }],
-          target: { getBoundingClientRect: () => { 
-            return {
-              top: 111,
-              left: 0
-            };
-          }}
-        }
-      );
-      screenWrapper.find('.card-base').first().invoke("onTouchEnd")();
-      expect(screenWrapper.find('.card-base').first().props().style).toHaveProperty("top", 121);
-      expect(screenWrapper.find('.card-base').first().props().style).toHaveProperty("left", 6);
+    describe('the CalendarView', () => {
+      it('component', () => {
+        expect(calendarScreenWrapper.find(CalendarView).length).toBe(1);
+      });
+
+      it('Show Calendar View button', () => {
+        expect(calendarScreenWrapper.find(".view-swap-button").text()).toBe("Show Home View");
+      });
+
+      it('after the Show Calendar View button is clicked', () => {
+        homeScreenWrapper.find('.view-swap-button').simulate('click');
+        expect(homeScreenWrapper.find(CalendarView).length).toBe(1);
+      });
     });
   });
 });
