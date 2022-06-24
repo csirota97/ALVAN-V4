@@ -27,6 +27,18 @@ function WeatherCalendarView(props) {
   const slot3Icon = response?.forecast?.forecastday[1].day.condition.icon;
   const slot4Icon = response?.forecast?.forecastday[2].day.condition.icon;
 
+  const slotWeatherInfo = (slotIcon, slotIndex) => {
+    return (
+    <div className="centered">
+      <img className="weather-icon" src={slotIcon} alt="" draggable="false" />
+      <div className="inline-text">
+        <h3 className="max-temp">{`Max: ${response?.forecast?.forecastday[slotIndex].day.maxtemp_f}°F`}</h3>
+        <h3 className="min-temp">{`Min: ${response?.forecast?.forecastday[slotIndex].day.mintemp_f}°F`}</h3>
+      </div>
+    </div>
+  )};
+  console.log(response);
+
   return (
     <>
 
@@ -34,7 +46,7 @@ function WeatherCalendarView(props) {
         <h2>Today</h2>
         {
           response?.current?.condition?.icon ?
-          <img className="centered weather-icon" src={slot2Icon} alt="" draggable="false" /> :
+          slotWeatherInfo(slot2Icon, 0) :
           <Watch color="#5A6060"/>
         }
       </div>
@@ -42,7 +54,7 @@ function WeatherCalendarView(props) {
         <h2>Tomorrow</h2>
         {
           response?.current?.condition?.icon ?
-          <img className="centered weather-icon" src={slot3Icon} alt="" draggable="false" /> :
+          slotWeatherInfo(slot3Icon, 1) :
           <Watch color="#5A6060"/>
         }
       </div>
@@ -50,7 +62,7 @@ function WeatherCalendarView(props) {
         <h2>{dayName[(new Date().getDay() + 2) % 7]}</h2>
         {
           response?.current?.condition?.icon ?
-          <img className="centered weather-icon" src={slot4Icon} alt="" draggable="false" /> :
+          slotWeatherInfo(slot4Icon, 2) :
           <Watch className="centered"  color="#5A6060"/>
         }
       </div>
@@ -58,7 +70,7 @@ function WeatherCalendarView(props) {
         <h2>Current</h2>
         {
           response?.current?.condition?.icon ?
-          <img className="centered weather-icon" src={response?.current?.condition?.icon} alt="" draggable="false" /> :
+          <img className="weather-icon" src={response?.current?.condition?.icon} alt="" draggable="false" /> :
           <Watch color="#5A6060"/>
         }
         {

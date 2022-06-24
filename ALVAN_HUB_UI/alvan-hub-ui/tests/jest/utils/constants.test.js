@@ -19,6 +19,12 @@ describe('Constants', () => {
     expect(constants.SERVER_URL).toBe('http://localhost:5000/');
   });
 
+  it('should have the correct test server url', () => {
+    process.env.NODE_ENV = 'test'
+    const constants = getConstants();
+    expect(constants.SERVER_URL).toBe('http://localhost:5000/');
+  });
+
   it('should have the correct prod server url', () => {
     process.env.NODE_ENV = 'production'
     const constants = getConstants();

@@ -13,7 +13,7 @@ const dev = {
 };
 
 const getConstants = () => {
-  const config = process.env.NODE_ENV === 'development' ? dev : prod;
+  const config = ['development', 'test'].includes(process.env.NODE_ENV) ? dev : prod;
   Object.assign(constants, constants, config);
   return constants;
 };
