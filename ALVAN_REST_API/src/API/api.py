@@ -20,13 +20,12 @@ class ALVAN(Resource):
   def post(self):
     tts_response = ''
     print(request)
-    print(request.form, 69)
     if request.form['query']:
       #TODO get tts response from ML training set
       print(request.form['query'])
       print(ML_model.query(request.form['query']))
       tts_response = ML_model.query(request.form['query'])
-    return {"tts": tts_response}
+    return {"tts_cd": tts_response}
 
 class Calendar(Resource):
   def get(self):

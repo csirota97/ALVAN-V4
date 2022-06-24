@@ -4,23 +4,15 @@ import getConstants from './constants';
 const url = getConstants().SERVER_URL;
 
 const serviceFactory = {
-  sendQuery: async (query) => {
+  sendQuery: async (query, setResponseJson) => {
     const formData = new FormData();
     formData.append('query', query);
     const response = await fetch(url+"alvan/api/query", {
       method: "POST",
       mode: 'cors',
       body: formData,
-    }).then(response => response.json());
-  
-    const responseString = async () => {
-      response.then((a) => {
-        console.log(a);
-        return a;
-      });
-    };
-
-    return responseString()
+    });
+    setResponseJson(await response.json());
   },
 
   calendarRequest: async () => {
