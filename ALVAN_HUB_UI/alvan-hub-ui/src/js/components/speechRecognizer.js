@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import { Howl, Howler } from 'howler';
-import serviceFactory from '../utils/service-factory.js';
 
 const SpeechRecognition = window.SpeechRecognition ||
   window.webkitSpeechRecognition;
