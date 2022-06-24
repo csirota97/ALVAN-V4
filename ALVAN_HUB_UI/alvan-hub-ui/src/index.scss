@@ -110,3 +110,31 @@ h1 {
 .line-3 {
   left: 75%;
 }
+
+.centered {
+  position:absolute;
+  transform: translate(-50%, 50%);
+  top: 50%;
+}
+
+.inline-text {
+  display: inline;
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  width: 200px;
+}
+
+.inline-text > h3 {
+  justify-content: left;
+  position: relative;
+  left: -50px;
+  width: 200px;
+}
+
+.center-items {
+  position: relative;
+  top: -100%;
+  left: 0;
+}
+
