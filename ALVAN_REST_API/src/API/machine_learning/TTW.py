@@ -12,7 +12,7 @@ from nltk.stem.lancaster import LancasterStemmer
 # nltk.download('punkt')
 stemmer = LancasterStemmer()
 
-with open('intents.json') as file:
+with open('machine_learning/test_intents.json') as file:
     data = json.load(file)
 
 try:
@@ -81,7 +81,7 @@ model = tflearn.DNN(net)
 # try:
 #     model.load("training_data{}model.tflearn".format(os.sep))
 # except:
-model.fit(training, output, n_epoch=2000, batch_size=8, show_metric=True)
+model.fit(training, output, n_epoch=4000, batch_size=8, show_metric=True)
 model.save(os.path.join("training_data","model.tflearn"))
 
 def bag_of_words(s, words):

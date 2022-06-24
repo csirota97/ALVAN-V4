@@ -6,6 +6,7 @@ import SpeechRecognizer from './speechRecognizer.js';
 import PropTypes from 'prop-types';
 import HomeView from './views/homeView';
 import CalendarView from './views/calendarView';
+import Card from './card';
 
 /**
  * @return {Component} screen component
@@ -25,7 +26,9 @@ function Screen(props) {
       <Clock />
       <img className='logo' alt="logo" src={logo}></img>
       <img className='logo-back' alt="logo back" src={logo2}></img>
-      <SpeechRecognizer></SpeechRecognizer>
+      <Card name="Speech Recognizer" lockedWidth="400px">
+        <SpeechRecognizer></SpeechRecognizer>
+      </Card>
       <div className='view-swap-button' onClick={() => setDisplayCalendar(!displayCalendar)}>
         <h3 className='view-swap-label nonselectable'>
           { displayCalendar ? 'Show Home View' : 'Show Calendar View'}

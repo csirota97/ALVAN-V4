@@ -1,20 +1,32 @@
 {"intents": [
-    {
-        "tag":"unsure",
-        "patterns": [],
-        "responses":0,
-        "context_set":""
-    },
-    {
-        "tag":"time",
-        "patterns": ["tell me the time", "what is the time", "I need the time"],
-        "responses":1,
-        "context_set":""
-    },
-    {
-        "tag":"date",
-        "patterns": ["tell me the date", "what is the date", "I need the date"],
-        "responses":2,
-        "context_set":""
-    }
+  {
+    "tag":"unsure",
+    "patterns": [],
+    "responses":0,
+    "context_set":""
+  },
+  {
+    "tag":"time",
+    "patterns": ["tell me the time", "what is the time", "I need the time"],
+    "responses":1,
+    "context_set":""
+  },
+  {
+    "tag":"date",
+    "patterns": ["tell me the date", "what is the date", "I need the date"],
+    "responses":2,
+    "context_set":""
+  },
+  {
+    "tag":"lights_on",
+    "patterns": ["turn on the lights", "it is too dark in here", "I want the lights on", "I want it brighter in here"],
+    "responses":3,
+    "context_set":""
+  },
+  {
+    "tag":"lights_off",
+    "patterns": ["turn off the lights", "it is too bright in here", "I want the lights off", "I want it darker in here"],
+    "responses":4,
+    "context_set":""
+  }
 ]}

@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Howl, Howler } from 'howler';
+import serviceFactory from '../utils/service-factory';
 
 const SpeechRecognition = window.SpeechRecognition ||
   window.webkitSpeechRecognition;
@@ -19,6 +20,7 @@ function SpeechRecognizer (props) {
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState('');
   const [activated, setActivated] = useState(false);
+  const [response, setResponse] = useState({});
 
   mic.onspeechend = (e) => {
     // console.log(e);
@@ -28,7 +30,9 @@ function SpeechRecognizer (props) {
       // console.log("blip");
     } else if (activated && transcript !== "") {
       //query api
-      // console.log("Query: " + transcript);
+      console.log("Query: " + transcript);
+      serviceFactory.sendQuery(transcript, setResponse);
+      
       setActivated(false);  
     }
     mic.stop();
@@ -76,7 +80,10 @@ function SpeechRecognizer (props) {
         <p id='transcript'>
           Transcript: {transcript}
         </p>
-        {/* <button onClick={() => {console.log(serviceFactory.sendQuery("what time is it?"));}} /> */}
+        <p id='response'>
+          Response: {response.tts_cd}
+        </p>
+        <button onClick={() => {console.log(serviceFactory.sendQuery(transcript, setResponse));}} />
       </div>
     </>
   );
