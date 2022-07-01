@@ -28,5 +28,11 @@
     "patterns": ["turn off the lights", "it is too bright in here", "I want the lights off", "I want it darker in here"],
     "responses":4,
     "context_set":""
+  },
+  {
+    "tag":"temp",
+    "patterns": ["what's the temperature", "how hot is it outside", "how cold is it outside", "I need the temperature"],
+    "responses":5,
+    "context_set":""
   }
 ]}

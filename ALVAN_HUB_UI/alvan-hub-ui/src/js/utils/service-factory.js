@@ -1,4 +1,5 @@
 import 'babel-polyfill';
+import commands from './commands';
 import getConstants from './constants';
 
 const url = getConstants().SERVER_URL;
@@ -12,7 +13,9 @@ const serviceFactory = {
       mode: 'cors',
       body: formData,
     });
-    setResponseJson(await response.json());
+    const jsonRes = await response.json();
+    setResponseJson(jsonRes);
+    commands[jsonRes.tts_cd]();
   },
 
   calendarRequest: async () => {
@@ -31,11 +34,29 @@ const serviceFactory = {
   },
 
   weatherRequest: async (location, setResponseJson) => {
-    const response = await fetch(url+`alvan/api/weather/${location}`, {
+    const options = {
       method: "get",
-    });
-    const resJson = await response.json();
-    setResponseJson(resJson);
+    };
+    const weatherUrl = `${url}alvan/api/weather`
+    if (location) {
+      const response = await fetch(`${weatherUrl}/${location}`, options);
+      const resJson = await response.json();
+      setResponseJson(resJson);
+    }
+    else {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const response = await fetch(`${weatherUrl}/${position.coords.latitude},${position.coords.longitude}`, options);
+          const resJson = await response.json();
+          setResponseJson(resJson);
+        },
+        async () => {
+          const response = await fetch(`${weatherUrl}/philadelphia`, options);
+          const resJson = await response.json();
+          setResponseJson(resJson);
+        }
+      )
+    }
   },
 };
 

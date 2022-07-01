@@ -20,6 +20,7 @@ function SpeechRecognizer (props) {
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState('');
   const [activated, setActivated] = useState(false);
+  const [wasActivated, setWasActivated] = useState(false);
   const [response, setResponse] = useState({});
 
   mic.onspeechend = (e) => {
@@ -27,7 +28,7 @@ function SpeechRecognizer (props) {
     if (transcript.includes('Alvin') && !activated) {
       setActivated(true);
       activatedSound.play();
-      // console.log("blip");
+      // console.log("blip"); 
     } else if (activated && transcript !== "") {
       //query api
       console.log("Query: " + transcript);
@@ -38,6 +39,34 @@ function SpeechRecognizer (props) {
     mic.stop();
     // console.log("RESTART");
   }
+
+  useEffect(() => {
+    var context = new AudioContext();
+    var oscillator = context.createOscillator();
+    oscillator.type = "sine";
+
+    if (activated && !wasActivated) {
+      setWasActivated(true);
+      oscillator.frequency.value = 800;
+      oscillator.connect(context.destination);
+      oscillator.start(); 
+      // Beep for 500 milliseconds
+      setTimeout(function () {
+          oscillator.stop();
+      }, 100);      
+    
+    }
+    else if (!activated && wasActivated) {
+      setWasActivated(false);
+      oscillator.frequency.value = 1200;
+      oscillator.connect(context.destination);
+      oscillator.start(); 
+      // Beep for 500 milliseconds
+      setTimeout(function () {
+          oscillator.stop();
+      }, 100);  
+    }
+  })
 
   useEffect(() => {
     if (isListening) {

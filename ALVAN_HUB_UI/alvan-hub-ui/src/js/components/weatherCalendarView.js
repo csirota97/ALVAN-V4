@@ -17,7 +17,7 @@ function WeatherCalendarView(props) {
   }
 
   if (Math.floor(new Date().getTime()/1000) - response?.location?.localtime_epoch >= 600 || response === '') {
-    serviceFactory.weatherRequest('philadelphia', setResponse);
+    serviceFactory.weatherRequest(null, setResponse);
     console.log(trigger);
   }
 
