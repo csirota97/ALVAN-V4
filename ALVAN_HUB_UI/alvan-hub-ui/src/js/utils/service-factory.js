@@ -44,7 +44,7 @@ const serviceFactory = {
       setResponseJson(resJson);
     }
     else {
-      navigator.geolocation.getCurrentPosition(
+      navigator.geolocation?.getCurrentPosition(
         async (position) => {
           const response = await fetch(`${weatherUrl}/${position.coords.latitude},${position.coords.longitude}`, options);
           const resJson = await response.json();
