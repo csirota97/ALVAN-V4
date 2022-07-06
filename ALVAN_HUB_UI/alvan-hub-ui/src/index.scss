@@ -49,11 +49,11 @@ h1 {
   border-radius: 5px 5px 0 0;
 }
 
-.view-swap-button:active {
+.view-swap-button:active .google-sign-in-button:active {
   background-color: var(--emphasis);
 }
 
-.view-swap-button:active > .view-swap-label {
+.view-swap-button:active > .view-swap-label .google-sign-in-button > .view-swap-label {
   color: var(--secondary-emphasis);
 }
 
@@ -64,6 +64,14 @@ h1 {
   top: 0;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.google-sign-in-button {
+  z-index: 200;
+  position: absolute;
+  transform: translate(-50%, 0);
+  top: 0;
+  left: 50%;
 }
 
 .calendar-separator {
