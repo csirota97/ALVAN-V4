@@ -2,6 +2,7 @@ const constants = {
   LISTENER_MIC_TIMEOUT: 10000,
   LISTENER_MIC_LANG: 'en-US',
   ALVAN_MIC_TIMEOUT: 5000,
+  CLIENT_ID: "470610043829-bgkch081ikasle3kkitqb1oi6f384b95.apps.googleusercontent.com",
 };
 
 const prod = {
