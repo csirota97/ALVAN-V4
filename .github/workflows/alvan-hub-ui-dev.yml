@@ -12,7 +12,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     defaults:
       run:
         working-directory: ./ALVAN_HUB_UI/alvan-hub-ui
