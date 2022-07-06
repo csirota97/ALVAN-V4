@@ -1,6 +1,5 @@
 import 'jsdom-global/register';
 import React from "react";
-import { act } from 'react-dom/test-utils';
 import Screen from '../../../src/js/components/screen';
 import SpeechRecognizer from '../../../src/js/components/speechRecognizer';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
@@ -26,11 +25,9 @@ let calendarScreenWrapper;
 
 describe("Screen", () => {
   beforeEach(() => {
-    act(() => {
-      homeScreenWrapper = mount(<Screen calendarData={mockCalendarCall} home/>);
-      homeScreenWrapper.find('#show-calendar-events').simulate('click');
-      calendarScreenWrapper = mount(<Screen calendarData={mockCalendarCall}/>);
-    });
+    homeScreenWrapper = mount(<Screen calendarData={mockCalendarCall} home/>);
+    homeScreenWrapper.find('#show-calendar-events').simulate('click');
+    calendarScreenWrapper = mount(<Screen calendarData={mockCalendarCall}/>);
   });
 
   describe("should render", () => {

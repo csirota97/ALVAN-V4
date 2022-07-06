@@ -2,7 +2,7 @@ import 'jsdom-global/register';
 import React from "react";
 import WeatherCalendarView from '../../../src/js/components/weatherCalendarView';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-import { mount, configure, EnzymeAdapter } from "enzyme";
+import { mount, configure } from "enzyme";
 import mockWeatherCall from '../../../src/js/utils/mockWeatherCall';
 import { Watch } from 'react-loader-spinner';
 

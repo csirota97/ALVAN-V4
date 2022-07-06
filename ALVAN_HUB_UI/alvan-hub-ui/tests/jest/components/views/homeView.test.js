@@ -1,6 +1,5 @@
 import 'jsdom-global/register';
 import React from "react";
-import { act } from 'react-dom/test-utils';
 import HomeView from '../../../../src/js/components/views/homeView';
 import Card from "../../../../src/js/components/card";
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
@@ -23,10 +22,8 @@ let homeViewWrapper;
 
 describe("HomeView", () => {
   beforeEach(() => {
-    act(() => {
     homeViewWrapper = mount(<HomeView calendarData={mockCalendarCall} setDefaultWeather={()=>{}}/>);
     homeViewWrapper.find('#show-calendar-events').simulate('click');
-    });
   });
 
   describe("should render", () => {
