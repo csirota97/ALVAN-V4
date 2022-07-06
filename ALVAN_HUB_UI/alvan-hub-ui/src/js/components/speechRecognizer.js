@@ -66,7 +66,7 @@ function SpeechRecognizer (props) {
           oscillator.stop();
       }, 100);  
     }
-  })
+  }, [activated, wasActivated, setWasActivated])
 
   useEffect(() => {
     if (isListening) {

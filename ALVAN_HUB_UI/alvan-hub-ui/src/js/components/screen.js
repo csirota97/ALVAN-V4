@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import logo from '../../resources/images/ALVAN_LOGO_SMALL.png';
 import logo2 from '../../resources/images/ALVAN_LOGO_SMALL_BLACK.png';
 import Clock from './clock';
