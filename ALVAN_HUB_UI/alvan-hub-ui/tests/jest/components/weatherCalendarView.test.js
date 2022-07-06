@@ -1,6 +1,5 @@
 import 'jsdom-global/register';
 import React from "react";
-import { act } from 'react-dom/test-utils';
 import WeatherCalendarView from '../../../src/js/components/weatherCalendarView';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { mount, configure, EnzymeAdapter } from "enzyme";

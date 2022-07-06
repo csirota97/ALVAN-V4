@@ -27,9 +27,9 @@ let calendarScreenWrapper;
 describe("Screen", () => {
   beforeEach(() => {
     act(() => {
-    homeScreenWrapper = mount(<Screen calendarData={mockCalendarCall} home/>);
-    homeScreenWrapper.find('#show-calendar-events').simulate('click');
-    calendarScreenWrapper = mount(<Screen calendarData={mockCalendarCall}/>);
+      homeScreenWrapper = mount(<Screen calendarData={mockCalendarCall} home/>);
+      homeScreenWrapper.find('#show-calendar-events').simulate('click');
+      calendarScreenWrapper = mount(<Screen calendarData={mockCalendarCall}/>);
     });
   });
 
