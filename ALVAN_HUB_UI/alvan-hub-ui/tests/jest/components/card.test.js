@@ -25,7 +25,8 @@ describe('Card', () => {
       posY: undefined,
       zIndex: {},
       id: undefined,
-      hasBeenClicked: () => {}
+      hasBeenClicked: () => {},
+      lockedPos: false
     }
     const card = mount(<Card />);
     expect(card.props().toString()).toEqual(props.toString());
@@ -40,7 +41,8 @@ describe('Card', () => {
       posY: 100,
       id: 6,
       zIndex: {6: 50},
-      hasBeenClicked: () => {return null;}
+      hasBeenClicked: () => {return null;},
+      lockedPos: true
     }
     const card = mount(<Card {...props}>{props.children}</Card>);
     expect(card.props()).toEqual(props);

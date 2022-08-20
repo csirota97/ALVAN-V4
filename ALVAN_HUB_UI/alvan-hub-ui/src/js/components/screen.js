@@ -15,6 +15,7 @@ import GoogleSignInButton from './googleSignInButton';
 function Screen(props) {
   const [displayCalendar, setDisplayCalendar] = useState(!props.home && true);
   const [defaultWeather, setDefaultWeather] = useState('');
+  const [isMenuShown, setIsMenuShown] = useState(false)
   const customProps = {
     defaultWeather: defaultWeather,
     setDefaultWeather: setDefaultWeather,
@@ -24,13 +25,22 @@ function Screen(props) {
   }
   const homeView = (<HomeView {...customProps} />);
   const calendarView = (<CalendarView {...customProps} />);
+  const toggleMenuCard = () => setIsMenuShown(!isMenuShown);
 
   return (
     <div className="screen-container">
-      <GoogleSignInButton setGoogleUser={props.setGoogleUser} googleUser={props.googleUser} />
       <Clock />
-      <img className='logo' alt="logo" src={logo}></img>
-      <img className='logo-back' alt="logo back" src={logo2}></img>
+      <div onClick={toggleMenuCard} onTouchTap={toggleMenuCard}>
+        <img className='logo' alt="logo" src={logo}></img>
+        <img className='logo-back' alt="logo back" src={logo2}></img>  
+      </div>
+      {isMenuShown && (
+          <Card name="Settings" className="front" lockedPos lockedWidth="400px" id={-1} zIndex={{ '-1': 2000 }} posX={window.innerWidth - 410} posY={-50}>
+            <div>
+            <GoogleSignInButton setGoogleUser={props.setGoogleUser} googleUser={props.googleUser}/>
+            </div>
+          </Card>
+        )}
       <Card name="Speech Recognizer" lockedWidth="400px">
         <SpeechRecognizer></SpeechRecognizer>
       </Card>

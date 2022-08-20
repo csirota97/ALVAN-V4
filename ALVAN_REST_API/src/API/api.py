@@ -5,6 +5,7 @@ from flask_restful import Api, Resource
 from flask_cors import CORS
 import machine_learning.TTW as ML_model
 from requestors.weather_requestor import requestor as weather_requestor
+import external_requests.named_entity_extractor as NEE
 
 app = Flask(__name__)
 app.config.SERVER_NAME = "flask-api:5000"
@@ -25,7 +26,8 @@ class ALVAN(Resource):
       print(request.form['query'])
       print(ML_model.query(request.form['query']))
       tts_response = ML_model.query(request.form['query'])
-    return {"tts_cd": tts_response}
+      named_entities = NEE.request(request.form['query'])['result']
+    return {"tts_cd": tts_response, "named_entities": named_entities}
 
 class Calendar(Resource):
   def get(self):

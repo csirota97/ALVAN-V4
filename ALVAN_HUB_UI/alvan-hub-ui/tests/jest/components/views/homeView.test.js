@@ -35,7 +35,7 @@ describe("HomeView", () => {
     })
   });
 
-  describe("should move cards when dragged", () => {
+  describe("should move unlocked cards when dragged", () => {
     it('by mouse', () => {
       homeViewWrapper.find('.card-base').first().invoke("onMouseDown")(
         {
@@ -111,6 +111,65 @@ describe("HomeView", () => {
       homeViewWrapper.find('.card-base').first().invoke("onTouchEnd")();
       expect(homeViewWrapper.find('.card-base').first().props().style).toHaveProperty("top", 121);
       expect(homeViewWrapper.find('.card-base').first().props().style).toHaveProperty("left", 6);
+    });
+  });
+
+
+  describe("should not move locked cards when dragged", () => {
+    it('by mouse', () => {
+      homeViewWrapper.find('.card-base').last().invoke("onMouseDown")(
+        {
+          nativeEvent: {
+            offsetX: 4,
+            offsetY: 111
+          }
+        }
+      );
+      homeViewWrapper.find('.card-base').last().invoke("onMouseMove")(
+        {
+          nativeEvent: {
+            offsetX: 10,
+            offsetY: 121
+          }
+        }
+      );
+      homeViewWrapper.find('.card-base').last().invoke("onMouseUp")();
+      expect(homeViewWrapper.find('.card-base').last().props().style).toHaveProperty("top", 110);
+      expect(homeViewWrapper.find('.card-base').last().props().style).toHaveProperty("left", 0);
+    });
+
+    it('by touch', () => {
+      homeViewWrapper.find('.card-base').last().invoke("onTouchStart")(
+        {
+          targetTouches: [{
+            pageX: 4,
+            pageY: 111
+          }],
+          target: { getBoundingClientRect: () => { 
+            return {
+              top: 111,
+              left: 0
+            };
+          }}
+        }
+      );
+      homeViewWrapper.find('.card-base').last().invoke("onTouchMove")(
+        {
+          targetTouches: [{
+            pageX: 10,
+            pageY: 121
+          }],
+          target: { getBoundingClientRect: () => { 
+            return {
+              top: 111,
+              left: 0
+            };
+          }}
+        }
+      );
+      homeViewWrapper.find('.card-base').last().invoke("onTouchEnd")();
+      expect(homeViewWrapper.find('.card-base').last().props().style).toHaveProperty("top", 110);
+      expect(homeViewWrapper.find('.card-base').last().props().style).toHaveProperty("left", 0);
     });
   });
 });

@@ -17,6 +17,7 @@ h1 {
 }
 
 .logo {
+  cursor: pointer;
   opacity: .4;
   position: absolute;
   top: 10px;
@@ -67,10 +68,9 @@ h1 {
 }
 
 .google-sign-in-button {
-  z-index: 200;
+  cursor: pointer;
   position: absolute;
   transform: translate(-50%, 0);
-  top: 0;
   left: 50%;
 }
 
@@ -145,4 +145,3 @@ h1 {
   top: -100%;
   left: 0;
 }
-

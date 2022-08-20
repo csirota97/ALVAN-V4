@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 
 function Card (props) {
-  const {name, children, lockedWidth, posX, posY, zIndex, hasBeenClicked, id} = props;
+  const {name, children, lockedWidth, posX, posY, zIndex, hasBeenClicked, lockedPos, id} = props;
 
   const [positionX, setPositionX] = useState(posX ? posX + 0 : 0);
   const [positionY, setPositionY] = useState(posY ? posY + 110 : 110);
@@ -20,7 +20,7 @@ function Card (props) {
 
   const _onMouseMove = (e) => {
     // e.stopPropagation(); 
-    if (mouseDown) {
+    if (mouseDown && !lockedPos) {
       setPositionX(positionX+e.nativeEvent.offsetX-mouseDownPosX);
       setPositionY(positionY+e.nativeEvent.offsetY-mouseDownPosY);
       setCardZIndex(75);
@@ -28,18 +28,22 @@ function Card (props) {
   }
 
   const _onMouseDown = (e) => {
-    setMouseDownPosX(e.nativeEvent.offsetX);
-    setMouseDownPosY(e.nativeEvent.offsetY);
-    setMouseDown(true);
-    hasBeenClicked(id);
+    if (!lockedPos) {
+      setMouseDownPosX(e.nativeEvent.offsetX);
+      setMouseDownPosY(e.nativeEvent.offsetY);
+      setMouseDown(true);
+      hasBeenClicked(id);
+    }
   }
   const _onMouseUp = (e) => {
-    setMouseDown(false);
-    setCardZIndex(zIndex[id]);
+    if (!lockedPos) {
+      setMouseDown(false);
+      setCardZIndex(zIndex[id]);
+    }
   }
 
   const _onTouchMove = (e) => {
-    if (touchDown) {
+    if (touchDown && !lockedPos) {
       const rect = e.target.getBoundingClientRect();
       setPositionX(positionX+(e.targetTouches[0].pageX - rect.left)-touchDownPosX);
       setPositionY(positionY+(e.targetTouches[0].pageY - rect.top)-touchDownPosY);
@@ -48,16 +52,20 @@ function Card (props) {
   }
 
   const _onTouchStart = (e) => {
-    const rect = e.target.getBoundingClientRect();
-    setTouchDownPosX(e.targetTouches[0].pageX - rect.left);
-    setTouchDownPosY(e.targetTouches[0].pageY - rect.top);
-    setTouchDown(true);
-    hasBeenClicked(id);
+    if (!lockedPos) {
+      const rect = e.target.getBoundingClientRect();
+      setTouchDownPosX(e.targetTouches[0].pageX - rect.left);
+      setTouchDownPosY(e.targetTouches[0].pageY - rect.top);
+      setTouchDown(true);
+      hasBeenClicked(id);
+    }
   }
 
   const _onTouchEnd = (e) => {
-    setTouchDown(false);
-    setCardZIndex(zIndex[id]);
+    if (!lockedPos) {
+      setTouchDown(false);
+      setCardZIndex(zIndex[id]);
+    }
   }
 
   if (positionX < 0) {
@@ -99,7 +107,8 @@ Card.defaultProps = {
   posY: undefined,
   zIndex: {},
   id: undefined,
-  hasBeenClicked: () => {}
+  hasBeenClicked: () => {},
+  lockedPos: false,
 }
 
 Card.propTypes = {
@@ -145,7 +154,12 @@ Card.propTypes = {
   /**
    * Callback function to alert parent component if card has been clicked
    */
-  hasBeenClicked: PropTypes.func
+  hasBeenClicked: PropTypes.func,
+
+  /**
+   * Boolean for weather or not the position of the card is locked
+   */
+  lockedPos: PropTypes.bool
 }
 
 export default Card;

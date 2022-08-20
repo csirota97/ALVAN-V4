@@ -74,6 +74,7 @@ function HomeView(props) {
       {calendarEvents}
       <button onClick={() => setCalendarState(mockCalendarCall.items)} id='show-calendar-events' >show calendar events</button>
       {weatherComponent}
+      <Card name="last" lockedPos />
       <button onClick={weatherButtonClick} >trigger weather</button>
     </div>
   )
