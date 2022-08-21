@@ -48,11 +48,23 @@ const commands = {
   /**
    * temperature
    */
-  5: async () => {
-    let weatherData = '';
-    const setWeatherData = (data) => weatherData = data;
-    await serviceFactory.weatherRequest(null, setWeatherData);
-    console.log(weatherData); 
+  5: async (named_entities) => {
+    let weatherData = {};
+    const setWeatherData = (data) => {
+      console.log(data);
+      weatherData = data;
+    };
+
+    if (named_entities && named_entities.GEO) {
+      // const setWeatherData = (data) => window.speechSynthesis.speak(new SpeechSynthesisUtterance(JSON.stringify(data)));
+      await serviceFactory.weatherRequest(named_entities.GEO, setWeatherData);
+    } else {
+      await serviceFactory.weatherRequest('philadelphia', setWeatherData);
+    }
+    console.log(weatherData)
+    const resultSpeech = `It's currently ${weatherData.current.temp_f} degrees ${named_entities?.GEO ? `in ${weatherData.location.name}` : ''}`;
+    window.speechSynthesis.speak(new SpeechSynthesisUtterance(resultSpeech));
+
   },
 };
 
