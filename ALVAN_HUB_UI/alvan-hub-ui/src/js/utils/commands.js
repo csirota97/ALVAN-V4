@@ -48,11 +48,14 @@ const commands = {
   /**
    * temperature
    */
-  5: async () => {
+  5: async (named_entities) => {
     let weatherData = '';
-    const setWeatherData = (data) => weatherData = data;
+    const setWeatherData = (data) => {
+      console.log(data);
+    };
+
+    // const setWeatherData = (data) => window.speechSynthesis.speak(new SpeechSynthesisUtterance(JSON.stringify(data)));
     await serviceFactory.weatherRequest(null, setWeatherData);
-    console.log(weatherData); 
   },
 };
 

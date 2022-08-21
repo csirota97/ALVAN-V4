@@ -15,7 +15,8 @@ const serviceFactory = {
     });
     const jsonRes = await response.json();
     setResponseJson(jsonRes);
-    commands[jsonRes.tts_cd]();
+    console.log(jsonRes);
+    commands[jsonRes.tts_cd](jsonRes.named_entities);
   },
 
   calendarRequest: async () => {
