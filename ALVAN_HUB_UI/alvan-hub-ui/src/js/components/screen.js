@@ -8,6 +8,7 @@ import HomeView from './views/homeView';
 import CalendarView from './views/calendarView';
 import Card from './card';
 import GoogleSignInButton from './googleSignInButton';
+import mockCalendarCall from '../utils/mockCalendarCalls';
 
 /**
  * @return {Component} screen component
@@ -41,8 +42,8 @@ function Screen(props) {
             </div>
           </Card>
         )}
-      <Card name="Speech Recognizer" lockedWidth="400px">
-        <SpeechRecognizer></SpeechRecognizer>
+      <Card name="Speech Recognizer" lockedWidth="400px" posY={300} id={-2} zIndex={{'-2': 1000}}>
+        <SpeechRecognizer googleUser={props.googleUser}></SpeechRecognizer>
       </Card>
       <div className='view-swap-button' onClick={() => setDisplayCalendar(!displayCalendar)}>
         <h3 className='view-swap-label nonselectable'>
@@ -62,7 +63,7 @@ Screen.propTypes = {
 }
 
 Screen.defaultProps = {
-  calendarData: {items: []}
+  calendarData: {items: mockCalendarCall}
 }
 
 export default Screen;
