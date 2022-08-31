@@ -1,0 +1,23 @@
+<p style="color: green"><%= notice %></p>
+
+ID: <%= @event.id %>
+<br>
+Name: <%= @event.name %>
+<br>
+Calendar: <%= Calendar.find_by(:id => @event.calendar_id).name %>
+<br>
+Creator: <%= User.find_by(:id => @event.creator_id).name %>
+<br>
+Owner: <%= User.find_by(:id => @event.owner_id).name %>
+<br>
+Date: <%= @event.startDateTime.to_date %>
+<br>
+Status: <%= @event.status %>
+<br>
+
+<div>
+  <%= link_to "Edit this event", edit_event_path(@event) %> |
+  <%= link_to "Back to events", events_path %>
+
+  <%= button_to "Destroy this event", @event, method: :delete %>
+</div>

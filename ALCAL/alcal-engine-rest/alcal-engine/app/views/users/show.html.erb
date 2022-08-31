@@ -1,0 +1,19 @@
+<p style="color: green"><%= notice %></p>
+
+ID: <%= @user.id %>
+<br>
+Name: <%= @user.name %>
+<br>
+Calendars: 
+<br>
+<%= Calendar.where(:owner_id => @user.id).each do |calendar| %>
+  <%= calendar.name %>
+  <br>
+<% end %>
+
+<div>
+  <%= link_to "Edit this user", edit_user_path(@user) %> |
+  <%= link_to "Back to users", users_path %>
+
+  <%= button_to "Destroy this user", @user, method: :delete %>
+</div>
