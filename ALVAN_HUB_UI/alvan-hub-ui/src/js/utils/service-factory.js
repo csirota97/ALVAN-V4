@@ -34,7 +34,6 @@ const serviceFactory = {
     const response = await fetch(`${calendar_url}events/${calendar_id}.json`, {
       method: "get",
     });
-    console.log(response)
     const resJson = await response.json();
     console.log(resJson)
     setResponseJson(resJson);
