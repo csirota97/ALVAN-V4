@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+ID: <%= @calendar.id %>
+<br>
+Name: <%= @calendar.name %>
+<br>
+Owner ID: <%= @calendar.owner_id %>
+<br>
+Owner Name: <%= User.find_by(:id => @calendar.owner_id).name %>
+
+<div>
+  <%= link_to "Edit this calendar", edit_calendar_path(@calendar) %> |
+  <%= link_to "Back to calendars", calendars_path %>
+
+  <%= button_to "Destroy this calendar", @calendar, method: :delete %>
+</div>

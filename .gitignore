@@ -1,4 +1,4 @@
-/ALVAN_REST_API/venv/*
+*venv*
 /ALVAN_HUB_UI/alvan-hub-ui/node_modules/*
 /ALVAN_REST_API/.vscode/*
 !/ALVAN_REST_API/.vscode/tasks.json
