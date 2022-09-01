@@ -145,3 +145,30 @@ h1 {
   top: -100%;
   left: 0;
 }
+
+.calendar-slot-component {
+  position: absolute;
+  top: 33%;
+  width: 25%;
+  word-wrap: normal;
+  height: 100px;
+}
+
+.calendar-slot-item-component {
+  position: static;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  padding-left: 5px;
+  padding-bottom: 5px;
+  border-style: none none solid solid;
+  border-color: #9C9E9B;
+  height: fit-content;
+}
+
+.calendar-slot-item-indicator {
+  position: relative;
+  top: 0;
+  right: 0;
+  width: 10px;
+  height:10px;
+}
