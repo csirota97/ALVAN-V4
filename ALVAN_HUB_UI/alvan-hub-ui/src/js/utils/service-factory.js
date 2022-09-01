@@ -2,7 +2,10 @@ import 'babel-polyfill';
 import commands from './commands';
 import getConstants from './constants';
 
-const url = getConstants().SERVER_URL;
+const CONSTANTS = getConstants();
+
+const url = CONSTANTS.SERVER_URL;
+const calendar_url = CONSTANTS.CALENDAR_URL;
 
 const serviceFactory = {
   sendQuery: async (query, setResponseJson) => {
@@ -19,19 +22,22 @@ const serviceFactory = {
     commands[jsonRes.tts_cd](jsonRes.named_entities);
   },
 
-  calendarRequest: async () => {
-    const response = await fetch(url+"alvan/api/calendar", {
+  calendarRequest: async (user_id, setResponseJson) => {
+    const response = await fetch(`${calendar_url}calendars.json?owner_id=${user_id}`, {
       method: "get",
-    }).then(response => response.json());
+    });
+    const resJson = await response.json();
+    setResponseJson(resJson);
+  },
 
-    const responseString = async () => {
-      response.then((a) => {
-        console.log(a);
-        return a;
-      });
-    };
-
-    return responseString()
+  eventRequest: async (calendar_id, setResponseJson) => {
+    const response = await fetch(`${calendar_url}events/${calendar_id}.json`, {
+      method: "get",
+    });
+    console.log(response)
+    const resJson = await response.json();
+    console.log(resJson)
+    setResponseJson(resJson);
   },
 
   weatherRequest: async (location, setResponseJson) => {

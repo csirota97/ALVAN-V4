@@ -4,6 +4,7 @@ import WeatherContainer from '../weatherCardContainer';
 
 import mockCalendarCall from '../../utils/mockCalendarCalls';
 import getConstants from '../../utils/constants';
+import serviceFactory from '../../utils/service-factory';
 
 function HomeView(props) {
   const [calendarState, setCalendarState] = useState(props.calendarData.items);
@@ -51,7 +52,7 @@ function HomeView(props) {
 
   const calendarEvents = calendarState.map((event, i) =>
     <Card
-      name={event.summary.substring(0, 30)}
+      name={event.description.substring(0, 30)}
       lockedWidth="default"
       posY={i*50 + 1}
       key={`${i}${event.summary}`}
@@ -61,18 +62,52 @@ function HomeView(props) {
       hasBeenClicked={hasCalendarCardBeenClicked}
       className={'calendar-card'}
     >
-      {event.organizer.displayName}
+      {event.organizer || "Organizer"}
       <hr />
-      {event.start.date}
+      {event.startDateTime}
       <br />
-      {event.end.date}
+      {event.endDateTime}
+      <br />
+      {event.status}
     </Card>
   );
+
+  const [calendars, setCalendars] = useState([]);
+  const [events, setEvents] = useState([]);
+  const [searchForEvents, triggerSearchForEvents] = useState(false);
+  let tempEvents = events;
+  const appendEvents = (newEvents) => {
+    tempEvents = tempEvents.concat(newEvents);
+    setEvents(tempEvents)
+  }
+
+  const getCalendarData = () => {
+    setEvents([])
+    serviceFactory.calendarRequest(1, setCalendars);
+    triggerSearchForEvents(true)
+  }
+
+  useEffect(() => {
+    console.log(calendars);
+
+    if (searchForEvents) {
+      calendars.forEach(calendar => {
+        serviceFactory.eventRequest(calendar.id, appendEvents)
+      });
+      triggerSearchForEvents(false);
+    }
+  });
+
+  useEffect(() => {
+    console.log(events)
+    setCalendarState(events)
+  })
 
   return (
     <div>
       {calendarEvents}
-      <button onClick={() => setCalendarState(mockCalendarCall.items)} id='show-calendar-events' >show calendar events</button>
+      <button onClick={getCalendarData} id='show-calendar-events' >show calendar events</button>
+      {/* <button onClick={() => setCalendarState(mockCalendarCall.items)} id='show-calendar-events' >show calendar events</button> */}
       {weatherComponent}
       <Card name="last" lockedPos />
       <button onClick={weatherButtonClick} >trigger weather</button>

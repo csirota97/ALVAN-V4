@@ -1,6 +1,8 @@
 class CalendarsController < ApplicationController
   before_action :set_calendar, only: %i[ show edit update destroy ]
 
+  after_action :add_headers
+
   # GET /calendars or /calendars.json
   def index
     @calendars = Calendar.all
@@ -21,6 +23,14 @@ class CalendarsController < ApplicationController
 
   # GET /calendars/1/edit
   def edit
+  end
+
+  def events
+    if params[:owner_id]
+      @calendars = Calendar.where(:owner_id => params[:owner_id].to_i)
+    end
+    @calendars
+    render json: Calendar.joins(:events)
   end
 
   # POST /calendars or /calendars.json
@@ -70,5 +80,10 @@ class CalendarsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def calendar_params
       params.fetch(:calendar, {})
+    end
+
+    def add_headers
+      response.headers['Access-Control-Allow-Origin'] = '*'
+      response.headers['Access-Control-Allow-Credentials'] = true
     end
 end

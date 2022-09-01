@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get 'events/calendar'
   get 'events/user'
+  post 'calendars/events', to: 'calendars#events'
   resources :events
   resources :calendars
   resources :users
