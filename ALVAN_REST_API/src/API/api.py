@@ -18,6 +18,7 @@ class HelloWorld(Resource):
   def get(self):
     return {"data": "Hello World"}
 
+#TODO get tensorflow working on M1 chip
 # class ALVAN(Resource):
 #   def post(self):
 #     tts_response = ''
@@ -30,12 +31,6 @@ class HelloWorld(Resource):
 #       named_entities = NEE.request(request.form['query'])['result']
 #     return {"tts_cd": tts_response, "named_entities": named_entities}
 
-class Calendar(Resource):
-  def post(self):
-    print(json.loads(request.form['auth'])['Ca'])
-    # print(request.form['auth'])
-    return {"calendar": request.form['auth']}
-
 class Weather(Resource):
   def get(self, location):
     response = weather_requestor(location).json()
@@ -43,7 +38,6 @@ class Weather(Resource):
 
 api.add_resource(HelloWorld, '/helloworld')
 # api.add_resource(ALVAN, '/alvan/api/query')
-api.add_resource(Calendar, '/alvan/api/calendar')
 api.add_resource(Weather, '/alvan/api/weather/<location>')
 
 if __name__ == '__main__':
