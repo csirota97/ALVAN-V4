@@ -3,7 +3,7 @@ from urllib import response
 from flask import Flask, request
 from flask_restful import Api, Resource
 from flask_cors import CORS
-# import machine_learning.TTW as ML_model
+import machine_learning.TTW as ML_model
 from requestors.weather_requestor import requestor as weather_requestor
 import requestors.named_entity_extractor as NEE
 import json
