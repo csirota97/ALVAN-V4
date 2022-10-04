@@ -8,7 +8,6 @@ import HomeView from './views/homeView';
 import CalendarView from './views/calendarView';
 import Card from './card';
 import GoogleSignInButton from './googleSignInButton';
-import mockCalendarCall from '../utils/mockCalendarCalls';
 
 /**
  * @return {Component} screen component
@@ -17,13 +16,16 @@ function Screen(props) {
   const [displayCalendar, setDisplayCalendar] = useState(!props.home && true);
   const [defaultWeather, setDefaultWeather] = useState('');
   const [isMenuShown, setIsMenuShown] = useState(false)
+  const [calendarData, setCalendarData] = useState([])
   const customProps = {
     defaultWeather: defaultWeather,
     setDefaultWeather: setDefaultWeather,
     render: props.render,
     forceRerender: props.forceRerender,
-    calendarData: props.calendarData
+    calendarData: calendarData,
+    setCalendarData: setCalendarData
   }
+
   const homeView = (<HomeView {...customProps} />);
   const calendarView = (<CalendarView {...customProps} />);
   const toggleMenuCard = () => setIsMenuShown(!isMenuShown);
@@ -63,7 +65,6 @@ Screen.propTypes = {
 }
 
 Screen.defaultProps = {
-  calendarData: {items: mockCalendarCall}
 }
 
 export default Screen;

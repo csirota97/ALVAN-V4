@@ -9,13 +9,12 @@ function CalendarView(props) {
   console.log(calendarData)
   const eventsByDay = { today: [], tomorrow: [], inTwoDays: [] };
 
-  // TODO: get rid of this and replace current date definition with new Date()
-  const event1Date = new Date(calendarData.items.items[2].start.date);
-
-  calendarData.items.items.forEach(event => {
-    const eventDate = new Date((new Date()).setDate(new Date(event.start.date).getDate() + 1));
+  calendarData.forEach(event => {
+    console.log(event)
+    const eventDate = new Date(event.startDateTime);
+    console.log(eventDate)
     // const currentDate = new Date();
-    const currentDate = event1Date;
+    const currentDate = new Date();
     const tomorrowDate = new Date((new Date()).setDate(currentDate.getDate() + 1));
     const dateInTwoDays = new Date((new Date()).setDate(currentDate.getDate() + 2));
 
@@ -31,6 +30,26 @@ function CalendarView(props) {
       eventDate.getMonth() === dateInTwoDays.getMonth() &&
       eventDate.getFullYear() === dateInTwoDays.getFullYear();
 
+    console.log(eventDate.getDate())
+    console.log(eventDate.getMonth())
+    console.log(eventDate.getYear())
+    console.log('--------------------')
+    console.log(currentDate.getDate())
+    console.log(currentDate.getMonth())
+    console.log(currentDate.getYear())
+    console.log('--------------------')
+    console.log(tomorrowDate.getDate())
+    console.log(tomorrowDate.getMonth())
+    console.log(tomorrowDate.getYear())
+    console.log('--------------------')
+    console.log(dateInTwoDays.getDate())
+    console.log(dateInTwoDays.getMonth())
+    console.log(dateInTwoDays.getYear())
+    console.log()
+    console.log()
+    console.log(isToday())
+    console.log(isTomorrow())
+    console.log(isInTwoDays())
     if (isToday()) {
       eventsByDay.today.push(event);
     } else if (isTomorrow()) {
@@ -48,7 +67,7 @@ function CalendarView(props) {
       {
         eventsByDay.today.map(event => (
           <CalendarSlotItemComponent
-            summary={event.summary}
+            summary={event.description}
             eventStatus={event.status}
           />
         ))
@@ -59,7 +78,7 @@ function CalendarView(props) {
       {
         eventsByDay.tomorrow.map(event => (
           <CalendarSlotItemComponent 
-            summary={event.summary}
+            summary={event.description}
             eventStatus={event.status}
           />
         ))
@@ -70,7 +89,7 @@ function CalendarView(props) {
       {
         eventsByDay.inTwoDays.map(event => (
           <CalendarSlotItemComponent
-            summary={event.summary}
+            summary={event.description}
             eventStatus={event.status}
           />))
       }

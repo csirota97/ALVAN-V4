@@ -7,7 +7,7 @@ import getConstants from '../../utils/constants';
 import serviceFactory from '../../utils/service-factory';
 
 function HomeView(props) {
-  const [calendarState, setCalendarState] = useState(props.calendarData.items);
+  const [calendarState, setCalendarState] = useState([]);
 
   const [weatherQueryTrigger, setWeatherQueryTrigger] = useState(true);
   const constants = getConstants();
@@ -73,6 +73,7 @@ function HomeView(props) {
   );
 
   const [calendars, setCalendars] = useState([]);
+  const [retry, setRetry] = useState(0);
   const [events, setEvents] = useState([]);
   const [searchForEvents, triggerSearchForEvents] = useState(false);
   let tempEvents = events;
@@ -88,7 +89,9 @@ function HomeView(props) {
   }
 
   useEffect(() => {
-    console.log(calendars);
+    if (calendars.length > 0 && !searchForEvents && events.length === 0) {
+      triggerSearchForEvents(true);
+    }
 
     if (searchForEvents) {
       calendars.forEach(calendar => {
@@ -99,8 +102,8 @@ function HomeView(props) {
   });
 
   useEffect(() => {
-    console.log(events)
     setCalendarState(events)
+    props.setCalendarData(events)
   })
 
   return (

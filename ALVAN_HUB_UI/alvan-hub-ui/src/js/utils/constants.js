@@ -7,12 +7,12 @@ const constants = {
 
 const prod = {
   SERVER_URL: 'https://server.ALVANPROJECT.com/',
-  CALENDAR_URL: 'http://localhost:3000/',
+  CALENDAR_URL: 'http://localhost:3001/',
 };
 
 const dev = {
   SERVER_URL: 'http://localhost:5001/',
-  CALENDAR_URL: 'http://localhost:3000/',
+  CALENDAR_URL: 'http://localhost:3001/',
 };
 
 const getConstants = () => {
