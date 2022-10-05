@@ -1,3 +1,11 @@
+:root {
+  --background: #2D2D2D;
+  --clock-color: #9C9E9B;
+  --emphasis: #606060;
+  --secondary-emphasis: #aeaeae;
+  --card-blue: #0EADFF;
+}
+
 .completed-status-icon {
   margin-top: 5px;
   margin-right: 10px;
@@ -18,10 +26,36 @@
 .center {
   position: relative;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, 50%);
+  left: -10px;
 }
 
 .error-text {
   color: red;
+}
+
+.button {
+  height: fit-content;
+  width: fit-content;
+  padding: 5px;
+  margin: 5px;
+  display: inline-block;
+  border-radius: 3px;
+}
+
+.emphasis {
+  background-color: var(--clock-color);
+}
+
+.secondary {
+  background-color: var(--secondary-emphasis);
+}
+
+.footer {
+  position: relative;
+  bottom: 12px;
+}
+
+.card-content {
+  min-height: fit-content;
+  margin: 10px;
 }

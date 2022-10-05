@@ -35,6 +35,34 @@ function Screen(props) {
     setListOptions(listOptionsCopy)
   };
 
+  const newTaskDialogFooter = (
+    <div className='footer'>
+      <div
+        className='create-button emphasis button'
+        onClick={() => {
+          if(newTaskName) {
+            console.log(`Make call to create new task: "${newTaskName}" on current list`)
+            setIsNewTaskDialogShown(false);
+          } else {
+            setShowNewTaskErrorText(true);
+          }
+          setNewTaskName('');
+        }}
+        >
+        Create Task
+      </div>
+      <div
+        className='close-button secondary button' 
+        onClick={() => {
+          setIsNewTaskDialogShown(false);
+          setNewTaskName('');
+        }}
+        >
+        Close
+      </div>
+    </div>
+  );
+
   return (
     <div className="screen-container">
       <Clock />
@@ -46,35 +74,21 @@ function Screen(props) {
         </Card>
       )}
       {isNewTaskDialogShown && (
-        <div id='new-task-dialog' className='center'>
-          <Card name="New Task" className="front" lockedPos lockedWidth="400px" id={-2} zIndex={{ '-2': 10000000 }} posX={0} posY={-50}>          
-            <label for="lname">New Task</label><br/>
-            <input 
-              type="text" 
-              id="lname" 
-              name="lname" 
-              onChange={(event) =>{
-                if (showNewTaskErrorText) {
-                  setShowNewTaskErrorText(false)
-                }
-                setNewTaskName(event);
-              }}/><br/>
-              {showNewTaskErrorText && <div className='error-text'>A Name Must Be Entered To Create A New Task</div>}
-            <div
-              className='create-button button'
-              onClick={() => {
-                if(newTaskName) {
-                  console.log('Make call to create new task on current list')
-                  setIsNewTaskDialogShown(false);
-                } else {
-                  setShowNewTaskErrorText(true);
-                }
-              }}
-            >
-              Create Task
-            </div>
-            <div className='close-button button' onClick={() => setIsNewTaskDialogShown(false)}>
-              Close
+        <div id='new-task-dialog' className='center'>{console.log(window.innerWidth)}
+          <Card name="New Task" className="front" lockedPos lockedWidth={`${window.innerWidth}px`} id={-2} zIndex={{ '-2': 2000 }} posX='5%' posY="50%" footer={newTaskDialogFooter}>          
+            <div className='card-content'>
+              <label for="lname">New Task</label><br/>
+              <input 
+                type="text" 
+                id="lname" 
+                name="lname" 
+                onChange={(event) =>{
+                  if (showNewTaskErrorText) {
+                    setShowNewTaskErrorText(false)
+                  }
+                  setNewTaskName(event.target.value);
+                }}/><br/>
+                {showNewTaskErrorText && <div className='error-text'>A Name Must Be Entered To Create A New Task</div>}
             </div>
           </Card>
         </div>

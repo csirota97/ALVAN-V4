@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 
 function Card (props) {
-  const {name, children, lockedWidth, posX, posY, zIndex, hasBeenClicked, lockedPos, id} = props;
+  const {name, children, lockedWidth, posX, posY, zIndex, hasBeenClicked, lockedPos, id, footer} = props;
 
-  const [positionX, setPositionX] = useState(posX ? posX + 0 : 0);
+  const [positionX, setPositionX] = useState(posX ? posX : 0);
   const [positionY, setPositionY] = useState(posY ? posY + 110 : 110);
   const [mouseDown, setMouseDown] = useState(false);
   const [mouseDownPosX, setMouseDownPosX] = useState(0);
@@ -96,6 +96,20 @@ function Card (props) {
     <div className="padding">
       {children}
     </div>
+
+    {footer && 
+    
+    <div className="card-footer flipped">
+      <div className="padding">
+        <div className="flipped footer-content">
+          {footer}
+        </div>
+      </div>
+      <div className="card-divider"></div>
+      <div className="angle-absolute">
+        <div className="card-divider-angle"></div>
+      </div>
+    </div>}
   </div>);
 };
 

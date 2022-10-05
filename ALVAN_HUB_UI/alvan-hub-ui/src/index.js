@@ -16,7 +16,7 @@ ReactDOM.render(
     <BrowserRouter>
       <Routes>
         <Route path="ALVAN-V4" element={<AListApp />} />
-        <Route path="ALVAN-V4/ALVAN-V4" element={<AListApp />} />
+        <Route path="ALVAN-V4/ALVAN-V4" element={<App />} />
         <Route path="ALVAN-V4/expenses" element={<AListApp />} />
         <Route path="expenses" element={<AListApp />} />
       </Routes>
