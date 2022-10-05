@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import logo from '../../resources/images/ALVAN_LOGO_SMALL.png';
-import logo2 from '../../resources/images/ALVAN_LOGO_SMALL_BLACK.png';
 import Clock from './clock';
 import SpeechRecognizer from './speechRecognizer.js';
 import PropTypes from 'prop-types';
@@ -8,6 +6,7 @@ import HomeView from './views/homeView';
 import CalendarView from './views/calendarView';
 import Card from './card';
 import GoogleSignInButton from './googleSignInButton';
+import Logo from './logo';
 
 /**
  * @return {Component} screen component
@@ -33,10 +32,7 @@ function Screen(props) {
   return (
     <div className="screen-container">
       <Clock />
-      <div onClick={toggleMenuCard} onTouchTap={toggleMenuCard}>
-        <img className='logo' alt="logo" src={logo}></img>
-        <img className='logo-back' alt="logo back" src={logo2}></img>  
-      </div>
+      <Logo toggleMenuCard={toggleMenuCard} />
       {isMenuShown && (
           <Card name="Settings" className="front" lockedPos lockedWidth="400px" id={-1} zIndex={{ '-1': 2000 }} posX={window.innerWidth - 410} posY={-50}>
             <div>

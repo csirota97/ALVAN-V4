@@ -1,0 +1,66 @@
+:root {
+  --card-header: #5A6060;
+  --card-background: #9C9E9B;
+  --card-text: #D8C197;
+  --card-blue: #0EADFF;
+  --background: #2D2D2D;
+  --black: #000000;
+}
+
+.dropdown-selector {
+  width: fit-content;
+}
+
+.selector-selected {
+  display: inline-block;
+}
+
+.spacer {
+  width: 15px;
+  display: inline-block;
+}
+
+.selector-caret {
+  display: inline-block;
+}
+
+.selector-dropdown-body-container {
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  // position: absolute;
+  z-index: 10000;
+  height: fit-content;
+  transition: .25s;
+}
+
+.gone {
+  height: 0;
+  transition: .25s;
+}
+
+.selector-dropdown-body {
+  background-color: var(--card-background);
+  color: #000000;
+  padding-left: 5px;
+  padding-bottom: 5px;
+  padding-right: 27px;
+}
+
+.body-up {
+  transform: translateY(-101%);
+  transition: .25s;
+}
+
+.body-down {
+  transform: translateY(0);
+  transition: .25s;
+}
+
+.caret-up {
+  transform: rotate(360deg);
+  transition: .25s;
+}
+
+.caret-down {
+  transform: rotate(180deg);
+  transition: .25s;
+}

@@ -1,0 +1,27 @@
+.completed-status-icon {
+  margin-top: 5px;
+  margin-right: 10px;
+  margin-left: 5px;
+  display: inline-block;
+}
+
+.add-new-task {
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.add-new-task-icon {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.center {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+}
+
+.error-text {
+  color: red;
+}
