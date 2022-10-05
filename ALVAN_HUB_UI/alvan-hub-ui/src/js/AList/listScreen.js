@@ -83,14 +83,18 @@ function Screen(props) {
       <Selector options={mockToDoLists} selectedOption={selectedListOption} onChange={setSelectedListOption}></Selector>
       <div className='task-list'>
         {
-          selectedListOption.tasks.map((task => 
-            <div className='task' onClick={() => updateTask(task)} onTouch={(task) => updateTask()}>
-              <div className='completed-status-icon'>
-                <ion-icon name={task.completed ? 'checkmark-circle' : 'close-circle'}></ion-icon>
+          selectedListOption.tasks.length > 0 ?
+            selectedListOption.tasks.map((task => 
+              <div className='task' onClick={() => updateTask(task)} onTouch={(task) => updateTask()}>
+                <div className='completed-status-icon'>
+                  <ion-icon name={task.completed ? 'checkmark-circle' : 'close-circle'}></ion-icon>
+                </div>
+                {task.description}
               </div>
-              {task.description}
+            )) :
+            <div>
+            No Tasks In This List<br/>Click "Add New Task" To Create A New Task
             </div>
-          ))
         }
       </div>
       <div className='add-new-task' onClick={openNewTaskDialog}>

@@ -56,6 +56,11 @@ const mockToDoLists = [
         completed: false,
       }
     ]
+  },
+  {
+    key: 4,
+    value: 'fourth to-do list',
+    tasks: []
   }
 ];
 
