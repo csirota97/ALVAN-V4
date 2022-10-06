@@ -1,6 +1,6 @@
 import Screen from './components/screen';
 import React, { useState, useEffect } from 'react';
-import { gapi } from "gapi-script";
+// import { gapi } from "gapi-script";
 import getConstants from './utils/constants';
 
 function App() {
@@ -16,13 +16,13 @@ function App() {
 
   useEffect(() => {
     const start = () => {
-      gapi.client.init({
-        clientId: CONSTANTS.CLIENT_ID,
-        scope: ""
-      })
+      // gapi.client.init({
+      //   clientId: CONSTANTS.CLIENT_ID,
+      //   scope: ""
+      // })
     };
 
-    gapi.load('client:auth2', start);
+    // gapi.load('client:auth2', start);
   });
 
   return (
