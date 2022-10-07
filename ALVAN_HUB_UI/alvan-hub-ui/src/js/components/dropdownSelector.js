@@ -22,7 +22,7 @@ function Selector (props) {
   return (
     <div className="dropdown-selector">
       <div className="selector-header" onClick={toggleOpen} onTouch={toggleOpen}>
-        <div className="default-selection selector-selected">{options.filter(option => option.key === selectedOption.key)[0].value}</div>
+        <div className="default-selection selector-selected">{options.filter(option => option.key === selectedOption.key)[0]?.value}</div>
         <div className="spacer" />
         <div className={`selector-caret ${isOpen ? 'caret-up' : 'caret-down' }`}><ion-icon name='caret-up-outline'></ion-icon></div>
       </div>
