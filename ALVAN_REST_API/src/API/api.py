@@ -82,4 +82,4 @@ api.add_resource(ToDoID, '/alvan/api/todo/<table>/<id>')
 api.add_resource(ToDo, '/alvan/api/todo/<table>')
 
 if __name__ == '__main__':
-  app.run(host='0.0.0.0', debug=True, port=5001, ssl_context=('cert.pem', 'key.pem'))
+  app.run(host='0.0.0.0', debug=True, port=5001)

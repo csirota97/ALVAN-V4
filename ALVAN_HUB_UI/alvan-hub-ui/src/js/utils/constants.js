@@ -7,7 +7,7 @@ const constants = {
 };
 
 const prod = {
-  SERVER_URL: 'https://server.ALVANPROJECT.com/',
+  SERVER_URL: 'http://localhost:5001/',
   CALENDAR_URL: 'http://localhost:3001/',
 };
 
@@ -17,7 +17,7 @@ const dev = {
 };
 
 const getConstants = () => {
-  const config = ['development', 'test'].includes(process.env.NODE_ENV) ? dev : prod;
+  const config = ['development', 'test'].includes(process.env.NODE_ENV) ? prod : prod;
   Object.assign(constants, constants, config);
   return constants;
 };

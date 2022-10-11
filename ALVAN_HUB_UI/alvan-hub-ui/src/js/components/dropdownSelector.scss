@@ -11,6 +11,23 @@
   width: fit-content;
 }
 
+.selector-header {
+  padding: 3px;
+}
+
+.selector-header:active {
+  background-color: var(--active-background);
+}
+
+.selector-option {
+  padding: 5px;
+}
+
+.selector-option:active {
+  background-color: var(--active-background);
+
+}
+
 .selector-selected {
   display: inline-block;
 }
@@ -40,9 +57,10 @@
 .selector-dropdown-body {
   background-color: var(--card-background);
   color: #000000;
-  padding-left: 5px;
+  // padding-left: 5px;
+  padding-top: 5px;
   padding-bottom: 5px;
-  padding-right: 27px;
+  // padding-right: 27px;
 }
 
 .body-up {

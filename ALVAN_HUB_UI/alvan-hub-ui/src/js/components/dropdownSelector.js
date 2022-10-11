@@ -32,7 +32,7 @@ function Selector (props) {
             {
               isOpen &&
               options.map(option => (
-                <div onClick={() => onChange(option)} onTouch={() => onChange(option)}>
+                <div onClick={() => onChange(option)} onTouch={() => onChange(option)} className={"selector-option"}>
                   {option.value}
                 </div>
               ))

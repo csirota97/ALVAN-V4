@@ -7,6 +7,7 @@ import mockToDoLists from '../utils/mockToDoLists';
 import serviceFactory from '../utils/service-factory';
 import getConstants from '../utils/constants';
 import { reconstructToDoLists } from '../utils/constructToDoLists';
+import ActionCard from '../components/actionCard';
 
 const CONSTANTS = getConstants();
 
@@ -53,38 +54,24 @@ function Screen(props) {
     setListOptions(listOptionsCopy)
   };
 
-  const newTaskDialogFooter = (
-    <div className='footer'>
-      <div
-        className='create-button emphasis button'
-        onClick={() => {
-          if(newTaskName) {
-            console.log(`Make call to create new task: "${newTaskName}" on current list`)
-            serviceFactory.toDoRequest(CONSTANTS.TODO_REQUEST.NEW_EVENT, {listId: selectedListOption.key, description: newTaskName}, (res) => console.log(res));
-            // setListOptions(reconstructToDoLists());
-            window.location.reload();
-            // props.triggerListsReconstruction();
-            setIsNewTaskDialogShown(false);
-          } else {
-            setShowNewTaskErrorText(true);
-          }
-          setNewTaskName('');
-        }}
-        >
-        Create Task
-      </div>
-      <div
-        className='close-button secondary button' 
-        onClick={() => {
-          setIsNewTaskDialogShown(false);
-          setNewTaskName('');
-        }}
-        >
-        Close
-      </div>
-    </div>
-  );
-
+  const onNewTaskConfirmButtonClick = () => {
+    if(newTaskName) {
+      serviceFactory.toDoRequest(CONSTANTS.TODO_REQUEST.NEW_EVENT, {listId: selectedListOption.key, description: newTaskName}, (res) => console.log(res));
+      // setListOptions(reconstructToDoLists());
+      window.location.reload();
+      // props.triggerListsReconstruction();
+      setIsNewTaskDialogShown(false);
+    } else {
+      setShowNewTaskErrorText(true);
+    }
+    setNewTaskName('');
+  };
+  const onNewTaskCancelButtonClick = () => {
+    setIsNewTaskDialogShown(false);
+    setNewTaskName('');
+  }
+  const newTaskConfirmText = "Create Task";
+  const newTaskCancelText = "Cancel";
   return (
     <div className="screen-container">
       <Clock />
@@ -96,24 +83,25 @@ function Screen(props) {
         </Card>
       )}
       {isNewTaskDialogShown && (
-        <div id='new-task-dialog' className='center'>{console.log(window.innerWidth)}
-          <Card name="New Task" className="front" lockedPos lockedWidth={`${window.innerWidth}px`} id={-2} zIndex={{ '-2': 2000 }} posX='5%' posY="50%" footer={newTaskDialogFooter}>          
-            <div className='card-content'>
-              <label for="lname">New Task</label><br/>
-              <input 
-                type="text" 
-                id="lname" 
-                name="lname" 
-                onChange={(event) =>{
-                  if (showNewTaskErrorText) {
-                    setShowNewTaskErrorText(false)
-                  }
-                  setNewTaskName(event.target.value);
-                }}/><br/>
-                {showNewTaskErrorText && <div className='error-text'>A Name Must Be Entered To Create A New Task</div>}
-            </div>
-          </Card>
-        </div>
+        <ActionCard
+          confirmAction={onNewTaskConfirmButtonClick}
+          confirmText={newTaskConfirmText}
+          cancelAction={onNewTaskCancelButtonClick}
+          cancelText={newTaskCancelText}
+        >
+          <label for="lname">New Task</label><br/>
+          <input 
+            type="text" 
+            id="lname" 
+            name="lname" 
+            onChange={(event) =>{
+              if (showNewTaskErrorText) {
+                setShowNewTaskErrorText(false)
+              }
+              setNewTaskName(event.target.value);
+            }}/><br/>
+            {showNewTaskErrorText && <div className='error-text'>A Name Must Be Entered To Create A New Task</div>}
+        </ActionCard>
       )}
       
       {

@@ -1,8 +1,10 @@
 :root {
   --background: #2D2D2D;
+  --active-background: #504f4f;
   --clock-color: #9C9E9B;
   --emphasis: #606060;
   --secondary-emphasis: #aeaeae;
+  --active: #888888;
   --card-blue: #0EADFF;
   color: var(--clock-color);
 }
@@ -171,4 +173,8 @@ h1 {
   right: 0;
   width: 10px;
   height:10px;
+}
+
+.error-text {
+  color: red;
 }
