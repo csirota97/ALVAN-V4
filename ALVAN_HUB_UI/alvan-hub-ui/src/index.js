@@ -1,6 +1,6 @@
 import React from 'react';
 import { 
-  BrowserRouter,
+  HashRouter as Router,
   Routes,
   Route,
   
@@ -13,15 +13,15 @@ import {default as AListApp} from './js/AList/app';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <Router>
       <Routes>
-        <Route path="/" element={<AListApp />} />
-        <Route path="ALVAN-V4" element={<AListApp />} />
+        <Route path="/" element={<App />} />
+        <Route path="ALVAN-V4" element={<App />} />
+        <Route path="todoList" element={<AListApp />} />
+        <Route path="ALVAN-V4/todoList" element={<AListApp />} />
         <Route path="ALVAN-V4/ALVAN-V4" element={<App />} />
-        <Route path="ALVAN-V4/expenses" element={<AListApp />} />
-        <Route path="expenses" element={<AListApp />} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );
