@@ -53,13 +53,16 @@ class Connector:
     print(ownerId)
     if ownerId and ownerId != -1:
       self.cursor.execute(
-        'SELECT * FROM Lists WHERE OWNER={0}'.format(ownerId)
+        'SELECT * FROM Lists JOIN Events where ListId = Lists.id WHERE OWNER={0}'.format(ownerId)
       )
     else:
       print(123)
       self.cursor.execute('SELECT * FROM Lists JOIN Events where ListId = Lists.id')
 
     self.result = self.cursor.fetchall()
+    self.cursor.execute('Select * from Lists where id NOT IN (SELECT listId FROM Events)')
+    self.result.extend(self.cursor.fetchall())
+    self.result.sort(key=lambda res: res[0])
     print(self.result)
     return self
 

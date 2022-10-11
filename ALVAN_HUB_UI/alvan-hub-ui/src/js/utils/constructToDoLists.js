@@ -12,11 +12,11 @@ const constructToDoLists = (listQueryResults) => {
       listHash[row[0]] = {
         key: row[0],
         value: row[3],
-        tasks: [{
+        tasks: row.length > 4 ? [{
           id: row[4],
           description: row[6],
           completed: !!row[7],
-        }]
+        }] : []
       }
     }
   })

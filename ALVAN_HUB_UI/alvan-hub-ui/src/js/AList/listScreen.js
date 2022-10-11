@@ -16,24 +16,21 @@ const CONSTANTS = getConstants();
  */
 function Screen(props) {
   console.log(props)
-  const [isMenuShown, setIsMenuShown] = useState(false)
-  const [isNewTaskDialogShown, setIsNewTaskDialogShown] = useState(false)
-  const [listOptions, setListOptions] = useState(props.toDoLists)
-  const [selectedListOption, setSelectedListOption] = useState(props.defaultSelection)
+  const [isMenuShown, setIsMenuShown] = useState(false);
+  const [isNewTaskDialogShown, setIsNewTaskDialogShown] = useState(false);
+  const [isNewListDialogShown, setIsNewListDialogShown] = useState(false);
+  const [listOptions, setListOptions] = useState(props.toDoLists);
+  const [selectedListOption, setSelectedListOption] = useState(props.defaultSelection);
   const [newTaskName, setNewTaskName] = useState('');
+  const [newListName, setNewListName] = useState('');
   const [showNewTaskErrorText, setShowNewTaskErrorText] = useState(false);
+  const [showNewListErrorText, setShowNewListErrorText] = useState(false);
   const [initialRender, setInitialRender] = useState(true);
   const [reload, setReload] = useState(0);
   const openNewTaskDialog = () => setIsNewTaskDialogShown(true);
+  const openNewListDialog = () => setIsNewListDialogShown(true);
   const toggleMenuCard = () => setIsMenuShown(!isMenuShown);
   const triggerReload = () => setReload(reload+1);
-
-  console.log(listOptions)
-  console.log(listOptions[0])
-  console.log(props.toDoLists)
-  console.log(selectedListOption)
-  console.log(props.defaultSelection)
-
 
   const updateTask = (task) => {
     console.log(task)
@@ -72,6 +69,30 @@ function Screen(props) {
   }
   const newTaskConfirmText = "Create Task";
   const newTaskCancelText = "Cancel";
+
+  const onNewListConfirmButtonClick = () => {
+    if(newListName) {
+      serviceFactory.toDoRequest(CONSTANTS.TODO_REQUEST.NEW_LIST, {
+        ownerId: null,
+        calendarId: null,
+        listName: newListName,
+      }, (res) => console.log(res));
+      // setListOptions(reconstructToDoLists());
+      window.location.reload();
+      // props.triggerListsReconstruction();
+      setIsNewListDialogShown(false);
+    } else {
+      setShowNewListErrorText(true);
+    }
+    setNewListName('');
+  };
+  const onNewListCancelButtonClick = () => {
+    setIsNewListDialogShown(false);
+    setNewListName('');
+  }
+  const newListConfirmText = "Create List";
+  const newListCancelText = "Cancel";
+
   return (
     <div className="screen-container">
       <Clock />
@@ -92,8 +113,8 @@ function Screen(props) {
           <label for="lname">New Task</label><br/>
           <input 
             type="text" 
-            id="lname" 
-            name="lname" 
+            id="newTask" 
+            name="newTask" 
             onChange={(event) =>{
               if (showNewTaskErrorText) {
                 setShowNewTaskErrorText(false)
@@ -101,6 +122,27 @@ function Screen(props) {
               setNewTaskName(event.target.value);
             }}/><br/>
             {showNewTaskErrorText && <div className='error-text'>A Name Must Be Entered To Create A New Task</div>}
+        </ActionCard>
+      )}
+      {isNewListDialogShown && (
+        <ActionCard
+          confirmAction={onNewListConfirmButtonClick}
+          confirmText={newListConfirmText}
+          cancelAction={onNewListCancelButtonClick}
+          cancelText={newListCancelText}
+        >
+          <label for="lname">New List</label><br/>
+          <input 
+            type="text" 
+            id="newList" 
+            name="newList" 
+            onChange={(event) =>{
+              if (showNewListErrorText) {
+                setShowNewListErrorText(false)
+              }
+              setNewListName(event.target.value);
+            }}/><br/>
+            {showNewListErrorText && <div className='error-text'>A Name Must Be Entered To Create A New List</div>}
         </ActionCard>
       )}
       
@@ -128,6 +170,11 @@ function Screen(props) {
             <div className='add-new-task-icon'>
               <ion-icon name="add-circle"></ion-icon>
             </div>Add New Task
+          </div>
+          <div className='add-new-task' onClick={openNewListDialog}>
+            <div className='add-new-task-icon'>
+              <ion-icon name="add-circle"></ion-icon>
+            </div>Add New List
           </div>
         </>
       }
