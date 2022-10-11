@@ -21,8 +21,6 @@ const constructToDoLists = (listQueryResults) => {
     }
   })
 
-  console.log(listHash)
-
   const constructedListTasks = Object.keys(listHash)
     .map(function(key) {
         return listHash[key];

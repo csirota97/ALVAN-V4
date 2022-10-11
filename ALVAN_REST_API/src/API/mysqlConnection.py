@@ -57,7 +57,7 @@ class Connector:
       )
     else:
       print(123)
-      self.cursor.execute('SELECT * FROM Lists JOIN Events')
+      self.cursor.execute('SELECT * FROM Lists JOIN Events where ListId = Lists.id')
 
     self.result = self.cursor.fetchall()
     print(self.result)
