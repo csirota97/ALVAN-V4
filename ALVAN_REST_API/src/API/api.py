@@ -10,7 +10,7 @@ import json
 from mysqlConnection import Connector
 
 app = Flask(__name__)
-app.config.SERVER_NAME = "flask-api:5001"
+app.config.SERVER_NAME = "flask-api:5000"
 api = Api(app)
 CORS(app)
 
@@ -83,4 +83,4 @@ api.add_resource(ToDoID, '/alvan/api/todo/<table>/<id>')
 api.add_resource(ToDo, '/alvan/api/todo/<table>')
 
 if __name__ == '__main__':
-  app.run(host='0.0.0.0', debug=True, port=5001)
+  app.run(host='0.0.0.0', debug=True, port=5000)

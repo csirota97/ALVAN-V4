@@ -1,7 +1,7 @@
 import requests
 import testRunner as testRunner
 
-BASE = "http://127.0.0.1:5001/"
+BASE = "http://127.0.0.1:5000/"
 
 alvan_POST_request = lambda x, expected: requests.post(BASE + "alvan",x).json()["tts"] == expected
 
