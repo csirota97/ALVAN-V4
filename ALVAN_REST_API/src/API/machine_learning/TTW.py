@@ -79,7 +79,7 @@ net = tflearn.regression(net)
 model = tflearn.DNN(net)
 
 # try:
-#     model.load("training_data{}model.tflearn".format(os.sep))
+    # model.load("training_data{}model.tflearn".format(os.sep))
 # except:
 model.fit(training, output, n_epoch=4000, batch_size=8, show_metric=True)
 model.save(os.path.join("training_data","model.tflearn"))
@@ -128,8 +128,9 @@ def query(user_query, attempt=0):
             for tg in data["intents"]:
                     if tg['tag'] == tag:
                         response = tg['responses']
-            return response
-        return -1
+                        follow_up = tg['follow_up']
+            return response, follow_up
+        return -1, False
     except LookupError:
         nltk.download('punkt')
         if attempt==0:
