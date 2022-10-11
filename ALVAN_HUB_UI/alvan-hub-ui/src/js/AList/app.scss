@@ -1,16 +1,21 @@
 :root {
-  --background: #2D2D2D;
-  --clock-color: #9C9E9B;
-  --emphasis: #606060;
-  --secondary-emphasis: #aeaeae;
-  --card-blue: #0EADFF;
+  .noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+  }
 }
 
 .completed-status-icon {
-  margin-top: 5px;
+  vertical-align: baseline;
   margin-right: 10px;
-  margin-left: 5px;
   display: inline-block;
+  position: relative;
+  top: 3px;
 }
 
 .add-new-task {
@@ -23,39 +28,10 @@
   margin-right: 10px;
 }
 
-.center {
-  position: relative;
-  top: 50%;
-  left: -10px;
-}
-
-.error-text {
-  color: red;
-}
-
-.button {
-  height: fit-content;
-  width: fit-content;
+.task {
   padding: 5px;
-  margin: 5px;
-  display: inline-block;
-  border-radius: 3px;
 }
 
-.emphasis {
-  background-color: var(--clock-color);
-}
-
-.secondary {
-  background-color: var(--secondary-emphasis);
-}
-
-.footer {
-  position: relative;
-  bottom: 12px;
-}
-
-.card-content {
-  min-height: fit-content;
-  margin: 10px;
+.task:active {
+  background-color: var(--active-background);
 }

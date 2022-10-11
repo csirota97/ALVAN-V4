@@ -1,0 +1,39 @@
+.center {
+  position: relative;
+  top: 50%;
+  left: -10px;
+}
+
+.button {
+  height: fit-content;
+  width: fit-content;
+  padding: 5px;
+  margin: 5px;
+  display: inline-block;
+  border-radius: 3px;
+}
+
+.emphasis {
+  background-color: var(--clock-color);
+}
+.emphasis:active {
+  background-color: var(--active);
+}
+
+.secondary {
+  background-color: var(--secondary-emphasis);
+}
+
+.secondary:active {
+  background-color: var(--active);
+}
+
+.footer {
+  position: relative;
+  bottom: 12px;
+}
+
+.card-content {
+  min-height: fit-content;
+  margin: 10px;
+}

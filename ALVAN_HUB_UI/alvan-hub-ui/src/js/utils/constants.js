@@ -3,10 +3,11 @@ const constants = {
   LISTENER_MIC_LANG: 'en-US',
   ALVAN_MIC_TIMEOUT: 5000,
   CLIENT_ID: "470610043829-bgkch081ikasle3kkitqb1oi6f384b95.apps.googleusercontent.com",
+  TODO_REQUEST: { GET_LIST_EVENTS: 0, NEW_LIST: 1, DELETE_LIST: 2, GET_LISTS: 3, NEW_EVENT: 4, DELETE_EVENT: 5, GET_EVENTS: 6, UPDATE_EVENT: 7 },
 };
 
 const prod = {
-  SERVER_URL: 'https://server.ALVANPROJECT.com/',
+  SERVER_URL: 'http://localhost:5001/',
   CALENDAR_URL: 'http://localhost:3001/',
 };
 

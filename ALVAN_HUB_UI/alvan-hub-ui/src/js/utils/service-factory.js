@@ -64,6 +64,74 @@ const serviceFactory = {
       )
     }
   },
+
+  toDoRequest: async (requestType, params, setResponseJson) => {
+    let response = {};
+    const formData = new FormData();
+    const toDoURL = `${url}alvan/api/todo`
+    switch(requestType) {
+      case CONSTANTS.TODO_REQUEST.GET_LIST_EVENTS:
+        // console.log(formData)
+        response = await fetch(`${toDoURL}/lists/-1`, {
+          method: "GET",
+          headers: {'mode': 'no-cors'},
+        });
+        break;
+      case CONSTANTS.TODO_REQUEST.NEW_LIST:
+        formData.append('ownerId', params.ownerId);
+        formData.append('calendarId', params.calendarId);
+        formData.append('listName', params.listName);
+        // console.log(formData)
+        response = await fetch(`${toDoURL}/list`, {
+          method: "POST",
+          body: formData,
+        });
+        break;
+      case CONSTANTS.TODO_REQUEST.DELETE_LIST:
+        // code block
+        break;
+      case CONSTANTS.TODO_REQUEST.GET_LISTS:
+        // console.log(formData)
+        response = await fetch(`${toDoURL}/lists/-1`, {
+          method: "GET",
+          headers: {'mode': 'no-cors'},
+        });
+        break;
+      case CONSTANTS.TODO_REQUEST.DELETE_LIST:
+      case CONSTANTS.TODO_REQUEST.NEW_EVENT:
+        formData.append('listId', params.listId);
+        formData.append('description', params.description);
+        formData.append('completed', false);
+        response = await fetch(`${toDoURL}/event`, {
+          method: "POST",
+          body: formData,
+          headers: {'mode': 'no-cors'},
+        });
+        break;
+      case CONSTANTS.TODO_REQUEST.DELETE_EVENT:
+        break;
+      case CONSTANTS.TODO_REQUEST.GET_EVENTS:
+        response = await fetch(`${toDoURL}/events/${params.listId}`, {
+          method: "GET",
+          headers: {'Content-Type': 'application/json', 'mode': 'no-cors'},
+        });
+        return response;
+      case CONSTANTS.TODO_REQUEST.UPDATE_EVENT:
+        response = await fetch(`${toDoURL}/event/${params.eventId}`, {
+          method: "PUT",
+          body: JSON.stringify({ completed: params.completed }),
+          headers: {'Content-Type': 'application/json', 'mode': 'no-cors'},
+        });
+        break;
+      default:
+        // code block
+        break;
+    };
+
+    const resJson = await response.json();
+    // console.log(resJson)
+    setResponseJson(resJson);
+  },
 };
 
 export default serviceFactory;
