@@ -15,7 +15,8 @@ api = Api(app)
 CORS(app)
 
 #TODO replace localhost with remote DB once we figure that out
-db = Connector('localhost', 'root', '')
+db = Connector('localhost', 'alvan', 'Password1!')
+# db = Connector('localhost', 'root', '')
 
 class HelloWorld(Resource):
   def get(self):
