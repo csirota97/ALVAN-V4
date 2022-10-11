@@ -17,7 +17,7 @@ class Connector:
   def newList (self, ownerId, calendarId, listName): #CONNECTED
     # self.cursor.execute("show columns in Lists;")
     self.cursor.execute(
-      'INSERT INTO LISTS (OWNER, CALENDAR, NAME) VALUES ({0}, {1}, "{2}");'
+      'INSERT INTO Lists (OWNER, CALENDAR, NAME) VALUES ({0}, {1}, "{2}");'
       .format(ownerId, calendarId, listName)
     )
 
@@ -28,7 +28,7 @@ class Connector:
   def newEvent (self, listId, description, completed): #CONNECTED
     print(listId, description, completed)
     self.cursor.execute(
-      'INSERT INTO EVENTS (LISTID, DESCRIPTION, COMPLETED) VALUES ({0}, "{1}", {2});'
+      'INSERT INTO Events (LISTID, DESCRIPTION, COMPLETED) VALUES ({0}, "{1}", {2});'
       .format(listId, description, completed)
     )
 
@@ -53,11 +53,11 @@ class Connector:
     print(ownerId)
     if ownerId and ownerId != -1:
       self.cursor.execute(
-        'SELECT * FROM LISTS WHERE OWNER={0}'.format(ownerId)
+        'SELECT * FROM Lists WHERE OWNER={0}'.format(ownerId)
       )
     else:
       print(123)
-      self.cursor.execute('SELECT * FROM LISTS JOIN EVENTS')
+      self.cursor.execute('SELECT * FROM Lists JOIN Events')
 
     self.result = self.cursor.fetchall()
     print(self.result)
@@ -68,7 +68,7 @@ class Connector:
     if not listId and not isinstance(listId, int):
       raise ValueError('listId must be provided as an integer value')
     self.cursor.execute(
-      'SELECT * FROM EVENTS WHERE LISTID={0}'.format(listId)
+      'SELECT * FROM Events WHERE LISTID={0}'.format(listId)
     )
 
     self.result = self.cursor.fetchall()
