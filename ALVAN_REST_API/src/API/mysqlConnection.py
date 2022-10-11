@@ -41,7 +41,7 @@ class Connector:
     if not eventId or not completed:
       raise ValueError('eventId and completed must be provided')
     self.cursor.execute(
-      'UPDATE EVENTS SET COMPLETED = {0} WHERE id={1};'
+      'UPDATE Events SET COMPLETED = {0} WHERE id={1};'
       .format(str(completed), eventId)
     )
 
