@@ -1,9 +1,9 @@
 from flask import request
 from flask_restful import Resource
 from mysqlConnection import Connector
+from utils import CONSTANTS
 
-# db = Connector('localhost', 'alvan', 'Password1!')
-db = Connector('localhost', 'root', '')
+db = CONSTANTS.db
 
 
 #TODO get tensorflow working on M1 chip
