@@ -1,6 +1,7 @@
 import 'babel-polyfill';
 import commands from './commands';
 import getConstants from './constants';
+import hash from 'hash.js';
 
 const CONSTANTS = getConstants();
 
@@ -72,7 +73,7 @@ const serviceFactory = {
     switch(requestType) {
       case CONSTANTS.TODO_REQUEST.GET_LIST_EVENTS:
         // console.log(formData)
-        response = await fetch(`${toDoURL}/lists/-1`, {
+        response = await fetch(`${toDoURL}/lists/${params.id}`, {
           method: "GET",
           headers: {'mode': 'no-cors'},
         });
@@ -131,6 +132,36 @@ const serviceFactory = {
     const resJson = await response.json();
     // console.log(resJson)
     setResponseJson(resJson);
+  },
+
+  createUser: async (firstName, lastName, email, password, setResponseJson) => {
+    const formData = new FormData();
+    formData.append('firstName', firstName);
+    formData.append('lastName', lastName);
+    formData.append('email', email);
+    formData.append('passwordHash', hash.sha256().update(password+CONSTANTS.SALT).digest('hex'));
+    return await fetch(url+"alvan/api/auth/newUser", {
+      method: "POST",
+      mode: 'cors',
+      body: formData,
+    }).then(async res => res.json()).catch(e => console.log(e));
+    // console.log(response)
+    // let resJson = response;
+    
+  },
+
+  findUser: async (email, password, setResponseJson) => {
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('passwordHash', hash.sha256().update(password+CONSTANTS.SALT).digest('hex'));
+    return await fetch(url+"alvan/api/auth/login", {
+      method: "POST",
+      mode: 'cors',
+      body: formData,
+    }).then(async res => res.json()).catch(e => console.log(e));
+    // console.log(response)
+    // let resJson = response;
+    
   },
 };
 

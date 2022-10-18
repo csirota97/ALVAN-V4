@@ -8,6 +8,8 @@ import serviceFactory from '../utils/service-factory';
 import getConstants from '../utils/constants';
 import { reconstructToDoLists } from '../utils/constructToDoLists';
 import ActionCard from '../components/actionCard';
+import NewUserDialog from '../components/Cards/newUserDialog';
+import LogInDialog from '../components/Cards/logInDialog';
 
 const CONSTANTS = getConstants();
 
@@ -16,9 +18,18 @@ const CONSTANTS = getConstants();
  */
 function Screen(props) {
   console.log(props)
+  const defaultNewUser = {
+    firstNameValid: true,
+    lastNameValid: true,
+    emailValid: true,
+    passwordValid: true,
+    confirmPasswordValid: true,
+  };
   const [isMenuShown, setIsMenuShown] = useState(false);
   const [isNewTaskDialogShown, setIsNewTaskDialogShown] = useState(false);
   const [isNewListDialogShown, setIsNewListDialogShown] = useState(false);
+  const [isLogInCardShown, setIsLogInCardShown] = useState(false);
+  const [isNewUserCardShown, setIsNewUserCardShown] = useState(false);
   const [listOptions, setListOptions] = useState(props.toDoLists);
   const [selectedListOption, setSelectedListOption] = useState(props.defaultSelection);
   const [newTaskName, setNewTaskName] = useState('');
@@ -27,10 +38,15 @@ function Screen(props) {
   const [showNewListErrorText, setShowNewListErrorText] = useState(false);
   const [initialRender, setInitialRender] = useState(true);
   const [reload, setReload] = useState(0);
+  const [newUserCriteria, setNewUserCriteria] = useState(defaultNewUser);
+  const [logInUserCriteria, setLogInUserCriteria] = useState(defaultNewUser);
+  const [validationTrigger, setValidationTrigger] = useState(true);
+
   const openNewTaskDialog = () => setIsNewTaskDialogShown(true);
   const openNewListDialog = () => setIsNewListDialogShown(true);
   const toggleMenuCard = () => setIsMenuShown(!isMenuShown);
   const triggerReload = () => setReload(reload+1);
+  const revalidate = () => setValidationTrigger(!validationTrigger)
 
   const updateTask = (task) => {
     console.log(task)
@@ -73,7 +89,7 @@ function Screen(props) {
   const onNewListConfirmButtonClick = () => {
     if(newListName) {
       serviceFactory.toDoRequest(CONSTANTS.TODO_REQUEST.NEW_LIST, {
-        ownerId: null,
+        ownerId: props.userToken[0],
         calendarId: null,
         listName: newListName,
       }, (res) => console.log(res));
@@ -97,85 +113,160 @@ function Screen(props) {
     <div className="screen-container">
       <Clock />
       <Logo toggleMenuCard={toggleMenuCard} />
-      {isMenuShown && (
-        <Card name="Settings" className="front" lockedPos lockedWidth="400px" id={-1} zIndex={{ '-1': 2000 }} posX={window.innerWidth - 410} posY={-50}>
-          <div>
-          </div>
-        </Card>
-      )}
-      {isNewTaskDialogShown && (
-        <ActionCard
-          confirmAction={onNewTaskConfirmButtonClick}
-          confirmText={newTaskConfirmText}
-          cancelAction={onNewTaskCancelButtonClick}
-          cancelText={newTaskCancelText}
-        >
-          <label for="lname">New Task</label><br/>
-          <input 
-            type="text" 
-            id="newTask" 
-            name="newTask" 
-            onChange={(event) =>{
-              if (showNewTaskErrorText) {
-                setShowNewTaskErrorText(false)
-              }
-              setNewTaskName(event.target.value);
-            }}/><br/>
-            {showNewTaskErrorText && <div className='error-text'>A Name Must Be Entered To Create A New Task</div>}
-        </ActionCard>
-      )}
-      {isNewListDialogShown && (
-        <ActionCard
-          confirmAction={onNewListConfirmButtonClick}
-          confirmText={newListConfirmText}
-          cancelAction={onNewListCancelButtonClick}
-          cancelText={newListCancelText}
-        >
-          <label for="lname">New List</label><br/>
-          <input 
-            type="text" 
-            id="newList" 
-            name="newList" 
-            onChange={(event) =>{
-              if (showNewListErrorText) {
-                setShowNewListErrorText(false)
-              }
-              setNewListName(event.target.value);
-            }}/><br/>
-            {showNewListErrorText && <div className='error-text'>A Name Must Be Entered To Create A New List</div>}
-        </ActionCard>
-      )}
-      
-      {
-        selectedListOption.tasks && 
-        <>
-          <Selector options={listOptions} selectedOption={selectedListOption} onChange={setSelectedListOption}></Selector>
-          <div className='task-list'>
-            {
-              selectedListOption.tasks.length > 0 ?
-                selectedListOption.tasks.map((task => 
-                  <div className='task' onClick={() => updateTask(task)} onTouch={(task) => updateTask()}>
-                    <div className='completed-status-icon'>
-                      <ion-icon name={task.completed ? 'checkmark-circle' : 'close-circle'}></ion-icon>
+          {isMenuShown && (
+            <Card name="Settings" className="front" lockedPos lockedWidth="400px" id={-1} zIndex={{ '-1': 2000 }} posX={window.innerWidth - 410} posY={-50}>
+              <div>
+                {
+                  props.userToken ? 
+                  <>
+                  Welcome Back, {props.userToken[1]}!
+                    <div
+                      className='close-button secondary button' 
+                      onClick={() => {
+                        localStorage.setItem('userToken', undefined);
+                        props.setUserToken(null);
+                        window.location.reload();
+                      }}
+                      >
+                        Log Out
                     </div>
-                    {task.description}
-                  </div>
-                )) :
-                <div>
-                No Tasks In This List<br/>Click "Add New Task" To Create A New Task
-                </div>
-            }
-          </div>
-          <div className='add-new-task' onClick={openNewTaskDialog}>
-            <div className='add-new-task-icon'>
-              <ion-icon name="add-circle"></ion-icon>
-            </div>Add New Task
-          </div>
-          <div className='add-new-task' onClick={openNewListDialog}>
-            <div className='add-new-task-icon'>
-              <ion-icon name="add-circle"></ion-icon>
-            </div>Add New List
-          </div>
+                  </> :
+                  <>
+                    <div
+                      className='close-button secondary button' 
+                      onClick={() => {
+                        setIsMenuShown(false);
+                        setIsLogInCardShown(true);
+                        setLogInUserCriteria(defaultNewUser)
+                      }}
+                      >
+                        Log In
+                    </div><br />
+                    <div
+                      className='close-button secondary button' 
+                      onClick={() => {
+                        setIsMenuShown(false);
+                        setIsNewUserCardShown(true);
+                        setNewUserCriteria(defaultNewUser)
+                      }}
+                      >
+                        New User
+                    </div>
+                  </>
+                }
+              </div>
+            </Card>
+          )}
+          {isNewUserCardShown && (
+            <ActionCard
+
+              confirmAction={() => {revalidate()}}
+              confirmText={"Add User"}
+              cancelAction={() => {setIsNewUserCardShown(false)}}
+              cancelText={"Cancel"}
+            >
+              <NewUserDialog userInfo={newUserCriteria} setUserInfo={setNewUserCriteria} onSubmit={(token) => {setIsNewUserCardShown(false); props.setUserToken(token)}} validationTrigger={validationTrigger} />
+            </ActionCard>
+          )}
+          {isLogInCardShown && (
+            <ActionCard
+
+              confirmAction={() => {revalidate()}}
+              confirmText={"Log In"}
+              cancelAction={() => {setIsLogInCardShown(false)}}
+              cancelText={"Cancel"}
+            >
+              <LogInDialog userInfo={logInUserCriteria} setUserInfo={setLogInUserCriteria} onSubmit={(token) => {setIsLogInCardShown(false); props.setUserToken(token)}} validationTrigger={validationTrigger} />
+            </ActionCard>
+          )}
+          {isNewTaskDialogShown && (
+            <ActionCard
+              confirmAction={onNewTaskConfirmButtonClick}
+              confirmText={newTaskConfirmText}
+              cancelAction={onNewTaskCancelButtonClick}
+              cancelText={newTaskCancelText}
+              name="New Task"
+            >
+              <label for="newTask">New Task</label><br/>
+              <input 
+                type="text" 
+                id="newTask" 
+                name="newTask" 
+                onChange={(event) =>{
+                  if (showNewTaskErrorText) {
+                    setShowNewTaskErrorText(false)
+                  }
+                  setNewTaskName(event.target.value);
+                }}/><br/>
+                {showNewTaskErrorText && <div className='error-text'>A Name Must Be Entered To Create A New Task</div>}
+            </ActionCard>
+          )}
+          {isNewListDialogShown && (
+            <ActionCard
+              confirmAction={onNewListConfirmButtonClick}
+              confirmText={newListConfirmText}
+              cancelAction={onNewListCancelButtonClick}
+              cancelText={newListCancelText}
+              name="New List"
+            >
+              <label for="newList">New List</label><br/>
+              <input 
+                type="text" 
+                id="newList" 
+                name="newList" 
+                onChange={(event) =>{
+                  if (showNewListErrorText) {
+                    setShowNewListErrorText(false)
+                  }
+                  setNewListName(event.target.value);
+                }}
+              /><br/>
+                {showNewListErrorText && <div className='error-text'>A Name Must Be Entered To Create A New List</div>}
+            </ActionCard>
+          )}
+          
+      {
+        props.unloaded ? <></> : 
+        <>
+          {
+            listOptions && listOptions.length > 0 ? selectedListOption.tasks && 
+            <>
+              <Selector options={listOptions} selectedOption={selectedListOption} onChange={setSelectedListOption}></Selector>
+              <div className='task-list'>
+                {
+                  selectedListOption.tasks.length > 0 ?
+                    selectedListOption.tasks.map((task => 
+                      <div className='task' onClick={() => updateTask(task)} onTouch={(task) => updateTask()}>
+                        <div className='completed-status-icon'>
+                          <ion-icon name={task.completed ? 'checkmark-circle' : 'close-circle'}></ion-icon>
+                        </div>
+                        {task.description}
+                      </div>
+                    )) :
+                    <div>
+                    No Tasks In This List<br/>Click "Add New Task" To Create A New Task
+                    </div>
+                }
+              </div>
+              <div className='add-new-task' onClick={openNewTaskDialog}>
+                <div className='add-new-task-icon'>
+                  <ion-icon name="add-circle"></ion-icon>
+                </div>Add New Task
+              </div>
+              <div className='add-new-task' onClick={openNewListDialog}>
+                <div className='add-new-task-icon'>
+                  <ion-icon name="add-circle"></ion-icon>
+                </div>Add New List
+              </div>
+            </>
+            : 
+            <div className='add-new-task' onClick={openNewListDialog}>
+              <div className='add-new-task-icon'>
+                <ion-icon name="add-circle"></ion-icon>
+              </div>Add New List
+            </div>
+
+          }
         </>
       }
     </ div>

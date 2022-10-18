@@ -12,6 +12,7 @@ function App() {
   const [constructedToDoLists, setConstructedToDoLists] = useState(null);
   const [reconstructTrigger, setReconstructTrigger] = useState(false);
   const CONSTANTS = getConstants();
+  const [userToken, setUserToken] = useState(localStorage.getItem('userToken') === 'undefined' || localStorage.getItem('userToken') == null ? undefined : localStorage.getItem('userToken').split(','));
 
   useEffect(() => {
     if (reconstructTrigger) {
@@ -25,11 +26,12 @@ function App() {
 
   useEffect(() => {
     // console.log(1,1)
-    if (!lists && !constructedToDoLists) {
+    if (!lists && !constructedToDoLists && userToken) {
       // console.log(2,2)
-      serviceFactory.toDoRequest(CONSTANTS.TODO_REQUEST.GET_LIST_EVENTS, null, setLists);
+      console.log(userToken);
+      serviceFactory.toDoRequest(CONSTANTS.TODO_REQUEST.GET_LIST_EVENTS, {id: userToken[0]}, setLists);
     }
-    else if (lists && !constructedToDoLists) {
+    else if (lists && !constructedToDoLists && userToken) {
       // console.log(3,3)
       // console.log(lists)
 
@@ -45,9 +47,15 @@ function App() {
   console.log(constructedToDoLists[0])
 
   return (
-    lists && constructedToDoLists &&
-    <Screen toDoLists={constructedToDoLists} defaultSelection={constructedToDoLists[0]} triggerListsReconstruction={() => setReconstructTrigger(true)}>
-    </Screen>
+    (lists && constructedToDoLists || !userToken) &&
+    <Screen
+      toDoLists={constructedToDoLists}
+      defaultSelection={constructedToDoLists ? constructedToDoLists[0] : undefined}
+      triggerListsReconstruction={() => setReconstructTrigger(true)}
+      userToken={userToken}
+      setUserToken={setUserToken}
+      unloaded={!lists || !constructedToDoLists}
+    />
   );
 }
 

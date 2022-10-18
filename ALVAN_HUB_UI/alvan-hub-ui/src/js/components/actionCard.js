@@ -22,7 +22,7 @@ const ActionCard = (props) => {
 
   return (
     <div id='new-task-dialog' className='center'>
-      <Card name="New Task" className="front" lockedPos lockedWidth={`${window.innerWidth}px`} id={-2} zIndex={{ '-2': 2000 }} posX='5%' posY="50%" footer={newTaskDialogFooter}>          
+      <Card name={props.name} className="front" lockedPos lockedWidth={`${window.innerWidth}px`} id={-2} zIndex={{ '-2': 2000 }} posX='5%' posY="50%" footer={newTaskDialogFooter}>          
         <div className='card-content'>
           {props.children}
         </div>
@@ -30,5 +30,10 @@ const ActionCard = (props) => {
     </div>
   )
 }
+
+Card.defaultProps = {
+  name: 'Action Card',
+}
+
 
 export default ActionCard;
