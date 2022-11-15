@@ -20,6 +20,16 @@ def newEvent (self, listId, description, completed): #CONNECTED
   return self
 
 
+def deleteEvent (self, eventId): #CONNECTED
+  self.cursor.execute(
+    'Delete from Events where id={0};'
+    .format(eventId)
+  )
+
+  self.result = self.cursor.fetchall()
+  return self
+
+
 def updateEvent (self, eventId, completed):
   print(eventId, completed)
   if not eventId or not completed:

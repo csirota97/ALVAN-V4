@@ -27,6 +27,9 @@ class Connector:
   def updateEvent (self, eventId, completed): #CONNECTED
     return todo.updateEvent(self, eventId, completed)
 
+  def deleteEvent (self, eventId): 
+    return todo.deleteEvent(self, eventId)
+
   def getLists(self, ownerId): #CONNECTED
     return todo.getLists(self, ownerId)
 

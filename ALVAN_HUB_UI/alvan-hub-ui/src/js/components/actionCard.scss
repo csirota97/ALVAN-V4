@@ -11,6 +11,7 @@
   margin: 5px;
   display: inline-block;
   border-radius: 3px;
+  filter: drop-shadow(-1px 1px 1px #121212);
 }
 
 .emphasis {
@@ -37,4 +38,23 @@
   min-height: fit-content;
   margin: 10px;
   margin-bottom: 50px;
+}
+
+.action-card-background {
+  background-color: transparent;
+  z-index: 1500;
+  position: absolute;
+  top: 0%;
+  bottom: 0%;
+  left: 0%;
+  right: 0%;
+}
+
+.action-card {
+  z-index: 2000;
+  filter: drop-shadow(-2px 2px 2px #121212);
+}
+
+.button-spacer {
+  background-color: transparent;
 }

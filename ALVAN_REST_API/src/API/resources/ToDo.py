@@ -1,3 +1,4 @@
+from urllib import response
 from flask import request
 from flask_restful import Resource
 from utils import CONSTANTS
@@ -18,6 +19,17 @@ class ToDo(Resource):
 
 
 class ToDoID(Resource):
+  def delete(self, table, id):
+    response = {"error": 404}
+
+    if table.lower() == 'list':
+      print(id)
+    elif table.lower() == 'event':
+      response = {'events': db.deleteEvent(int(id)).result}
+
+    return response
+
+
   def get(self, table, id):
     response = {"error": 404}
 

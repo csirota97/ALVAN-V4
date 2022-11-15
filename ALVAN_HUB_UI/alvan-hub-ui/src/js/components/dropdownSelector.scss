@@ -4,7 +4,9 @@
   --card-text: #D8C197;
   --card-blue: #0EADFF;
   --background: #2D2D2D;
+  --text-color: #1e1e1e;
   --black: #000000;
+  --selector-head: #797878;
 }
 
 .dropdown-selector {
@@ -12,7 +14,12 @@
 }
 
 .selector-header {
-  padding: 3px;
+  padding: 4px 10px;
+  border-radius: 10px;
+  background-color: var(--selector-head);
+  color: var(--text-color);
+  width: fit-content;
+  filter: drop-shadow(-2px 2px 2px #121212);
 }
 
 .selector-header:active {
@@ -21,11 +28,17 @@
 
 .selector-option {
   padding: 5px;
+  color: var(--text-color);
+}
+
+.selector-option-non-final {
+  border: 1px var(--selector-head);
+  border-style: none none solid none;
 }
 
 .selector-option:active {
   background-color: var(--active-background);
-
+  color: var(--card-background);
 }
 
 .selector-selected {
@@ -42,6 +55,7 @@
 }
 
 .selector-dropdown-body-container {
+  margin-top: 3px;
   clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
   // position: absolute;
   z-index: 10000;
@@ -61,10 +75,11 @@
   padding-top: 5px;
   padding-bottom: 5px;
   // padding-right: 27px;
+  border-radius: 10px;
 }
 
 .body-up {
-  transform: translateY(-101%);
+  transform: translateY(-105%);
   transition: .25s;
 }
 

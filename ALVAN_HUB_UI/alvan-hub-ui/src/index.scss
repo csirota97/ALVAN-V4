@@ -7,6 +7,11 @@
   --active: #888888;
   --card-blue: #0EADFF;
   color: var(--clock-color);
+  user-select: none;
+}
+
+html, body {
+  max-width: 100%;
 }
 
 body {
@@ -25,16 +30,20 @@ h1 {
   top: 10px;
   right: 10px;
   z-index: 100;
+
+  // filter: drop-shadow(-4px 4px 4px black);
 }
 .logo-back {
   z-index: 99;
   position: absolute;
   top: 10px;
   right: 10px;
+  filter: drop-shadow(-2px 2px 2px #121212);
 }
 
 .clock {
   color: var(--clock-color);
+  filter: drop-shadow(-2px 2px 2px #121212);
 }
 
 .nonselectable {

@@ -110,6 +110,12 @@ const serviceFactory = {
         });
         break;
       case CONSTANTS.TODO_REQUEST.DELETE_EVENT:
+        console.log('delete');
+        response = await fetch(`${toDoURL}/event/${params.eventId}`, {
+          method: "delete",
+          body: formData,
+          headers: {'mode': 'no-cors'},
+        });
         break;
       case CONSTANTS.TODO_REQUEST.GET_EVENTS:
         response = await fetch(`${toDoURL}/events/${params.listId}`, {

@@ -48,11 +48,11 @@ const NewUserDialog = (props) => {
   return (
     <>
       {results.result === 'already exists' ? <div className='error-text'>This user already exists</div> : <><br /></>}
-      <label for="newList">First Name</label><br/>
+      <label for="firstName">First Name</label><br/>
       <input 
         type="text" 
-        id="fname" 
-        name="fname" 
+        id="firstName" 
+        name="firstName" 
         onChange={(event) => {setUserInfo({
           ...userInfo,
           firstName: event.target.value,
@@ -60,11 +60,11 @@ const NewUserDialog = (props) => {
         })}}
       />
       {userInfo.firstNameValid ? <><br /><br /></> : <div className='error-text'>This value can not be blank</div>}
-      <label for="newList">Last Name</label><br/>
+      <label for="lastName">Last Name</label><br/>
       <input 
         type="text" 
-        id="newList" 
-        name="newList" 
+        id="lastName" 
+        name="lastName" 
         onChange={(event) => {setUserInfo({
           ...userInfo,
           lastName: event.target.value,
@@ -72,11 +72,11 @@ const NewUserDialog = (props) => {
         })}}
       />
       {userInfo.lastNameValid ? <><br /><br /></> : <div className='error-text'>This value can not be blank</div>}
-      <label for="newList">Email</label><br/>
+      <label for="emailNew">Email</label><br/>
       <input 
         type="email" 
-        id="newList" 
-        name="newList" 
+        id="emailNew" 
+        name="emailNew" 
         onChange={(event) => {setUserInfo({
           ...userInfo,
           email: event.target.value,
@@ -84,11 +84,11 @@ const NewUserDialog = (props) => {
         })}}
       />
       {userInfo.emailValid ? <><br /><br /></> : <div className='error-text'>Please enter a valid email address</div>}
-      <label for="newList">Password</label><br/>
+      <label for="passwordNew">Password</label><br/>
       <input 
-        type="text" 
-        id="newList" 
-        name="newList" 
+        type="password" 
+        id="passwordNew" 
+        name="passwordNew" 
         onChange={(event) => {setUserInfo({
           ...userInfo,
           password: event.target.value,
@@ -96,11 +96,11 @@ const NewUserDialog = (props) => {
         })}}
       />
       {userInfo.passwordValid ? <><br /><br /></> : <div className='error-text'>Password must be at least 4 characters long and contain no spaces</div>}
-      <label for="newList">Confirm Password</label><br/>
+      <label for="confirmPassword">Confirm Password</label><br/>
       <input 
-        type="text" 
-        id="newList" 
-        name="newList" 
+        type="password" 
+        id="confirmPassword" 
+        name="confirmPassword" 
         onChange={(event) => {setUserInfo({
           ...userInfo,
           confirmPassword: event.target.value,

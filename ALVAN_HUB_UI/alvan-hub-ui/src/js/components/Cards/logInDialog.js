@@ -40,11 +40,11 @@ const LogInDialog = (props) => {
   return (
     <>
       {results.result === 'Incorrect Email or Password' ? <div className='error-text'>Incorrect Email or Password</div> : <><br /></>}
-      <label for="newList">Email</label><br/>
+      <label for="email">Email</label><br/>
       <input 
         type="email" 
-        id="newList" 
-        name="newList" 
+        id="email" 
+        name="email" 
         onChange={(event) => {setUserInfo({
           ...userInfo,
           email: event.target.value,
@@ -52,11 +52,11 @@ const LogInDialog = (props) => {
         })}}
       />
       {userInfo.emailValid ? <><br /><br /></> : <div className='error-text'>Please enter a valid email address</div>}
-      <label for="newList">Password</label><br/>
+      <label for="password">Password</label><br/>
       <input 
-        type="text" 
-        id="newList" 
-        name="newList" 
+        type="password" 
+        id="password" 
+        name="password" 
         onChange={(event) => {setUserInfo({
           ...userInfo,
           password: event.target.value,

@@ -8,6 +8,9 @@
               user-select: none; /* Non-prefixed version, currently
                                     supported by Chrome, Edge, Opera and Firefox */
   }
+
+  --task-hover: #797878;
+  --text-color: #1e1e1e;
 }
 
 .completed-status-icon {
@@ -30,8 +33,46 @@
 
 .task {
   padding: 5px;
+  padding-right: 30px;
+  border-radius: 10px;
+  margin: 5px 10px 5px 10px;
+  background-color: var(--task-hover);
+  box-shadow: 3px;
+  filter: drop-shadow(-2px 2px 2px #121212);
+  color: var(--text-color);
+}
+
+.task-settings-icon {
+
+  display: inline;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-40%);
 }
 
 .task:active {
   background-color: var(--active-background);
+}
+
+.task-list {
+  max-height:10%;
+  overflow-y:auto;
+}
+
+.settings-wrapper {
+  transition: .5s;
+  transition-timing-function: ease-in-out;
+  transform-origin: right bottom;
+  position: relative;
+  z-index: 1;
+  top:-40px;
+}
+
+.settings-closing {
+  scale: 0;
+}
+
+.settings-opening {
+  scale: 1;
 }
