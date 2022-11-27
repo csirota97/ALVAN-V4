@@ -44,6 +44,7 @@ function App() {
   })
 
   const findLocalKey = (listOfLists, localObject) => {
+    if (!localObject || !localObject.key) return undefined;
     console.log(listOfLists.filter(list => list.key === localObject.key)[0])
     return listOfLists.filter(list => list.key === localObject.key)[0]
   }
