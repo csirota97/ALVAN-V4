@@ -43,14 +43,33 @@ function App() {
     }
   })
 
-  if(constructedToDoLists)
-  console.log(constructedToDoLists[0])
+  const findLocalKey = (listOfLists, localObject) => {
+    console.log(listOfLists.filter(list => list.key === localObject.key)[0])
+    return listOfLists.filter(list => list.key === localObject.key)[0]
+  }
+
+  let defaultSelectedList = undefined;
+  if(constructedToDoLists) {
+    console.log(constructedToDoLists[0], 'bazingaroni')
+    defaultSelectedList = constructedToDoLists[0];
+    const currentLocalSelection = JSON.parse(localStorage.getItem('currentListSelection'));
+    const localKey = findLocalKey(constructedToDoLists, currentLocalSelection)
+    console.log(111)
+    if (currentLocalSelection && localKey) {
+      console.log(222, localKey)
+      defaultSelectedList = localKey
+    } else {
+    console.log(333)
+
+      localStorage.setItem('currentListSelection', JSON.stringify(constructedToDoLists[0]))
+    }
+  }
 
   return (
     (lists && constructedToDoLists || !userToken) &&
     <Screen
       toDoLists={constructedToDoLists}
-      defaultSelection={constructedToDoLists ? constructedToDoLists[0] : undefined}
+      defaultSelection={defaultSelectedList}
       triggerListsReconstruction={() => setReconstructTrigger(true)}
       userToken={userToken}
       setUserToken={setUserToken}

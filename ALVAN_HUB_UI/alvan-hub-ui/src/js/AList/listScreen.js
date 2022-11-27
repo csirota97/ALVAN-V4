@@ -59,6 +59,12 @@ function Screen(props) {
       setSettingsCardClasses('settings-wrapper settings-opening');
     }
   };
+
+  const onListSelectorChange = (newList) => {
+    console.log(newList)
+    localStorage.setItem('currentListSelection', JSON.stringify(newList))
+    return setSelectedListOption(newList)
+  }
   
   const openNewTaskDialog = () => setIsNewTaskDialogShown(true);
   const openNewListDialog = () => setIsNewListDialogShown(true);
@@ -309,7 +315,7 @@ function Screen(props) {
       <ListBody
         listOptions={listOptions}
         selectedListOption={selectedListOption}
-        setSelectedListOption={setSelectedListOption}
+        setSelectedListOption={onListSelectorChange}
         isMenuShown={isMenuShown}
         isNewTaskDialogShown={isNewTaskDialogShown}
         isNewListDialogShown={isNewListDialogShown}
