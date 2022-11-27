@@ -17,124 +17,49 @@ class Connector:
 
     self.cursor = self.connection.cursor()
 
+  def __catchDBError__(self, serviceCall, args):
+    try:
+      return serviceCall(self, *args)
+    except mysql.connector.errors.DatabaseError:
+      self.connection = mysql.connector.connect(
+        host=self.host,
+        user=self.user,
+        password=self.password,
+        database="alvandb"
+      )
+      self.connection.autocommit = True
+      self.cursor = self.connection.cursor()
+      return serviceCall(self, *args)
+
   #----------------------------------------------------------------
   # To Do List
   #----------------------------------------------------------------
 
   def newList (self, ownerId, calendarId, listName): #CONNECTED
-    try:
-      return todo.newList(self,ownerId,calendarId, listName)
-    except mysql.connector.errors.DatabaseError:
-      self.connection = mysql.connector.connect(
-        host=self.host,
-        user=self.user,
-        password=self.password,
-        database="alvandb"
-      )
-      self.connection.autocommit = True
-      self.cursor = self.connection.cursor()
-      return todo.newList(self,ownerId,calendarId, listName)
-
+    return self.__catchDBError__(todo.newList, [ownerId, calendarId, listName])
 
   def newEvent (self, listId, description, completed): #CONNECTED
-    try:
-      return todo.newEvent(self, listId, description, completed)
-    except mysql.connector.errors.DatabaseError:
-      self.connection = mysql.connector.connect(
-        host=self.host,
-        user=self.user,
-        password=self.password,
-        database="alvandb"
-      )
-      self.connection.autocommit = True
-      self.cursor = self.connection.cursor()
-      return todo.newEvent(self, listId, description, completed)
+    return self.__catchDBError__(todo.newEvent, [listId, description, completed])
 
   def updateEvent (self, eventId, completed): #CONNECTED
-    try:
-      return todo.updateEvent(self, eventId, completed)
-    except mysql.connector.errors.DatabaseError:
-      self.connection = mysql.connector.connect(
-        host=self.host,
-        user=self.user,
-        password=self.password,
-        database="alvandb"
-      )
-      self.connection.autocommit = True
-      self.cursor = self.connection.cursor()
-      return todo.updateEvent(self, eventId, completed)
+    return self.__catchDBError__(todo.updateEvent, [eventId, completed])
 
   def deleteEvent (self, eventId):
-    try:
-      return todo.deleteEvent(self, eventId)
-    except mysql.connector.errors.DatabaseError:
-      self.connection = mysql.connector.connect(
-        host=self.host,
-        user=self.user,
-        password=self.password,
-        database="alvandb"
-      )
-      self.connection.autocommit = True
-      self.cursor = self.connection.cursor()
-      return todo.deleteEvent(self, eventId)
+    return self.__catchDBError__(todo.deleteEvent, [eventId])
   
   def getLists(self, ownerId): #CONNECTED
-    try:
-      return todo.getLists(self, ownerId)
-    except mysql.connector.errors.DatabaseError:
-      self.connection = mysql.connector.connect(
-        host=self.host,
-        user=self.user,
-        password=self.password,
-        database="alvandb"
-      )
-      self.connection.autocommit = True
-      self.cursor = self.connection.cursor()
-      return todo.getLists(self, ownerId)
+    return self.__catchDBError__(todo.getLists, [ownerId])
     
   def getEvents(self, listId): #CONNECTED
-    try:
-      return todo.getEvents(self, listId)
-    except mysql.connector.errors.DatabaseError:
-      self.connection = mysql.connector.connect(
-        host=self.host,
-        user=self.user,
-        password=self.password,
-        database="alvandb"
-      )
-      self.connection.autocommit = True
-      self.cursor = self.connection.cursor()
-      return todo.getEvents(self, listId)
+    return self.__catchDBError__(todo.getEvents, [listId])
 
   #----------------------------------------------------------------
   # User Authentication
   #----------------------------------------------------------------
 
   def createUser(self, firstName, lastName, email, password):
-    try:
-      return userC.createUser(self, firstName, lastName, email, password)
-    except mysql.connector.errors.DatabaseError:
-      self.connection = mysql.connector.connect(
-        host=self.host,
-        user=self.user,
-        password=self.password,
-        database="alvandb"
-      )
-      self.connection.autocommit = True
-      self.cursor = self.connection.cursor()
-      return userC.createUser(self, firstName, lastName, email, password)
+    return self.__catchDBError__(userC.createUser, [firstName, lastName, email, password])
 
   def login(self, email, password):
-    try:
-      return userC.login(self, email, password)
-    except mysql.connector.errors.DatabaseError:
-      self.connection = mysql.connector.connect(
-        host=self.host,
-        user=self.user,
-        password=self.password,
-        database="alvandb"
-      )
-      self.connection.autocommit = True
-      self.cursor = self.connection.cursor()
-      return userC.login(self, email, password)
+    return self.__catchDBError__(userC.login, [email, password])
   
