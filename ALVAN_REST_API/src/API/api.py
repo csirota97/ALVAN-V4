@@ -5,9 +5,7 @@ from flask_restful import Api, Resource
 from flask_cors import CORS
 import json
 from mysqlConnection import Connector
-from resources import Weather, ToDo, UserAuth
-
-# from resources import ALVAN
+from resources import Weather, ToDo, UserAuth, ALVAN
 
 app = Flask(__name__)
 app.config.SERVER_NAME = "flask-api:5000"
@@ -21,7 +19,7 @@ class HelloWorld(Resource):
     return {"data": "Hello World"}
 
 
-# api.add_resource(ALVAN, '/alvan/api/query')
+api.add_resource(ALVAN.ALVAN, '/alvan/api/query')
 
 api.add_resource(HelloWorld, '/helloworld')
 api.add_resource(Weather.Weather, '/alvan/api/weather/<location>')

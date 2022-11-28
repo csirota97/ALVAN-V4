@@ -1,6 +1,7 @@
 from flask import request
 from flask_restful import Resource
-import machine_learning.TTW as ML_model
+# import machine_learning.TTW as ML_model
+import machine_learning.temp_query as ML_model
 import requestors.named_entity_extractor as NEE
 
 #TODO get tensorflow working on M1 chip
