@@ -112,7 +112,6 @@ function SpeechRecognizer (props) {
         <p id='response'>
           Response: {response.tts_cd}
         </p>
-        <button onClick={() => {console.log(serviceFactory.calendarRequest(props.googleUser));}} />
       </div>
     </>
   );

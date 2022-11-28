@@ -18,7 +18,7 @@ const ListBody = (props) => {
     openNewListDialog,
     openTaskSettingsCard,
     updateTask,
-    activeTask,
+    activeTask, //task being interacted with for settings menu
     setActiveTask,
   } = props
 
