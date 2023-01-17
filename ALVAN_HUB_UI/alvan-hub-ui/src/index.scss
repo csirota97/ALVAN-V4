@@ -186,4 +186,7 @@ h1 {
 
 .error-text {
   color: red;
+  padding: 3px;
+  background-color: var(--active-background);
+  border-radius: 5px;
 }

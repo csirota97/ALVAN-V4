@@ -126,7 +126,14 @@ const serviceFactory = {
       case CONSTANTS.TODO_REQUEST.UPDATE_EVENT:
         response = await fetch(`${toDoURL}/event/${params.eventId}`, {
           method: "PUT",
-          body: JSON.stringify({ completed: params.completed }),
+          body: JSON.stringify({ completed: params.completed, inProgress: false }),
+          headers: {'Content-Type': 'application/json', 'mode': 'no-cors'},
+        });
+        break;
+      case CONSTANTS.TODO_REQUEST.EVENT_SET_IN_PROGRESS:
+        response = await fetch(`${toDoURL}/event/${params.eventId}`, {
+          method: "PUT",
+          body: JSON.stringify({ completed: false, inProgress: true }),
           headers: {'Content-Type': 'application/json', 'mode': 'no-cors'},
         });
         break;

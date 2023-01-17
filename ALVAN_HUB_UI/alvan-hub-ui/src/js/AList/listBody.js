@@ -46,7 +46,7 @@ const ListBody = (props) => {
               (<div>
                 
               {selectedListOption.tasks.map((task =>
-                task.completed ?
+                task.completed || task.inProgress ?
                   undefined :
                   <TaskRow
                     task={task}
@@ -54,6 +54,20 @@ const ListBody = (props) => {
                     openTaskSettingsCard={openTaskSettingsCard}
                     setActiveTask={setActiveTask}
                   />
+              ))}
+
+              
+              {selectedListOption.tasks.some(task => task.inProgress) && selectedListOption.tasks.some(task => !task.inProgress) ? <><br /><hr /></>:undefined}
+              {selectedListOption.tasks.some(task => task.inProgress) ? "In Progress Tasks":""}
+              {selectedListOption.tasks.map((task => 
+                task.inProgress ?
+                  <TaskRow
+                    task={task}
+                    updateTask={updateTask}
+                    openTaskSettingsCard={openTaskSettingsCard}
+                    setActiveTask={setActiveTask}
+                  /> :
+                  undefined
               ))}
 
               {selectedListOption.tasks.some(task => task.completed) && selectedListOption.tasks.some(task => !task.completed) ? <><br /><hr /></>:undefined}

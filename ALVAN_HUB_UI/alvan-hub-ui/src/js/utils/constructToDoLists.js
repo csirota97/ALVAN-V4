@@ -8,6 +8,7 @@ const constructToDoLists = (listQueryResults) => {
           id: row[4],
           description: row[6],
           completed: !!row[7],
+          inProgress: !!row[8],
         })
       } else {
         listHash[row[0]] = {
@@ -17,6 +18,7 @@ const constructToDoLists = (listQueryResults) => {
             id: row[4],
             description: row[6],
             completed: !!row[7],
+            inProgress: !!row[8],
           }] : []
         }
       }

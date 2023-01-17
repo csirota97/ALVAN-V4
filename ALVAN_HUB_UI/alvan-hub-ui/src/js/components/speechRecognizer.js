@@ -10,7 +10,7 @@ console.log(window.webkitSpeechRecognition);
 const mic = new SpeechRecognition();
 mic.interimResults = false;
 mic.continuous = true;
-console.log(mic)
+mic.timeout = 10000;
 mic.lang = 'en-US';
 
 const activatedSound = new Howl({src: '../../resources/sounds/confirm1.wav'});
@@ -27,22 +27,19 @@ function SpeechRecognizer (props) {
   useEffect(() => {
     // console.log(e);
     if (transcript.includes('Alvin') && !activated) {
-      console.log("ALVAN ACTIVATED")
       setActivated(true);
       activatedSound.play();
       // console.log("blip"); 
     } else if (activated && transcript !== "") {
-      console.log("ALVAN QUERIED")
       //query api
       console.log("Query: " + transcript);
       serviceFactory.sendQuery(transcript, setResponse);
       
       setActivated(false);  
     }
-    else {console.log("neither")}
     mic.stop();
     // console.log("RESTART");
-  }, [transcript]);
+  }, [transcript])
 
   useEffect(() => {
     var context = new AudioContext();
@@ -75,10 +72,6 @@ function SpeechRecognizer (props) {
   useEffect(() => {
     if (isListening) {
       mic.start();
-      mic.onspeechend = () => {
-        console.log('done talking')
-        mic.stop()
-      }
       mic.onend = () => {
         // console.log('continue');
         mic.start();
@@ -95,14 +88,11 @@ function SpeechRecognizer (props) {
 
     mic.onresult = (event) => {
       const resultsArray = Array.from(event.results);
-      const transcript = resultsArray
-        .map(result => result[0])
-        .map(result => result.transcript)[resultsArray.length - 1]
-      setTranscript(transcript)
-      mic.onerror = event => {
-        console.log(event.error)
-      }
-    }
+      setTranscript(resultsArray
+        .map((result) => result[0])
+        .map((result) => result.transcript)[resultsArray.length - 1]
+      );
+    };
   }, [isListening]);
 
   if(!isListening) {
@@ -118,6 +108,7 @@ function SpeechRecognizer (props) {
         <p id='response'>
           Response: {response.tts_cd}
         </p>
+        <button onClick={() => {console.log(serviceFactory.calendarRequest(props.googleUser));}} />
       </div>
     </>
   );

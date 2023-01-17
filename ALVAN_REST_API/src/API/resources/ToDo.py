@@ -48,7 +48,6 @@ class ToDoID(Resource):
     response = {"error": 404}
 
     if table.lower() == 'event':
-      print(id, request.json['completed'])
-      response = {'event': db.updateEvent(id, str(request.json['completed'])).result}
+      response = {'event': db.updateEvent(id, str(request.json['completed']), str(request.json['inProgress'])).result}
 
     return response

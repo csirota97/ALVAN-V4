@@ -30,13 +30,12 @@ def deleteEvent (self, eventId): #CONNECTED
   return self
 
 
-def updateEvent (self, eventId, completed):
-  print(eventId, completed)
+def updateEvent (self, eventId, completed, inProgress):
   if not eventId or not completed:
     raise ValueError('eventId and completed must be provided')
   self.cursor.execute(
-    'UPDATE Events SET COMPLETED = {0} WHERE id={1};'
-    .format(str(completed), eventId)
+    'UPDATE Events SET COMPLETED = {0}, inProgress = {1} WHERE id={2};'
+    .format(str(completed), str(inProgress), eventId)
   )
 
   self.result = self.cursor.fetchall()

@@ -72,12 +72,14 @@ function Screen(props) {
   const updateTask = (task) => {
     console.log(task)
     console.log(`Make call to flip task: ${task.id}:'${task.description}' to ${!task.completed}`)
+    console.log(task.completed)
     serviceFactory.toDoRequest(CONSTANTS.TODO_REQUEST.UPDATE_EVENT,{eventId: task.id, completed: !task.completed},()=>console.log(`${task.id}:'${task.description}' set to ${!task.completed}`))
     const listOptionsCopy = listOptions.slice().map(listOption => {
       if (listOption.key === selectedListOption?.key) {
         listOption.tasks = listOption.tasks.map(optionTask => {
           if (optionTask.id === task.id) {
             optionTask.completed = !optionTask.completed;
+            optionTask.inProgress = false;
           }
           return optionTask;
         });
@@ -272,11 +274,33 @@ function Screen(props) {
       name={activeTask?.description}
     >
       <div
-          className='create-button secondary button'
-          onClick={() => {setIsTaskSettingsCardShown(false); setIsDeleteTaskCardShown(true);}}
-          >
-          Delete Task
-        </div>
+        className='create-button secondary button'
+        onClick={() => {
+          serviceFactory.toDoRequest(CONSTANTS.TODO_REQUEST.EVENT_SET_IN_PROGRESS,{eventId: activeTask.id, completed: activeTask.completed, inProgress: true},()=>console.log(`${activeTask.id}:'${activeTask.description}' set to in progress`));
+          const listOptionsCopy = listOptions.slice().map(listOption => {
+            if (listOption.key === selectedListOption?.key) {
+              listOption.tasks = listOption.tasks.map(optionTask => {
+                if (optionTask.id === activeTask.id) {
+                  optionTask.completed = false;
+                  optionTask.inProgress = true;
+                }
+                return optionTask;
+              });
+            }
+            return listOption;
+          })
+          setListOptions(listOptionsCopy);
+          setIsTaskSettingsCardShown(false);
+        }}
+        >
+        In Progress
+      </div>
+      <div
+        className='create-button secondary button'
+        onClick={() => {setIsTaskSettingsCardShown(false); setIsDeleteTaskCardShown(true);}}
+        >
+        Delete Task
+      </div>
       <br/>
       {showNewListErrorText && <div className='error-text'>A Name Must Be Entered To Create A New List</div>}
     </ActionCard>

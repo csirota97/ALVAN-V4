@@ -41,8 +41,8 @@ class Connector:
   def newEvent (self, listId, description, completed): #CONNECTED
     return self.__catchDBError__(todo.newEvent, [listId, description, completed])
 
-  def updateEvent (self, eventId, completed): #CONNECTED
-    return self.__catchDBError__(todo.updateEvent, [eventId, completed])
+  def updateEvent (self, eventId, completed, inProgress): #CONNECTED
+    return self.__catchDBError__(todo.updateEvent, [eventId, completed, inProgress])
 
   def deleteEvent (self, eventId):
     return self.__catchDBError__(todo.deleteEvent, [eventId])
