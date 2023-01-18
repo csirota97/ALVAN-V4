@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/ALVAN-V4/static/css/main.0dc435d3.css",
+    "main.css": "/ALVAN-V4/static/css/main.515eaee0.css",
     "main.js": "/ALVAN-V4/static/js/main.e7093b34.js",
     "index.html": "/ALVAN-V4/index.html",
-    "main.0dc435d3.css.map": "/ALVAN-V4/static/css/main.0dc435d3.css.map",
+    "main.515eaee0.css.map": "/ALVAN-V4/static/css/main.515eaee0.css.map",
     "main.e7093b34.js.map": "/ALVAN-V4/static/js/main.e7093b34.js.map"
   },
   "entrypoints": [
-    "static/css/main.0dc435d3.css",
+    "static/css/main.515eaee0.css",
     "static/js/main.e7093b34.js"
   ]
 }
