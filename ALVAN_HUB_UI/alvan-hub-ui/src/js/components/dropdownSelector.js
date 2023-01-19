@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import './dropdownSelector.scss';
 
 function Selector (props) {
-  const {options, selectedOption, onChange, isUnselectable} = props;
+  const {options, selectedOption, onChange, isUnselectable, showSettingsButton, settingsButtonOnClick} = props;
   const [isOpen, setIsOpen] = useState(false);
   const toggleOpen = (event) => {
     event.stopPropagation();
@@ -34,6 +34,15 @@ function Selector (props) {
         <div className="spacer" />
         <div className={`selector-caret ${isOpen ? 'caret-up' : 'caret-down' }`}><ion-icon name='caret-up-outline'></ion-icon></div>
       </div>
+
+      {
+        showSettingsButton &&
+        (
+          <div className='list-settings-icon unga' onClick={(event) => {event.stopPropagation(); settingsButtonOnClick(event);}}>
+            <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
+          </div>
+        )
+      }
       <div className={`selector-dropdown-body-container`}>
         {
           <div className={`${isOpen ? 'body-down' : 'body-up'} selector-dropdown-body`}>
@@ -48,6 +57,7 @@ function Selector (props) {
           </div>
         }
       </div>
+
     </div> 
   );
 }

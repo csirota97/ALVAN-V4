@@ -89,7 +89,10 @@ const serviceFactory = {
         });
         break;
       case CONSTANTS.TODO_REQUEST.DELETE_LIST:
-        // code block
+        response = await fetch(`${toDoURL}/list/${params.listId}`, {
+          method: "delete",
+          headers: {'mode': 'no-cors'},
+        });
         break;
       case CONSTANTS.TODO_REQUEST.GET_LISTS:
         // console.log(formData)
@@ -98,7 +101,6 @@ const serviceFactory = {
           headers: {'mode': 'no-cors'},
         });
         break;
-      case CONSTANTS.TODO_REQUEST.DELETE_LIST:
       case CONSTANTS.TODO_REQUEST.NEW_EVENT:
         formData.append('listId', params.listId);
         formData.append('description', params.description);
@@ -110,7 +112,6 @@ const serviceFactory = {
         });
         break;
       case CONSTANTS.TODO_REQUEST.DELETE_EVENT:
-        console.log('delete');
         response = await fetch(`${toDoURL}/event/${params.eventId}`, {
           method: "delete",
           body: formData,
@@ -139,9 +140,12 @@ const serviceFactory = {
         break;
       default:
         // code block
+        console.log("blik")
         break;
     };
-
+console.log(requestType)
+console.log(CONSTANTS.TODO_REQUEST.DELETE_LIST);
+console.log(CONSTANTS.TODO_REQUEST.DELETE_LIST===requestType)
     const resJson = await response.json();
     // console.log(resJson)
     setResponseJson(resJson);

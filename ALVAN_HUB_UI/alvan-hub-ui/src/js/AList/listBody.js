@@ -20,6 +20,7 @@ const ListBody = (props) => {
     updateTask,
     activeTask, //task being interacted with for settings menu
     setActiveTask,
+    onListSettingsButtonClick,
   } = props
 
   return (
@@ -38,6 +39,8 @@ const ListBody = (props) => {
             isLogInCardShown ||
             isNewUserCardShown
           }
+          showSettingsButton
+          settingsButtonOnClick={(event) => {onListSettingsButtonClick();}}
         />
         <div className='task-list'>
           {

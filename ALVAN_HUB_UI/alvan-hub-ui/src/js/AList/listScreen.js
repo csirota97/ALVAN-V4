@@ -33,7 +33,9 @@ function Screen(props) {
   const [isLogInCardShown, setIsLogInCardShown] = useState(false);
   const [isNewUserCardShown, setIsNewUserCardShown] = useState(false);
   const [isTaskSettingsCardShown, setIsTaskSettingsCardShown] = useState(false);
+  const [isListSettingsCardShown, setIsListSettingsCardShown] = useState(false);
   const [isDeleteTaskCardShown, setIsDeleteTaskCardShown] = useState(false);
+  const [isDeleteListCardShown, setIsDeleteListCardShown] = useState(false);
   const [listOptions, setListOptions] = useState(props.toDoLists);
   const [selectedListOption, setSelectedListOption] = useState(props.defaultSelection);
   const [newTaskName, setNewTaskName] = useState('');
@@ -130,6 +132,11 @@ function Screen(props) {
   }
   const newListConfirmText = "Create List";
   const newListCancelText = "Cancel";
+
+  const onListSettingsButtonClick = () => {
+    console.log(selectedListOption)
+    setIsListSettingsCardShown(true);
+  };
 
   const newUserCard = (isNewUserCardShown && (
     <ActionCard
@@ -295,6 +302,7 @@ function Screen(props) {
         >
         In Progress
       </div>
+      <br />
       <div
         className='create-button secondary button'
         onClick={() => {setIsTaskSettingsCardShown(false); setIsDeleteTaskCardShown(true);}}
@@ -302,7 +310,6 @@ function Screen(props) {
         Delete Task
       </div>
       <br/>
-      {showNewListErrorText && <div className='error-text'>A Name Must Be Entered To Create A New List</div>}
     </ActionCard>
   );
 
@@ -321,7 +328,40 @@ function Screen(props) {
     >
       Would you like to delete {activeTask.description}?
       <br/>
-      {showNewListErrorText && <div className='error-text'>A Name Must Be Entered To Create A New List</div>}
+    </ActionCard>
+  );
+  const listSettingsCard = (
+    isListSettingsCardShown &&
+    <ActionCard
+      cancelAction={() => setIsListSettingsCardShown(false)}
+      cancelText={closeTaskSettings}
+      name={selectedListOption.value}
+    >
+      <div
+        className='create-button secondary button'
+        onClick={() => {setIsListSettingsCardShown(false); setIsDeleteListCardShown(true);}}
+        >
+        Delete List
+      </div>
+      <br/>
+    </ActionCard>
+  );
+
+  const deleteListCard = (
+    isDeleteListCardShown &&
+    <ActionCard
+      confirmAction={() => {
+        serviceFactory.toDoRequest(CONSTANTS.TODO_REQUEST.DELETE_LIST,{listId: selectedListOption.key},()=>console.log(`list deleted`));
+        setIsDeleteListCardShown(false);
+        window.location.reload();
+      }}
+      confirmText="Delete List"
+      cancelAction={() => {setIsDeleteListCardShown(false); setIsListSettingsCardShown(true);}}
+      cancelText="Cancel"
+      name="Delete List?"
+    >
+      Would you like to delete {selectedListOption.value}?
+      <br/>
     </ActionCard>
   );
 
@@ -329,13 +369,15 @@ function Screen(props) {
     <div className="screen-container">
       <Clock />
       <Logo toggleMenuCard={toggleMenuCard} />
-      {settingsCard}
+      {taskSettingsCard}
       {newUserCard}
       {loginCard}
       {newTaskCard}
       {newListCard}
       {taskSettingsCard}
       {deleteTaskCard}
+      {listSettingsCard}
+      {deleteListCard}
       <ListBody
         listOptions={listOptions}
         selectedListOption={selectedListOption}
@@ -351,6 +393,7 @@ function Screen(props) {
         updateTask={updateTask}
         activeTask={activeTask}
         setActiveTask={setActiveTask}
+        onListSettingsButtonClick={onListSettingsButtonClick}
       />
     </ div>
   );

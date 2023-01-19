@@ -51,6 +51,19 @@
   transform: translateY(-40%);
 }
 
+.list-settings-icon {
+  display: inline;
+  position: absolute;
+  right: 10px;
+  transform: translateY(-100%);
+  background-color: #797878;
+  border-radius: 10px;
+  padding-bottom: 3px;
+  padding-top: 5px;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
 .task:active {
   background-color: var(--active-background);
 }

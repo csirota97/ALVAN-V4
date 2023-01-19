@@ -53,16 +53,15 @@ function App() {
   if(constructedToDoLists) {
     console.log(constructedToDoLists[0], 'bazingaroni')
     defaultSelectedList = constructedToDoLists[0];
-    const currentLocalSelection = JSON.parse(localStorage.getItem('currentListSelection'));
-    const localKey = findLocalKey(constructedToDoLists, currentLocalSelection)
-    console.log(111)
+    const currentListSelection = localStorage.getItem('currentListSelection');
+    const currentLocalSelection = JSON.parse(
+      currentListSelection === 'undefined' ? JSON.stringify({}) : currentListSelection
+    );
+    const localKey = findLocalKey(constructedToDoLists, currentLocalSelection);
     if (currentLocalSelection && localKey) {
-      console.log(222, localKey)
-      defaultSelectedList = localKey
+      defaultSelectedList = localKey;
     } else {
-    console.log(333)
-
-      localStorage.setItem('currentListSelection', JSON.stringify(constructedToDoLists[0]))
+      localStorage.setItem('currentListSelection', JSON.stringify(constructedToDoLists[0]));
     }
   }
 
