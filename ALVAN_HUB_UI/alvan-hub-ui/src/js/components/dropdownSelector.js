@@ -24,7 +24,7 @@ function Selector (props) {
       <div
         className="selector-header"
         onClick={(event) => {
-          if (!isUnselectable) {
+          if (!isUnselectable && options.length > 1) {
             toggleOpen(event)
           }
         }}
