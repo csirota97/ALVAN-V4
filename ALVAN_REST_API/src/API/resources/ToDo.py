@@ -23,7 +23,7 @@ class ToDoID(Resource):
     response = {"error": 404}
 
     if table.lower() == 'list':
-      print(id)
+      response = {'events': db.deleteList(int(id)).result}
     elif table.lower() == 'event':
       response = {'events': db.deleteEvent(int(id)).result}
 

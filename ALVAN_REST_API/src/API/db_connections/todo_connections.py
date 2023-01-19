@@ -19,6 +19,23 @@ def newEvent (self, listId, description, completed): #CONNECTED
   self.result = self.cursor.fetchall()
   return self
 
+def deleteList (self, listId): #CONNECTED
+  self.cursor.execute(
+    'Delete from Events where ListId={0};'
+    .format(listId)
+  )
+
+  self.result = self.cursor.fetchall()
+
+  self.cursor.execute(
+    'Delete from Lists where id={0};'
+    .format(listId)
+  )
+
+  self.result = self.cursor.fetchall()
+  return self
+
+
 
 def deleteEvent (self, eventId): #CONNECTED
   self.cursor.execute(
