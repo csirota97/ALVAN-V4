@@ -378,23 +378,28 @@ function Screen(props) {
       {deleteTaskCard}
       {listSettingsCard}
       {deleteListCard}
-      <ListBody
-        listOptions={listOptions}
-        selectedListOption={selectedListOption}
-        setSelectedListOption={onListSelectorChange}
-        isMenuShown={isMenuShown}
-        isNewTaskDialogShown={isNewTaskDialogShown}
-        isNewListDialogShown={isNewListDialogShown}
-        isLogInCardShown={isLogInCardShown}
-        isNewUserCardShown={isNewUserCardShown}
-        openNewTaskDialog={openNewTaskDialog}
-        openNewListDialog={openNewListDialog}
-        openTaskSettingsCard={() => setIsTaskSettingsCardShown(true)}
-        updateTask={updateTask}
-        activeTask={activeTask}
-        setActiveTask={setActiveTask}
-        onListSettingsButtonClick={onListSettingsButtonClick}
-      />
+      {
+        !!props.userToken ?
+        (
+          <ListBody
+            listOptions={listOptions}
+            selectedListOption={selectedListOption}
+            setSelectedListOption={onListSelectorChange}
+            isMenuShown={isMenuShown}
+            isNewTaskDialogShown={isNewTaskDialogShown}
+            isNewListDialogShown={isNewListDialogShown}
+            isLogInCardShown={isLogInCardShown}
+            isNewUserCardShown={isNewUserCardShown}
+            openNewTaskDialog={openNewTaskDialog}
+            openNewListDialog={openNewListDialog}
+            openTaskSettingsCard={() => setIsTaskSettingsCardShown(true)}
+            updateTask={updateTask}
+            activeTask={activeTask}
+            setActiveTask={setActiveTask}
+            onListSettingsButtonClick={onListSettingsButtonClick}
+          />
+        ) : "Tap the logo to sign in."
+      }
     </ div>
   );
 };
