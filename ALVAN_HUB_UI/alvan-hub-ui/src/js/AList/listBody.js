@@ -98,11 +98,6 @@ const ListBody = (props) => {
             <ion-icon name="add-circle"></ion-icon>
           </div>Add New Task
         </div>
-        <div className='add-new-task' onClick={openNewListDialog}>
-          <div className='add-new-task-icon'>
-            <ion-icon name="add-circle"></ion-icon>
-          </div>Add New List
-        </div>
       </>
       : 
       <div className='add-new-task' onClick={openNewListDialog}>

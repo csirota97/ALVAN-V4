@@ -11,6 +11,7 @@
 
   --task-hover: #797878;
   --text-color: #1e1e1e;
+  --emphasis: #606060;
 }
 
 .completed-status-icon {
@@ -66,6 +67,10 @@
 
 .task:active {
   background-color: var(--active-background);
+}
+
+.button:active {
+  background-color: var(--emphasis);
 }
 
 .task-list {

@@ -339,8 +339,15 @@ function Screen(props) {
     >
       <div
         className='create-button secondary button'
+        onClick={() => {setIsListSettingsCardShown(false); openNewListDialog(true);}}
+      >
+        Add List
+      </div>
+      <br/>
+      <div
+        className='create-button secondary button'
         onClick={() => {setIsListSettingsCardShown(false); setIsDeleteListCardShown(true);}}
-        >
+      >
         Delete List
       </div>
       <br/>

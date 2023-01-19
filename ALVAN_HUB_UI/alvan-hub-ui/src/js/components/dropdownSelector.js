@@ -43,7 +43,7 @@ function Selector (props) {
       {
         showSettingsButton &&
         (
-          <div className='list-settings-icon unga' onClick={(event) => {event.stopPropagation(); settingsButtonOnClick(event);}}>
+          <div className='list-settings-icon button' onClick={(event) => {event.stopPropagation(); settingsButtonOnClick(event);}}>
             <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
           </div>
         )
