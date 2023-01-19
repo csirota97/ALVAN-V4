@@ -369,7 +369,7 @@ function Screen(props) {
     <div className="screen-container">
       <Clock />
       <Logo toggleMenuCard={toggleMenuCard} />
-      {taskSettingsCard}
+      {settingsCard}
       {newUserCard}
       {loginCard}
       {newTaskCard}
