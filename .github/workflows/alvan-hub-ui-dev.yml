@@ -26,5 +26,5 @@ jobs:
     - uses: actions/checkout@v3
     - run: ls
     - run: npm ci
-    - run: npm run build
-    - run: npm run gh-pages -d build
+    - run: npm run build --if-present
+    - run: npm run gh-pages -d build --if-present
