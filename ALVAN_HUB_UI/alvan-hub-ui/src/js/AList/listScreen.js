@@ -12,6 +12,7 @@ import NewUserDialog from '../components/Cards/newUserDialog';
 import LogInDialog from '../components/Cards/logInDialog';
 import TaskRow from './taskRow';
 import ListBody from './listBody';
+import ButtonGroup from 'terra-button-group';
 
 const CONSTANTS = getConstants();
 
@@ -36,6 +37,11 @@ function Screen(props) {
   const [isListSettingsCardShown, setIsListSettingsCardShown] = useState(false);
   const [isDeleteTaskCardShown, setIsDeleteTaskCardShown] = useState(false);
   const [isDeleteListCardShown, setIsDeleteListCardShown] = useState(false);
+  const [isEventRepeating, setIsEventRepeating] = useState(false);
+  const [eventRepeatUnit, setEventRepeatUnit] = useState(["0"]);
+  const [eventRepeatInterval, setEventRepeatInterval] = useState(1);
+  const today = new Date();
+  const [eventRepeatStartDate, setEventRepeatStartDate] = useState(`${today.getFullYear()}-${today.getMonth() < 9 ? `0${today.getMonth() + 1}` : today.getMonth() + 1}-${today.getDate()}`);
   const [listOptions, setListOptions] = useState(props.toDoLists);
   const [selectedListOption, setSelectedListOption] = useState(props.defaultSelection);
   const [newTaskName, setNewTaskName] = useState('');
@@ -68,7 +74,7 @@ function Screen(props) {
     return setSelectedListOption(newList)
   }
   
-  const openNewTaskDialog = () => setIsNewTaskDialogShown(true);
+  const openNewTaskDialog = () => {setIsNewTaskDialogShown(true); setIsEventRepeating(false);}
   const openNewListDialog = () => setIsNewListDialogShown(true);
   
   const updateTask = (task) => {
@@ -93,7 +99,17 @@ function Screen(props) {
 
   const onNewTaskConfirmButtonClick = () => {
     if(newTaskName) {
-      serviceFactory.toDoRequest(CONSTANTS.TODO_REQUEST.NEW_EVENT, {listId: selectedListOption.key, description: newTaskName}, (res) => console.log(res));
+      serviceFactory.toDoRequest(
+        CONSTANTS.TODO_REQUEST.NEW_EVENT,
+        {
+          listId: selectedListOption.key,
+          description: newTaskName,
+          repeatUnit: isEventRepeating ? eventRepeatUnit[0] : -1,
+          repeatInterval: isEventRepeating ? eventRepeatInterval : null,
+          repeatStartDate: isEventRepeating ? eventRepeatStartDate : null,
+        },
+        (res) => console.log(res)
+      );
       // setListOptions(reconstructToDoLists());
       window.location.reload();
       // props.triggerListsReconstruction();
@@ -165,6 +181,14 @@ function Screen(props) {
 
   useEffect(()=>{console.log(activeTask)})
 
+
+  const onEventRepeatSelectorChange = (event, selectedKey) => {
+    if (ButtonGroup.Utils.shouldHandleSingleSelection(eventRepeatUnit, selectedKey)) {
+      event.preventDefault();
+      setEventRepeatUnit([selectedKey])
+    }
+  }
+
   const newTaskCard = (isNewTaskDialogShown && (
     <ActionCard
       confirmAction={onNewTaskConfirmButtonClick}
@@ -185,6 +209,65 @@ function Screen(props) {
           setNewTaskName(event.target.value);
         }}/><br/>
         {showNewTaskErrorText && <div className='error-text'>A Name Must Be Entered To Create A New Task</div>}
+
+        <br />
+        <label>
+          <input
+            type="checkbox"
+            checked={isEventRepeating}
+            onChange={(e) => {console.log(e); setIsEventRepeating(!isEventRepeating)}}
+          />
+          Repeat Event
+        </label>
+  
+        {isEventRepeating && (
+          <>
+            <br />
+            <br />
+            <ButtonGroup
+              id="repeat-unit-selector"
+              onChange={onEventRepeatSelectorChange}
+              
+              selectedKeys={eventRepeatUnit}
+            >
+              <ButtonGroup.Button text="Days" key={0} />
+              <ButtonGroup.Button text="Weeks" key={1} />
+              <ButtonGroup.Button text="Monthly" key={2} />
+            </ButtonGroup>
+            <br />
+            <br />
+
+            {
+              !eventRepeatUnit.includes('2') &&
+              (
+                <>
+                  <label>
+                    Repeat Interval
+                    <br />
+                    <input
+                      type="number"
+                      value={eventRepeatInterval}
+                      onChange={(e) => {console.log(e); setEventRepeatInterval(e.target.value);}}
+                    />
+                  </label>
+                  <br />
+                  <br />
+                </>
+              )
+            }
+            <label>
+              Repeat Start Date
+              <br />
+              <input type="date"
+                id="repeat-start-date"
+                name="trip-start"
+                min="2018-01-01"
+                value={eventRepeatStartDate}
+                onChange={(e) => setEventRepeatStartDate(e.target.value)}
+              />
+            </label>
+          </>
+        )}
       </ActionCard>
     )
   );

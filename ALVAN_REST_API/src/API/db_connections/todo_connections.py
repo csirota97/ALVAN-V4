@@ -1,3 +1,5 @@
+import datetime
+
 def newList (self, ownerId, calendarId, listName):
   # self.cursor.execute("show columns in Lists;")
   self.cursor.execute(
@@ -9,11 +11,20 @@ def newList (self, ownerId, calendarId, listName):
   return self
 
 
-def newEvent (self, listId, description, completed): #CONNECTED
-  print(listId, description, completed)
+def newEvent (self, listId, description, completed, repeatUnit, repeatInterval, repeatStartDate): #CONNECTED
+  print(listId, description, completed, repeatUnit, type(repeatUnit))
+  if repeatUnit == -1:
+    self.cursor.execute(
+      'INSERT INTO Events (LISTID, DESCRIPTION, COMPLETED) VALUES ({0}, "{1}", {2});'
+      .format(listId, description, completed)
+    )
+
+    self.result = self.cursor.fetchall()
+    return self
+
   self.cursor.execute(
-    'INSERT INTO Events (LISTID, DESCRIPTION, COMPLETED) VALUES ({0}, "{1}", {2});'
-    .format(listId, description, completed)
+    'INSERT INTO Events (LISTID, DESCRIPTION, COMPLETED, repeatUnit, repeatInterval, repeatStartDate) VALUES ({0}, "{1}", {2}, {3}, {4}, "{5}");'
+    .format(listId, description, completed, repeatUnit, repeatInterval, repeatStartDate)
   )
 
   self.result = self.cursor.fetchall()
@@ -87,4 +98,55 @@ def getEvents(self, listId): #CONNECTED
   )
 
   self.result = self.cursor.fetchall()
+  return self
+
+def resetRepeatingEvents(self):
+  self.cursor.execute('SELECT * FROM Events WHERE repeatInterval <> -1')
+  repeatingEventRows = self.cursor.fetchall()
+
+  def resetRow(id):
+    updateEvent(self, id, '0', '0')
+
+  TODAY = datetime.date.today()
+  MONTHS_WITH_30_DAYS = [9, 4, 6, 11]
+
+  # repeat units
+  # 0 = day
+  # 1 = week (7 days)
+  # 2 = month (same calendar date every month, if day doesn't exist in month, default to last day of month i.e. jan. 30 -> feb. 28)
+  for row in repeatingEventRows:
+    #row[5] = repeat interval
+    #row[6] = repeat unit
+    #row[7] = repeat start date
+    repeatInterval, repeatUnit, repeatStartDateStr = row[5:8]
+    repeatStartDate = datetime.date(*[int(dateComponent) for dateComponent in repeatStartDateStr.split('-')])
+
+    if repeatInterval == None:
+      repeatInterval = 1
+    if repeatUnit == None:
+      repeatUnit = 1
+    if repeatUnit == 1:
+      repeatUnit = 0
+      repeatInterval = repeatInterval * 7
+
+    if repeatUnit == 2:
+      if repeatStartDate.day == TODAY.day:
+        resetRow(row[0])
+      else:
+        if repeatStartDate.day == 31 and ((TODAY.day == 30 and TODAY.month in MONTHS_WITH_30_DAYS) 
+                                      or (TODAY.day == 29 and TODAY.month == 2 and TODAY.year % 4 == 0)
+                                      or (TODAY.day == 28 and TODAY.month == 2 and TODAY.year % 4 != 0)):
+          resetRow(row[0])
+        elif repeatStartDate.day == 30 and TODAY.month in MONTHS_WITH_30_DAYS and ((TODAY.day == 29 and TODAY.month == 2 and TODAY.year % 4 == 0)
+                                      or (TODAY.day == 28 and TODAY.month == 2 and TODAY.year % 4 != 0)):
+          resetRow(row[0])
+      continue
+    if (TODAY - repeatStartDate).days % repeatInterval == 0:
+      resetRow(row[0])
+
+
+
+  self.cursor.execute('SELECT * FROM Events WHERE repeatInterval <> -1')
+  self.result = self.cursor.fetchall()
+  
   return self

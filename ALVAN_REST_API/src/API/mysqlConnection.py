@@ -38,8 +38,8 @@ class Connector:
   def newList (self, ownerId, calendarId, listName): #CONNECTED
     return self.__catchDBError__(todo.newList, [ownerId, calendarId, listName])
 
-  def newEvent (self, listId, description, completed): #CONNECTED
-    return self.__catchDBError__(todo.newEvent, [listId, description, completed])
+  def newEvent (self, listId, description, completed, repeatUnit, repeatInterval, repeatStartDate): #CONNECTED
+    return self.__catchDBError__(todo.newEvent, [listId, description, completed, repeatUnit, repeatInterval, repeatStartDate])
 
   def updateEvent (self, eventId, completed, inProgress): #CONNECTED
     return self.__catchDBError__(todo.updateEvent, [eventId, completed, inProgress])
@@ -55,6 +55,9 @@ class Connector:
     
   def getEvents(self, listId): #CONNECTED
     return self.__catchDBError__(todo.getEvents, [listId])
+
+  def resetRepeatingEvents(self):
+    return self.__catchDBError__(todo.resetRepeatingEvents, [])
 
   #----------------------------------------------------------------
   # User Authentication

@@ -105,6 +105,9 @@ const serviceFactory = {
         formData.append('listId', params.listId);
         formData.append('description', params.description);
         formData.append('completed', false);
+        formData.append('repeatUnit', params.repeatUnit);
+        formData.append('repeatInterval', params.repeatInterval);
+        formData.append('repeatStartDate', params.repeatStartDate);
         response = await fetch(`${toDoURL}/event`, {
           method: "POST",
           body: formData,
