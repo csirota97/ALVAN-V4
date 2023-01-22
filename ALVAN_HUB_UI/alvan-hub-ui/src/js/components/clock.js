@@ -9,7 +9,7 @@ function Clock () {
     },1000);
   });
 
-  return (<h1 className="clock nonselectable">{time}</h1>);
+  return (<h1 className="clock nonselectable" onClick={() => window.location.reload()}>{time}</h1>);
 }
 
 export default Clock;
