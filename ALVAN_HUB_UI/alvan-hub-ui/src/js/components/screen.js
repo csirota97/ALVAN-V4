@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import HomeView from './views/homeView';
 import CalendarView from './views/calendarView';
 import Card from './card';
-import GoogleSignInButton from './googleSignInButton';
 import Logo from './logo';
 import ActionCard from './actionCard';
 import NewUserDialog from './Cards/newUserDialog';
@@ -140,12 +139,12 @@ function Screen(props) {
 
   return (
     <div className="screen-container">
-      <Clock />
+      {/* <Clock /> */}
       <Logo toggleMenuCard={toggleMenuCard} />
       {settingsCard}
       {newUserCard}
       {loginCard}
-      <Card name="Speech Recognizer" lockedWidth="400px" posY={300} id={-2} zIndex={{'-2': 1000}}>
+      <Card name="Speech Recognizer" lockedWidth="400px" posY={100} id={-2} zIndex={{'-2': 1000}}>
         <SpeechRecognizer/>
       </Card>
       <div className='view-swap-button' onClick={() => setDisplayCalendar(!displayCalendar)}>

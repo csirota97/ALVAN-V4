@@ -13,7 +13,7 @@ def newList (self, ownerId, calendarId, listName):
 
 def newEvent (self, listId, description, completed, repeatUnit, repeatInterval, repeatStartDate): #CONNECTED
   print(listId, description, completed, repeatUnit, type(repeatUnit))
-  if repeatUnit == -1:
+  if repeatUnit == "-1":
     self.cursor.execute(
       'INSERT INTO Events (LISTID, DESCRIPTION, COMPLETED) VALUES ({0}, "{1}", {2});'
       .format(listId, description, completed)

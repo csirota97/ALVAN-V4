@@ -1,5 +1,13 @@
 import serviceFactory from "./service-factory";
 
+const speak = (message) => {
+  try {
+    window.speechSynthesis.speak(new SpeechSynthesisUtterance(message));
+  } catch {
+    console.log(`READ_OUT_THE_FOLLOWING:${message}`);
+  }
+}
+
 const commands = {
   /**
    * default
@@ -19,19 +27,20 @@ const commands = {
     console.log(minutes);
     console.log(isAm);
 
-    window.speechSynthesis.speak(new SpeechSynthesisUtterance(`It's currently ${readHours} ${readMinutes} ${amPm}`));
+    speak(`It's currently ${readHours} ${readMinutes} ${amPm}`);
   },
   /**
    * date
    */
   2: async () => {
-    window.speechSynthesis.speak(new SpeechSynthesisUtterance(`Today is ${new Date().toDateString()}`));
+    speak(`Today is ${new Date().toDateString()}`);
   },
   /**
    * lights on
    */
   3: async () => {
-    window.speechSynthesis.speak(new SpeechSynthesisUtterance('Turning on lights'));
+    
+    speak('Turning on lights');
     await fetch("https://maker.ifttt.com/trigger/bedroom_lights_on/with/key/dhl8zRZHBF8v8n_HgpJi1E", {
       method: "get",
     });
@@ -40,7 +49,7 @@ const commands = {
    * lights off
    */
   4: async () => {
-    window.speechSynthesis.speak(new SpeechSynthesisUtterance('Turning off lights'));
+    speak('Turning off lights');
     await fetch("https://maker.ifttt.com/trigger/bedroom_lights_off/with/key/dhl8zRZHBF8v8n_HgpJi1E", {
       method: "get",
     })
@@ -63,8 +72,7 @@ const commands = {
     }
     console.log(weatherData)
     const resultSpeech = `It's currently ${weatherData.current.temp_f} degrees ${named_entities?.GEO ? `in ${weatherData.location.name}` : ''}`;
-    window.speechSynthesis.speak(new SpeechSynthesisUtterance(resultSpeech));
-
+    speak(resultSpeech);
   },
 };
 

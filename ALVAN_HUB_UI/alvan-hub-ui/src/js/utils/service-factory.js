@@ -46,6 +46,7 @@ const serviceFactory = {
     };
     const weatherUrl = `${url}alvan/api/weather`
     if (location) {
+      console.log(location)
       const response = await fetch(`${weatherUrl}/${location}`, options);
       const resJson = await response.json();
       setResponseJson(resJson);
