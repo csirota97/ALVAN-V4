@@ -1,5 +1,5 @@
 import mysql.connector
-from db_connections import todo_connections as todo, user_connections as userC
+from db_connections import todo_connections as todo, user_connections as userC, reminder_connections as reminderC
 
 class Connector:
   def __init__(self, host, user, password):
@@ -30,6 +30,17 @@ class Connector:
       self.connection.autocommit = True
       self.cursor = self.connection.cursor()
       return serviceCall(self, *args)
+
+  #----------------------------------------------------------------
+  # Reminders
+  #----------------------------------------------------------------
+
+  def newReminder (self, ownerId, reminderString, reminder_dt):
+    return self.__catchDBError__(reminderC.newReminder, [ownerId, reminderString, reminder_dt])
+
+  def getReminders (self, ownerId):
+    return self.__catchDBError__(reminderC.getReminders, [ownerId])
+
 
   #----------------------------------------------------------------
   # To Do List
