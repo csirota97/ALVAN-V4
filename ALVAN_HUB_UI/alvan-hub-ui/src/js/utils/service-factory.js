@@ -20,7 +20,7 @@ const serviceFactory = {
     const jsonRes = await response.json();
     setResponseJson(jsonRes);
     console.log(jsonRes);
-    commands[jsonRes.tts_cd](jsonRes.named_entities);
+    commands[jsonRes.tts_cd].function(jsonRes.named_entities);
   },
 
   calendarRequest: async (user_id, setResponseJson) => {
@@ -184,6 +184,16 @@ console.log(CONSTANTS.TODO_REQUEST.DELETE_LIST===requestType)
     // let resJson = response;
     
   },
+
+  jokeRequest: async (handleJsonResponse) => {
+    const headers = new Headers({'accept': 'application/json'});
+    const response = await fetch("https://icanhazdadjoke.com/", {
+      method: "GET",
+      headers: headers,
+    });
+    const jsonRes = await response.json();
+    handleJsonResponse(jsonRes);
+  }
 };
 
 export default serviceFactory;

@@ -7,38 +7,52 @@
     "follow_up": false
   },
   {
+    "tag":"abilities",
+    "patterns": ["What can you do", "What can I ask you", "what can you help me with", "what are your capabilities"],
+    "responses":1,
+    "context_set":"",
+    "follow_up": false
+  },
+  {
     "tag":"time",
     "patterns": ["tell me the time", "what is the time", "I need the time"],
-    "responses":1,
+    "responses":2,
     "context_set":"",
     "follow_up": false
   },
   {
     "tag":"date",
     "patterns": ["tell me the date", "what is the date", "I need the date"],
-    "responses":2,
+    "responses":3,
     "context_set":"",
     "follow_up": false
   },
   {
     "tag":"lights_on",
     "patterns": ["turn on the lights", "it is too dark in here", "I want the lights on", "I want it brighter in here"],
-    "responses":3,
+    "responses":4,
     "context_set":"",
     "follow_up": false
   },
   {
     "tag":"lights_off",
     "patterns": ["turn off the lights", "it is too bright in here", "I want the lights off", "I want it darker in here"],
-    "responses":4,
+    "responses":5,
     "context_set":"",
     "follow_up": false
   },
   {
     "tag":"temp",
     "patterns": ["what's the temperature", "how hot is it outside", "how cold is it outside", "I need the temperature"],
-    "responses":5,
+    "responses":6,
     "context_set":"",
     "follow_up": false
+  },
+  {
+    "tag":"joke",
+    "patterns": ["tell me a joke", "make me laugh", "I want to hear a joke"],
+    "responses":7,
+    "context_set":"",
+    "follow_up": false 
   }
 ]}
