@@ -93,7 +93,7 @@ def query(query):
 
   for index, line in enumerate(final_output):
     if line == output[lineWithMostPoints].tolist():
-      return (index+1, data['intents'][index+1]['follow_up'])
+      return (data['intents'][index+1]['responses'], data['intents'][index+1]['follow_up'])
   
 
 query("how hot is it outside")

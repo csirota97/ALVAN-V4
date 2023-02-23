@@ -12,7 +12,7 @@ const commands = {
   /**
    * default
    */
-  '-1': async () => {console.log('oopsies')},
+  '-1': {function: async () => {console.log('oopsies')}},
   /**
    * abilities
    */

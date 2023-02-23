@@ -7,6 +7,13 @@
     "follow_up": false
   },
   {
+    "tag":"nevermind",
+    "patterns": ["never mind", "cancel", "stop listening"],
+    "responses":-1,
+    "context_set":"",
+    "follow_up": false
+  },
+  {
     "tag":"abilities",
     "patterns": ["What can you do", "What can I ask you", "what can you help me with", "what are your capabilities"],
     "responses":1,
