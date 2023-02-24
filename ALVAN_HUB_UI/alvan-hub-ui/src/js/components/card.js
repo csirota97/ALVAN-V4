@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 
 function Card (props) {
-  const {name, children, lockedWidth, posX, posY, zIndex, hasBeenClicked, lockedPos, id, footer} = props;
+  const {name, children, lockedWidth, posX, posY, zIndex, hasBeenClicked, lockedPos, id, footer, className} = props;
 
   const [positionX, setPositionX] = useState(posX ? posX : 0);
   const [positionY, setPositionY] = useState(posY ? posY + 110 : 110);
@@ -75,7 +75,7 @@ function Card (props) {
 
   return (
   <div
-    className="card-base nonselectable"
+    className={`card-base nonselectable ${className}`}
     style={{top: positionY, left: positionX, width: width, zIndex: cardZIndex}}
     onMouseMove={_onMouseMove}
     onMouseDown={_onMouseDown}

@@ -31,6 +31,7 @@ function Screen(props) {
   const [calendarData, setCalendarData] = useState([]);
   const [validationTrigger, setValidationTrigger] = useState(true);
   const [settingsCardClasses, setSettingsCardClasses] = useState('settings-wrapper settings-closing');
+  const [hideSpeechRecognizer, setHideSpeechRecognizer] = useState(false);
   
   const customProps = {
     defaultWeather: defaultWeather,
@@ -132,6 +133,15 @@ function Screen(props) {
               </div>
             </>
           }
+          <br />
+          <div
+            className='close-button secondary button' 
+            onClick={() => {
+              setHideSpeechRecognizer(!hideSpeechRecognizer)
+            }}
+            >
+              {hideSpeechRecognizer ? "Show Speech Recognizer" : "Hide Speech Recognizer"}
+          </div>
         </div>
       </Card>
     </div>
@@ -144,7 +154,7 @@ function Screen(props) {
       {settingsCard}
       {newUserCard}
       {loginCard}
-      <Card name="Speech Recognizer" lockedWidth="400px" posY={100} id={-2} zIndex={{'-2': 1000}}>
+      <Card name="Speech Recognizer" lockedWidth="400px" posY={100} id={-2} zIndex={{'-2': hideSpeechRecognizer ? -1000 : 1000}} className={hideSpeechRecognizer ? 'hidden' : ''}>
         <SpeechRecognizer/>
       </Card>
       <div className='view-swap-button' onClick={() => setDisplayCalendar(!displayCalendar)}>

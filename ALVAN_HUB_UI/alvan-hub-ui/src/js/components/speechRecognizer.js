@@ -100,16 +100,19 @@ function SpeechRecognizer (props) {
   }
   return (
     <>
-      <div className='recognizer'>
-        {isListening ? <span>on</span> : <span>off</span>}
-        <p id='transcript'>
-          Transcript: {transcript}
-        </p>
-        <p id='response'>
-          Response: {response.tts_cd}
-        </p>
-        <button onClick={() => {console.log(serviceFactory.calendarRequest(props.googleUser));}} />
-      </div>
+      {
+        props.hidden ? <></> :
+        <div className='recognizer'>
+          {isListening ? <span>on</span> : <span>off</span>}
+          <p id='transcript'>
+            Transcript: {transcript}
+          </p>
+          <p id='response'>
+            Response: {response.tts_cd}
+          </p>
+          <button onClick={() => {console.log(serviceFactory.calendarRequest(props.googleUser));}} />
+        </div>
+      }
     </>
   );
 };
