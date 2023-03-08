@@ -33,7 +33,7 @@ function SpeechRecognizer (props) {
     } else if (activated && transcript !== "") {
       //query api
       console.log("Query: " + transcript);
-      serviceFactory.sendQuery(transcript, setResponse);
+      serviceFactory.sendQuery(transcript, props.userId, mic, setResponse);
       
       setActivated(false);  
     }

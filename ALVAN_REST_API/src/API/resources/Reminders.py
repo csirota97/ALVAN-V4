@@ -7,11 +7,13 @@ db = CONSTANTS.db
 
 class Reminders(Resource):
   def post(self, id):
-    response = {'lists': db.newReminder(id,request.form['reminderString'],request.form['reminder_dt']).result}
+    for m in request.form:
+      print(m)
+    response = {'reminders': db.newReminder(id,request.form['reminder'],request.form['reminder_dt']).result}
     return response
 
   def get(self, id):
-    response = {'lists': db.getReminders(id).result}
+    response = {'reminders': db.getReminders(id).result}
     return response
 
   def put(self, table): #NOT IMPLEMENTED

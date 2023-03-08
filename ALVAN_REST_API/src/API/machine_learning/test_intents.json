@@ -61,5 +61,19 @@
     "responses":7,
     "context_set":"",
     "follow_up": false 
+  },
+  {
+    "tag":"newReminder",
+    "patterns": ["set a reminder", "create a reminder"],
+    "responses":8,
+    "context_set":"",
+    "follow_up": true 
+  },
+  {
+    "tag":"getReminders",
+    "patterns": ["what reminders do I have", "Do I have any reminders", "Tell me my reminders"],
+    "responses":9,
+    "context_set":"",
+    "follow_up": false 
   }
 ]}

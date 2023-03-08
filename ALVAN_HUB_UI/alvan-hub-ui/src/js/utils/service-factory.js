@@ -9,7 +9,7 @@ const url = CONSTANTS.SERVER_URL;
 const calendar_url = CONSTANTS.CALENDAR_URL;
 
 const serviceFactory = {
-  sendQuery: async (query, setResponseJson) => {
+  sendQuery: async (query, userId, mic, setResponseJson) => {
     const formData = new FormData();
     formData.append('query', query);
     const response = await fetch(url+"alvan/api/query", {
@@ -20,7 +20,7 @@ const serviceFactory = {
     const jsonRes = await response.json();
     setResponseJson(jsonRes);
     console.log(jsonRes);
-    commands[jsonRes.tts_cd].function(jsonRes.named_entities);
+    commands[jsonRes.tts_cd].function(jsonRes.named_entities, userId, query, mic);
   },
 
   calendarRequest: async (user_id, setResponseJson) => {
@@ -193,7 +193,28 @@ console.log(CONSTANTS.TODO_REQUEST.DELETE_LIST===requestType)
     });
     const jsonRes = await response.json();
     handleJsonResponse(jsonRes);
-  }
+  },
+
+  newReminderRequest:  async (ownerId, reminderString, reminder_dt_string) => {
+    const formData = new FormData();
+    formData.append('reminder', reminderString);
+    formData.append('reminder_dt', reminder_dt_string);
+    return await fetch(url+"alvan/api/reminder/"+ownerId, {
+      method: "POST",
+      mode: 'cors',
+      body: formData,
+    }).then(async res => res.json()).catch(e => console.log(e));
+  },
+
+  getRemindersRequest:  async (ownerId, handleJsonResponse) => {
+    const response = await fetch(url+"alvan/api/reminder/"+ownerId, {
+      method: "GET",
+      mode: 'cors',
+    }).catch(e => console.log(e));
+    const jsonRes = await response.json();
+    handleJsonResponse(jsonRes);
+  },
+    
 };
 
 export default serviceFactory;
