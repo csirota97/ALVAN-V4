@@ -154,15 +154,20 @@ function Screen(props) {
       {settingsCard}
       {newUserCard}
       {loginCard}
-      <Card name="Speech Recognizer" lockedWidth="400px" posY={100} id={-2} zIndex={{'-2': hideSpeechRecognizer ? -1000 : 1000}} className={hideSpeechRecognizer ? 'hidden' : ''}>
-        <SpeechRecognizer userId={props.userToken[0]}/>
-      </Card>
-      <div className='view-swap-button' onClick={() => setDisplayCalendar(!displayCalendar)}>
-        <h3 className='view-swap-label nonselectable'>
-          { displayCalendar ? 'Show Home View' : 'Show Calendar View'}
-        </h3>
-      </div>
-      { displayCalendar ? calendarView : homeView }
+      {props.userToken ? 
+        <>
+          <Card name="Speech Recognizer" lockedWidth="400px" posY={100} id={-2} zIndex={{'-2': hideSpeechRecognizer ? -1000 : 1000}} className={hideSpeechRecognizer ? 'hidden' : ''}>
+            <SpeechRecognizer userId={props.userToken[0]}/>
+          </Card>
+          <div className='view-swap-button' onClick={() => setDisplayCalendar(!displayCalendar)}>
+            <h3 className='view-swap-label nonselectable'>
+              { displayCalendar ? 'Show Home View' : 'Show Calendar View'}
+            </h3>
+          </div>
+          { displayCalendar ? calendarView : homeView }
+        </> :
+        "Tap the logo to sign in or register"
+      }
     </ div>
   );
 };
