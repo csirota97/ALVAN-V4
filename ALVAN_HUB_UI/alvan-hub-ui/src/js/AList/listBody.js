@@ -92,11 +92,11 @@ const ListBody = (props) => {
               No Tasks In This List<br/>Click "Add New Task" To Create A New Task
               </div>
           }
-        </div>
         <div className='add-new-task' onClick={openNewTaskDialog}>
           <div className='add-new-task-icon'>
             <ion-icon name="add-circle"></ion-icon>
           </div>Add New Task
+        </div>
         </div>
       </>
       : 
