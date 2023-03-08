@@ -8,6 +8,7 @@ cffi==1.15.1
 charset-normalizer==2.0.12
 click==7.1.2
 cryptography==38.0.1
+datefinder==0.7.3
 Flask==1.1.2
 Flask-Cors==3.0.10
 Flask-MySQLdb==1.0.1
