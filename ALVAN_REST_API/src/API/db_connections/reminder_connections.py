@@ -8,7 +8,7 @@ def newReminder (self, ownerId, reminderString, reminder_dt):
     break
 
   self.cursor.execute(
-    'INSERT INTO `ALVANDB`.`Reminders` (`userId`, `reminderString`, `reminder_dt`) VALUES ({0}, "{1}", {2});'
+    'INSERT INTO Reminders (userId, reminderString, reminder_dt) VALUES ({0}, "{1}", {2});'
     .format(
       int(ownerId),
       reminderString,
