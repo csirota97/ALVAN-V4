@@ -61,3 +61,11 @@ class ToDoID(Resource):
       response = {'event': db.updateEvent(id, str(request.json['completed']), str(request.json['inProgress'])).result}
 
     return response
+
+  def post(self, table, id):
+    response = {"error": 404}
+
+    if table.lower() == 'registertodo':
+      response = {'register': db.registerDevice(id, request.form['deviceToken']).result}
+
+    return response

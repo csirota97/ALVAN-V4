@@ -70,6 +70,9 @@ class Connector:
   def resetRepeatingEvents(self):
     return self.__catchDBError__(todo.resetRepeatingEvents, [])
 
+  def registerDevice(self, ownerId, deviceToken):
+    return self.__catchDBError__(todo.registerDevice, [ownerId, deviceToken])
+
   #----------------------------------------------------------------
   # User Authentication
   #----------------------------------------------------------------

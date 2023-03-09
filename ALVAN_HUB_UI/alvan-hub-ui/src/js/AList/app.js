@@ -5,14 +5,25 @@ import Screen from './listScreen';
 import './app.scss';
 import serviceFactory from '../utils/service-factory';
 import constructToDoLists from '../utils/constructToDoLists';
+import { useParams } from 'react-router-dom';
 
 function App() {
   const [render, forceRerender] = useState(true);
   const [lists, setLists] = useState(null);
+  const [isDeviceRegistered, setIsDeviceRegistered] = useState(false)
   const [constructedToDoLists, setConstructedToDoLists] = useState(null);
   const [reconstructTrigger, setReconstructTrigger] = useState(false);
   const CONSTANTS = getConstants();
   const [userToken, setUserToken] = useState(localStorage.getItem('userToken') === 'undefined' || localStorage.getItem('userToken') == null ? undefined : localStorage.getItem('userToken').split(','));
+  let { token } = useParams();
+
+  useEffect(()=>{
+    if (!!token && !!userToken && !isDeviceRegistered) {
+      serviceFactory.registerToDoDevice(userToken[0], token);
+      setIsDeviceRegistered(true);
+    }
+    console.log(token)
+  })
 
   useEffect(() => {
     if (reconstructTrigger) {

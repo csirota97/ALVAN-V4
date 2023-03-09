@@ -185,6 +185,18 @@ console.log(CONSTANTS.TODO_REQUEST.DELETE_LIST===requestType)
     
   },
 
+  registerToDoDevice:  async (ownerId, deviceToken, handleJsonResponse) => {
+    const formData = new FormData();
+    formData.append('deviceToken', deviceToken);
+    const response = await fetch(url+"alvan/api/todo/RegisterToDo/"+ownerId, {
+      method: "POST",
+      mode: 'cors',
+      body: formData,
+    }).catch(e => console.log(e));
+    const jsonRes = await response.json();
+    handleJsonResponse(jsonRes);
+  },
+
   jokeRequest: async (handleJsonResponse) => {
     const headers = new Headers({'accept': 'application/json'});
     const response = await fetch("https://icanhazdadjoke.com/", {

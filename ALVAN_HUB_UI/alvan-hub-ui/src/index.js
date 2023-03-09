@@ -18,7 +18,8 @@ ReactDOM.render(
         <Route path="/" element={<App />} />
         <Route path="ALVAN-V4" element={<App />} />
         <Route path="todoList" element={<AListApp />} />
-        <Route path="ALVAN-V4/todoList" element={<AListApp />} />
+        <Route path="todoList/:token" element={<AListApp />} />
+        <Route path="ALVAN-V4/todoList/djk" element={<AListApp />} />
         <Route path="ALVAN-V4/ALVAN-V4" element={<App />} />
       </Routes>
     </Router>

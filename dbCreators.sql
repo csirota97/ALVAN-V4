@@ -54,3 +54,14 @@ CREATE TABLE `Reminders` (
   KEY `userId_idx` (`userId`),
   CONSTRAINT `userId` FOREIGN KEY (`userId`) REFERENCES `Users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- ToDo List Device Keys
+
+CREATE TABLE `todo_list_device_keys` (
+  `device_key` varchar(255) NOT NULL,
+  `userId` int DEFAULT NULL,
+  PRIMARY KEY (`device_key`),
+  KEY `userId_idx` (`userId`),
+  CONSTRAINT `user` FOREIGN KEY (`userId`) REFERENCES `Users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
