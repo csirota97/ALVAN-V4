@@ -9,14 +9,18 @@ headers = {
   'Authorization': apiKeys.ALVAN_FCM
 }
 
-def notify(title, body, reg_id):
+def notify(title, body, reg_id, tag):
   payload = json.dumps({
     "registration_ids": [
       reg_id
     ],
     "notification": {
       "body": body,
-      "title": title
+      "title": title,
+      "tag": tag,
+      "icon":"notification_icon",
+      "sound": "chime",
+      "color": "#FFFFFF"
     }
   })
   response = requests.request("POST", url, headers=headers, data=payload)

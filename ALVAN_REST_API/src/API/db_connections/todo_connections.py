@@ -168,9 +168,10 @@ def notifyEventReset(row):
   row_name = row[2]
   list_name = row[11]
   device_key = row[12]
+  tag = "ALVAN_NOTIFICATION_TAG_{}".format(row[0])
 
   notification_body = "List: {1}\nTask: {0}".format(row_name, list_name)
   print('\n------------------------------')
   print(notification_body)
 
-  notifier.notify("Task Reset", notification_body ,device_key)
+  notifier.notify("Task Reset", notification_body, device_key, tag)
