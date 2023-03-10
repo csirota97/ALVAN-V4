@@ -102,7 +102,7 @@ def getEvents(self, listId): #CONNECTED
   return self
 
 def resetRepeatingEvents(self):
-  self.cursor.execute('SELECT * FROM Events JOIN lists on events.listId = lists.id JOIN todo_list_device_keys on lists.owner = todo_list_device_keys.userId WHERE repeatInterval <> -1')
+  self.cursor.execute('SELECT * FROM Events JOIN Lists on Events.listId = Lists.id JOIN todo_list_device_keys on Lists.owner = todo_list_device_keys.userId WHERE repeatInterval <> -1')
   repeatingEventRows = self.cursor.fetchall()
 
   def resetRow(id):
