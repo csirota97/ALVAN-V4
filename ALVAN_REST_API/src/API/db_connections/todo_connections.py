@@ -1,4 +1,5 @@
 import datetime
+from Firebase import notifier
 
 def newList (self, ownerId, calendarId, listName):
   # self.cursor.execute("show columns in Lists;")
@@ -101,7 +102,7 @@ def getEvents(self, listId): #CONNECTED
   return self
 
 def resetRepeatingEvents(self):
-  self.cursor.execute('SELECT * FROM Events WHERE repeatInterval <> -1')
+  self.cursor.execute('SELECT * FROM Events JOIN alvandb.lists on events.listId = lists.id JOIN alvandb.todo_list_device_keys on lists.owner = todo_list_device_keys.userId WHERE repeatInterval <> -1')
   repeatingEventRows = self.cursor.fetchall()
 
   def resetRow(id):
@@ -131,19 +132,22 @@ def resetRepeatingEvents(self):
 
     if repeatUnit == 2:
       if repeatStartDate.day == TODAY.day:
+        notifyEventReset(row)
         resetRow(row[0])
       else:
         if repeatStartDate.day == 31 and ((TODAY.day == 30 and TODAY.month in MONTHS_WITH_30_DAYS) 
                                       or (TODAY.day == 29 and TODAY.month == 2 and TODAY.year % 4 == 0)
                                       or (TODAY.day == 28 and TODAY.month == 2 and TODAY.year % 4 != 0)):
+          notifyEventReset(row)
           resetRow(row[0])
         elif repeatStartDate.day == 30 and TODAY.month in MONTHS_WITH_30_DAYS and ((TODAY.day == 29 and TODAY.month == 2 and TODAY.year % 4 == 0)
                                       or (TODAY.day == 28 and TODAY.month == 2 and TODAY.year % 4 != 0)):
+          notifyEventReset(row)
           resetRow(row[0])
       continue
     if (TODAY - repeatStartDate).days % repeatInterval == 0:
+      notifyEventReset(row)
       resetRow(row[0])
-
 
 
   self.cursor.execute('SELECT * FROM Events WHERE repeatInterval <> -1')
@@ -159,3 +163,14 @@ def registerDevice(self, ownerId, deviceToken):
 
   self.result = self.cursor.fetchall()
   return self
+
+def notifyEventReset(row):
+  row_name = row[2]
+  list_name = row[11]
+  device_key = row[12]
+
+  notification_body = "List: {1}\nTask: {0}".format(row_name, list_name)
+  print('\n------------------------------')
+  print(notification_body)
+
+  notifier.notify("Task Reset", notification_body ,device_key)
