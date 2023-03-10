@@ -8,6 +8,5 @@
 !/ALVAN_REST_API/src/API/training_data/.gitkeep
 /ALVAN_HUB_UI/alvan-hub-ui/package-lock.json
 /ALVAN_REST_API/src/API/utils/apiKeys.py
-/ALVAN_REST_API/src/API/utils/CONSTANTS.py
 *pycache*
 *DS_Store*
