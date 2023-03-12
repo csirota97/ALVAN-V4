@@ -49,7 +49,7 @@ def getUpcomingReminders (self, scheduler):
   global global_index
   global_index = 0
   self.cursor.execute(
-    'Select * from Reminders JOIN todo_list_device_keys on Reminders.userId = todo_list_device_keys.userId where reminder_dt >  UNIX_TIMESTAMP(CURTIME());'
+    'Select * from Reminders JOIN todo_list_device_keys on Reminders.userId = todo_list_device_keys.userId where reminder_dt >  UNIX_TIMESTAMP(CURTIME())  ORDER BY reminder_dt ASC;'
   )
   reminderRows = self.cursor.fetchall()
 
