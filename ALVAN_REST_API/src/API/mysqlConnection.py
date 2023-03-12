@@ -35,11 +35,14 @@ class Connector:
   # Reminders
   #----------------------------------------------------------------
 
-  def newReminder (self, ownerId, reminderString, reminder_dt):
-    return self.__catchDBError__(reminderC.newReminder, [ownerId, reminderString, reminder_dt])
+  def newReminder (self, ownerId, reminderString, query, scheduler):
+    return self.__catchDBError__(reminderC.newReminder, [ownerId, reminderString, query, scheduler])
 
-  def getReminders (self, ownerId):
-    return self.__catchDBError__(reminderC.getReminders, [ownerId])
+  def getUserReminders (self, ownerId):
+    return self.__catchDBError__(reminderC.getUserReminders, [ownerId])
+
+  def getUpcomingReminders (self, scheduler):
+    return self.__catchDBError__(reminderC.getUpcomingReminders, [scheduler])
 
 
   #----------------------------------------------------------------

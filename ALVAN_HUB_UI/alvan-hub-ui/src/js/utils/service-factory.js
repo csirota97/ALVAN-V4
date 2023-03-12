@@ -207,10 +207,10 @@ console.log(CONSTANTS.TODO_REQUEST.DELETE_LIST===requestType)
     handleJsonResponse(jsonRes);
   },
 
-  newReminderRequest:  async (ownerId, reminderString, reminder_dt_string) => {
+  newReminderRequest:  async (ownerId, reminderString, query) => {
     const formData = new FormData();
     formData.append('reminder', reminderString);
-    formData.append('reminder_dt', reminder_dt_string);
+    formData.append('query', query);
     return await fetch(url+"alvan/api/reminder/"+ownerId, {
       method: "POST",
       mode: 'cors',

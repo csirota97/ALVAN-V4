@@ -13,7 +13,6 @@ def newList (self, ownerId, calendarId, listName):
 
 
 def newEvent (self, listId, description, completed, repeatUnit, repeatInterval, repeatStartDate): #CONNECTED
-  print(listId, description, completed, repeatUnit, type(repeatUnit))
   if repeatUnit == "-1":
     self.cursor.execute(
       'INSERT INTO Events (LISTID, DESCRIPTION, COMPLETED) VALUES ({0}, "{1}", {2});'
@@ -72,22 +71,17 @@ def updateEvent (self, eventId, completed, inProgress):
 
 
 def getLists(self, ownerId): #CONNECTED
-  print(ownerId)
   if ownerId and ownerId != -1:
-    print("in A")
     self.cursor.execute(
       'SELECT * FROM Lists JOIN Events where ListId = Lists.id AND Lists.owner={0}'.format(ownerId)
     )
   else:
-    print(123)
-    print("in B")
     self.cursor.execute('SELECT * FROM Lists JOIN Events where ListId = Lists.id')
 
   self.result = self.cursor.fetchall()
   self.cursor.execute('Select * from Lists where id NOT IN (SELECT listId FROM Events) AND Lists.owner={0}'.format(ownerId))
   self.result.extend(self.cursor.fetchall())
   self.result.sort(key=lambda res: res[0])
-  print(self.result)
   return self
 
 
@@ -171,7 +165,5 @@ def notifyEventReset(row):
   tag = "ALVAN_NOTIFICATION_TAG_{}".format(row[0])
 
   notification_body = "List: {1}\nTask: {0}".format(row_name, list_name)
-  print('\n------------------------------')
-  print(notification_body)
 
   notifier.notify("Task Reset", notification_body, device_key, tag)

@@ -7,11 +7,16 @@ import json
 from mysqlConnection import Connector
 from resources import Weather, ToDo, UserAuth, ALVAN, Reminders
 
+from flask_apscheduler import APScheduler
+
 app = Flask(__name__)
 app.config.SERVER_NAME = "flask-api:5000"
 api = Api(app)
 CORS(app)
 
+scheduler = APScheduler()
+scheduler.init_app(app)
+scheduler.start()
 
 
 class HelloWorld(Resource):
@@ -24,8 +29,8 @@ api.add_resource(ALVAN.ALVAN, '/alvan/api/query')
 api.add_resource(HelloWorld, '/helloworld')
 api.add_resource(Weather.Weather, '/alvan/api/weather/<location>')
 api.add_resource(ToDo.ToDoID, '/alvan/api/todo/<table>/<id>')
-api.add_resource(ToDo.ToDo, '/alvan/api/todo/<table>')
-api.add_resource(Reminders.Reminders, '/alvan/api/reminder/<id>')
+api.add_resource(ToDo.ToDo, '/alvan/api/todo/<table>', resource_class_kwargs={'scheduler': scheduler})
+api.add_resource(Reminders.Reminders, '/alvan/api/reminder/<id>', resource_class_kwargs={'scheduler': scheduler})
 api.add_resource(UserAuth.UserAuth, '/alvan/api/auth/<method>')
 
 if __name__ == '__main__':

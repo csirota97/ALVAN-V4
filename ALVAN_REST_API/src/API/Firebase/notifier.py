@@ -24,4 +24,3 @@ def notify(title, body, reg_id, tag):
     }
   })
   response = requests.request("POST", url, headers=headers, data=payload)
-

@@ -6,6 +6,10 @@ from utils import CONSTANTS
 db = CONSTANTS.db
 
 class ToDo(Resource):
+  def __init__(self, scheduler):
+    self.scheduler = scheduler
+
+
   def post(self, table):
     response = {"error": 404}
 
@@ -23,7 +27,8 @@ class ToDo(Resource):
 
     if table.lower() == 'resetRepeatingEvents'.lower():
       print("reset")
-      response = {'events': db.resetRepeatingEvents().result}
+      response = {'events': db.resetRepeatingEvents().result, 'reminders': db.getUpcomingReminders(self.scheduler).result}
+      
 
     return response
 

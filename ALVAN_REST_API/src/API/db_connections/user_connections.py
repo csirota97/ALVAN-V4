@@ -2,7 +2,6 @@ import hashlib
 
 def createUser(self, firstName, lastName, email, password): 
   self.cursor.execute('SELECT * FROM `Users` WHERE email = "{0}";'.format(email))
-  print(self, self.cursor)
   if len(self.cursor.fetchall()) >= 1:
     return 'already exists'
 
@@ -18,13 +17,11 @@ def createUser(self, firstName, lastName, email, password):
     if result.with_rows:
       output.append(result.fetchall())
 
-  print(output)
   return output
 
 
 def login(self, email, password): 
   self.cursor.execute('SELECT * FROM `Users` WHERE email = "{0}" AND passwordHash = "{1}";'.format(email, password))
-  print(self, self.cursor)
 
   result = self.cursor.fetchall()
 
