@@ -8,6 +8,8 @@ from flask_apscheduler import APScheduler
 global_index = 0
 
 def newReminder (self, ownerId, reminderString, query, scheduler):
+  print('\n\n\n')
+  print(ownerId, reminderString, query)
   modified_query = query.lower().replace('today',(datetime.date.today()).strftime('%m/%d/%Y'))
   modified_query = modified_query.lower().replace('tomorrow',(datetime.date.today()+ datetime.timedelta(days=1)).strftime('%m/%d/%Y'))
   for dateTime in datefinder.find_dates(modified_query):
@@ -84,7 +86,7 @@ def getUpcomingReminders (self, scheduler):
     scheduler.add_job(reminder_job_funcs[copy.copy(index)][0], reminder_job_funcs[copy.copy(index)][1], trigger='date', run_date=reminder_job_funcs[copy.copy(index)][2])
   
   self.cursor.execute(
-    'Select * from Reminders where reminder_dt >  UNIX_TIMESTAMP(CURTIME())'
+    'Select * from Reminders where reminder_dt > UNIX_TIMESTAMP(CURTIME()) ORDER BY reminder_dt ASC;'
   )
   self.result = self.cursor.fetchall()
   return self

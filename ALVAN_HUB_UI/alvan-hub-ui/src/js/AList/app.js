@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom';
 function App() {
   const [render, forceRerender] = useState(true);
   const [lists, setLists] = useState(null);
+  const [remindersList, setRemindersList] = useState(null);
   const [isDeviceRegistered, setIsDeviceRegistered] = useState(false)
   const [constructedToDoLists, setConstructedToDoLists] = useState(null);
   const [reconstructTrigger, setReconstructTrigger] = useState(false);
@@ -41,6 +42,7 @@ function App() {
       // console.log(2,2)
       console.log(userToken);
       serviceFactory.toDoRequest(CONSTANTS.TODO_REQUEST.GET_LIST_EVENTS, {id: userToken[0]}, setLists);
+      serviceFactory.getRemindersRequest(userToken[0], setRemindersList)
     }
     else if (lists && !constructedToDoLists && userToken) {
       // console.log(3,3)
@@ -80,6 +82,7 @@ function App() {
     (lists && constructedToDoLists || !userToken) &&
     <Screen
       toDoLists={constructedToDoLists}
+      remindersList={remindersList}
       defaultSelection={defaultSelectedList}
       triggerListsReconstruction={() => setReconstructTrigger(true)}
       userToken={userToken}

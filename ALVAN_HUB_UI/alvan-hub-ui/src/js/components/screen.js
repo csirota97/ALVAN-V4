@@ -71,7 +71,7 @@ function Screen(props) {
       <ActionCard
 
         confirmAction={() => {revalidate()}}
-        confirmText={"Log In"}
+        confirmText={"Sign In"}
         cancelAction={() => {setIsLogInCardShown(false)}}
         cancelText={"Cancel"}
       >
@@ -96,6 +96,7 @@ function Screen(props) {
             props.userToken ? 
             <>
             Welcome Back, {props.userToken[1]}!
+              <br/>
               <div
                 className='close-button secondary button' 
                 onClick={() => {
@@ -105,7 +106,7 @@ function Screen(props) {
                   toggleMenuCard(); 
                 }}
                 >
-                  Log Out
+                  Sign Out
               </div>
             </> :
             <>
@@ -118,7 +119,7 @@ function Screen(props) {
                   toggleMenuCard(); 
                 }}
                 >
-                  Log In
+                  Sign In
               </div><br />
               <div
                 className='close-button secondary button' 
