@@ -39,7 +39,8 @@ function Screen(props) {
     render: props.render,
     forceRerender: props.forceRerender,
     calendarData: calendarData,
-    setCalendarData: setCalendarData
+    setCalendarData: setCalendarData,
+    userToken: props.userToken
   }
   
   const homeView = (<HomeView {...customProps} />);

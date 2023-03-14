@@ -38,10 +38,10 @@ def deleteReminder (self, listId):
 def updateReminder (self, eventId, completed, inProgress):
   pass
 
-def getUserReminders (self, ownerId):
+def getUserReminders (self, ownerId, offset=0):
   self.cursor.execute(
-    'Select * from Reminders where userId = {0} and completed = 0 and reminder_dt >  UNIX_TIMESTAMP(CURTIME());'
-    .format(int(ownerId))
+    'Select * from Reminders where userId = {0} and completed = 0 and reminder_dt + {1} >  UNIX_TIMESTAMP(CURTIME()) ORDER BY reminder_dt ASC;'
+    .format(int(ownerId), offset)
   )
 
   self.result = self.cursor.fetchall()

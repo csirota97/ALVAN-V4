@@ -227,6 +227,15 @@ console.log(CONSTANTS.TODO_REQUEST.DELETE_LIST===requestType)
     handleJsonResponse(jsonRes);
   },
     
+  getRemindersWithOffsetRequest:  async (ownerId, offset, handleJsonResponse) => {
+    const response = await fetch(url+"alvan/api/reminder/"+ownerId+"/"+offset, {
+      method: "GET",
+      mode: 'cors',
+    }).catch(e => console.log(e));
+    const jsonRes = await response.json();
+    handleJsonResponse(jsonRes);
+  },
+    
 };
 
 export default serviceFactory;

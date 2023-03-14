@@ -15,8 +15,8 @@ class Reminders(Resource):
     response = {'reminders': db.newReminder(id,request.form['reminder'],request.form['query'], self.scheduler).result}
     return response
 
-  def get(self, id):
-    response = {'reminders': db.getUserReminders(id).result}
+  def get(self, id, offset=0):
+    response = {'reminders': db.getUserReminders(id, offset).result}
     return response
 
   def put(self, table): #NOT IMPLEMENTED
