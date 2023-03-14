@@ -66,7 +66,7 @@ function App() {
   if(constructedToDoLists) {
     console.log(constructedToDoLists[0], 'bazingaroni')
     defaultSelectedList = constructedToDoLists[0];
-    const currentListSelection = localStorage.getItem('currentListSelection');
+    const currentListSelection = sessionStorage.getItem('currentListSelection');
     const currentLocalSelection = JSON.parse(
       currentListSelection === 'undefined' ? JSON.stringify({}) : currentListSelection
     );
@@ -74,9 +74,14 @@ function App() {
     if (currentLocalSelection && localKey) {
       defaultSelectedList = localKey;
     } else {
-      localStorage.setItem('currentListSelection', JSON.stringify(constructedToDoLists[0]));
+      sessionStorage.setItem('currentListSelection', JSON.stringify(constructedToDoLists[0]));
     }
   }
+
+  const currentActivePageStore = sessionStorage.getItem('currentActivePage');
+  const currentActivePage = JSON.parse(
+    currentActivePageStore === 'undefined' ? JSON.stringify({}) : currentActivePageStore
+  );
 
   return (
     (lists && constructedToDoLists || !userToken) &&
@@ -88,6 +93,7 @@ function App() {
       userToken={userToken}
       setUserToken={setUserToken}
       unloaded={!lists || !constructedToDoLists}
+      remindersScreenActive={currentActivePage === 'reminders'}
     />
   );
 }

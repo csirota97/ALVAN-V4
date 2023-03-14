@@ -43,9 +43,11 @@ function Screen(props) {
   const [eventRepeatUnit, setEventRepeatUnit] = useState(["0"]);
   const [eventRepeatInterval, setEventRepeatInterval] = useState(1);
   const today = new Date();
+  const reminderDefault = new Date(today.setHours(today.getHours()+8));
   const [eventRepeatStartDate, setEventRepeatStartDate] = useState(`${today.getFullYear()}-${today.getMonth() < 9 ? `0${today.getMonth() + 1}` : today.getMonth() + 1}-${today.getDate()}`);
-  const [reminderDate, setReminderDate] = useState(`${today.getFullYear()}-${today.getMonth() < 9 ? `0${today.getMonth() + 1}` : today.getMonth() + 1}-${today.getDate()}`);
-  const [reminderTime, setReminderTime] = useState("08:00");
+  const [reminderDate, setReminderDate] = useState(`${reminderDefault.getFullYear()}-${reminderDefault.getMonth() < 9 ? `0${reminderDefault.getMonth() + 1}` : reminderDefault.getMonth() + 1}-${reminderDefault.getDate()}`);
+  const reminderMinDate = new Date(today.setHours(today.getHours()-8)).toLocaleDateString('sv');
+  const [reminderTime, setReminderTime] = useState(`${reminderDefault.getHours() < 10 ? 0:''}${reminderDefault.getHours()}:${reminderDefault.getMinutes()}`);
   const [listOptions, setListOptions] = useState(props.toDoLists);
   const [selectedListOption, setSelectedListOption] = useState(props.defaultSelection);
   const [newTaskName, setNewTaskName] = useState('');
@@ -61,11 +63,10 @@ function Screen(props) {
   const [validationTrigger, setValidationTrigger] = useState(true);
   const [settingsCardClasses, setSettingsCardClasses] = useState('settings-wrapper settings-closing');
   const [activeTask, setActiveTask] = useState(null);
-  const [isTodoListShown, setIsTodoListShown] = useState(true);
+  const [isTodoListShown, setIsTodoListShown] = useState(!props.remindersScreenActive);
   const triggerReload = () => setReload(reload+1);
   const revalidate = () => setValidationTrigger(!validationTrigger);
   const toggleMenuCard = () => {
-    console.log(2222222)
     if (isMenuShown) {
       setSettingsCardClasses('settings-wrapper settings-closing')
       setTimeout(() => setIsMenuShown(false), 500);
@@ -77,7 +78,7 @@ function Screen(props) {
 
   const onListSelectorChange = (newList) => {
     console.log(newList)
-    localStorage.setItem('currentListSelection', JSON.stringify(newList))
+    sessionStorage.setItem('currentListSelection', JSON.stringify(newList))
     return setSelectedListOption(newList)
   }
   
@@ -85,9 +86,6 @@ function Screen(props) {
   const openNewListDialog = () => setIsNewListDialogShown(true);
   
   const updateTask = (task) => {
-    console.log(task)
-    console.log(`Make call to flip task: ${task.id}:'${task.description}' to ${!task.completed}`)
-    console.log(task.completed)
     serviceFactory.toDoRequest(CONSTANTS.TODO_REQUEST.UPDATE_EVENT,{eventId: task.id, completed: !task.completed},()=>console.log(`${task.id}:'${task.description}' set to ${!task.completed}`))
     const listOptionsCopy = listOptions.slice().map(listOption => {
       if (listOption.key === selectedListOption?.key) {
@@ -352,7 +350,7 @@ function Screen(props) {
         <input type="date"
           id="repeat-start-date"
           name="trip-start"
-          min="2018-01-01"
+          min={reminderMinDate}
           value={reminderDate}
           onChange={(e) => {console.log(e.target);setReminderDate(e.target.value)}}
         />
@@ -445,6 +443,7 @@ function Screen(props) {
             onClick={() => {
               console.log("List type swap button");
               setIsTodoListShown(!isTodoListShown);
+              sessionStorage.setItem('currentActivePage', JSON.stringify(isTodoListShown ? 'reminders' : 'todos'))
               toggleMenuCard(); 
             }}
             >

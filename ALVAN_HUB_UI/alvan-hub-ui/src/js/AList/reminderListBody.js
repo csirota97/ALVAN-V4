@@ -57,7 +57,15 @@ const ReminderListBody = (props) => {
         </div>
       </>
       : 
-      "No Reminders"
+      <>
+        {"No Reminders"}
+        <br />
+        <div className='add-new-task' onClick={openNewReminderDialog}>
+          <div className='add-new-task-icon'>
+            <ion-icon name="add-circle"></ion-icon>
+          </div>Add New Reminder
+        </div>
+      </>
 
     }
   </>);
