@@ -16,7 +16,6 @@ class ToDo(Resource):
     if table.lower() == 'list':
       response = {'lists': db.newList(request.form['ownerId'],request.form['calendarId'],request.form['listName']).result}
     elif table.lower() == 'event':
-      print("hit", request.form)
       response = {'events': db.newEvent(request.form['listId'], request.form['description'], request.form['completed'], request.form['repeatUnit'], request.form['repeatInterval'], request.form['repeatStartDate']).result}
 
     return response
@@ -26,7 +25,6 @@ class ToDo(Resource):
     response = {"error": 404}
 
     if table.lower() == 'resetRepeatingEvents'.lower():
-      print("reset")
       response = {'events': db.resetRepeatingEvents().result, 'reminders': db.getUpcomingReminders(self.scheduler).result}
       
 
@@ -49,7 +47,6 @@ class ToDoID(Resource):
     response = {"error": 404}
 
     if table.lower() == 'lists':
-      print(id)
       if int(id) == -1:
         response = {'lists': db.getLists(-1).result}
       else:

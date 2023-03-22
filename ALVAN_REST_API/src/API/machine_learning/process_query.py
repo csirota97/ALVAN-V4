@@ -18,10 +18,6 @@ classes = pickle.load(open('training_data{}classes.pkl'.format(os.sep), 'rb'))
 # model = load_model('training_data{}alvan_response_trained_model.h5'.format(os.sep))
 model = load_model('chatbotmodel.h5')
 
-# print(words)
-# print(classes)
-# print(model)
-
 def clean_up_sentence(sentence):
   sentence_words = nltk.word_tokenize(sentence)
   sentence_words = [lemmatizer.lemmatize(word) for word in sentence_words]
@@ -50,7 +46,3 @@ def predict_class(sentence):
     return_list.append({'intent': classes[r[0]], 'probability': str(r[1])})
   
   return return_list
-test="turn on the lights"
-print(clean_up_sentence(test))
-print(bag_of_words(test))
-print(predict_class(test))

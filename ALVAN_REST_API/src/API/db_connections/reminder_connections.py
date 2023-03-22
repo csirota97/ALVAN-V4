@@ -8,8 +8,6 @@ from flask_apscheduler import APScheduler
 global_index = 0
 
 def newReminder (self, ownerId, reminderString, query, scheduler):
-  print('\n\n\n')
-  print(ownerId, reminderString, query)
   modified_query = query.lower().replace('today',(datetime.date.today()).strftime('%m/%d/%Y'))
   modified_query = modified_query.lower().replace('tomorrow',(datetime.date.today()+ datetime.timedelta(days=1)).strftime('%m/%d/%Y'))
   for dateTime in datefinder.find_dates(modified_query):
