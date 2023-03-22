@@ -2,6 +2,7 @@ import 'babel-polyfill';
 import commands from './commands';
 import getConstants from './constants';
 import hash from 'hash.js';
+import { internalIpV4, internalIpV4Sync } from 'internal-ip';
 
 const CONSTANTS = getConstants();
 
@@ -235,6 +236,56 @@ console.log(CONSTANTS.TODO_REQUEST.DELETE_LIST===requestType)
     const jsonRes = await response.json();
     handleJsonResponse(jsonRes);
   },
+
+  securityCameraNetworkScan: async (index, homeId) => {
+    console.log(index)
+    const privateIP = await internalIpV4() || '192.168.1.155';
+    const privateIPStem = privateIP.split('.').splice(0,3).join('.')
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), 2000);
+    let response = await fetch(`http://${privateIPStem}.${index}:5001/networkScan/${homeId}`, {
+      method: "GET",
+      mode: 'cors',
+      signal: controller.signal
+    }).then(res=> res.json()).then(res => {return {url:`http://${privateIPStem}.${index}:5001`, deviceId: res.deviceKey, status: res.status}})
+    clearTimeout(id);
+
+    console.log(index, response)
+    return {status: response.status, url:response.url.split('/network')[0], deviceId: response.deviceId}
+  },
+
+  registerDevice: async (homeId, deviceId, deviceType) => {
+    const formData = new FormData();
+    formData.append('homeId', homeId);
+    formData.append('deviceId', deviceId);
+    formData.append('deviceType', deviceType);
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), 2000);
+    let status = 0;
+    let response = await fetch(`${url}/device`, {
+      method: "POST",
+      mode: 'cors',
+      signal: controller.signal,
+      body: formData
+    }).then(res=>{status=res.status; return res.json()}).then(res => {return {response:res, url, status}})
+    clearTimeout(id);
+
+    return {status: response.response.status, url:url, body: response.response}
+  },
+
+  setSecurityCameraRegistration: async (url,homeId) => {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), 2000);
+    let status = 0;
+    let response = await fetch(`${url}/register/${homeId}`, {
+      method: "GET",
+      mode: 'cors',
+      signal: controller.signal
+    }).then(res=>{status=res.status; return res.json()}).then(res => {return {response:res, url, status}})
+    clearTimeout(id);
+
+    return {status: response.response.status, url:url, body: response.response}
+  }
     
 };
 

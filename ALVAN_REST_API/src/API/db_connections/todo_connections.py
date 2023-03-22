@@ -149,7 +149,7 @@ def resetRepeatingEvents(self):
   
   return self
 
-def registerDevice(self, ownerId, deviceToken):
+def registerToDoDevice(self, ownerId, deviceToken):
   self.cursor.execute(
     "INSERT INTO todo_list_device_keys (userId, device_key) VALUES ({0},'{1}');"
     .format(ownerId, deviceToken)
