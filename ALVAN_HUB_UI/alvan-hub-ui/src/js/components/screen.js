@@ -48,18 +48,13 @@ function Screen(props) {
   }
 
   const pushToCameraIPs = (ip) => {
-    console.log(`TESTS: "${cameraIPs.length}", "${ip}"`);
     cameraIPs=JSON.parse(sessionStorage.getItem('cameraIPs'));
-    console.log("YIP",cameraIPs)
     if (!cameraIPs.includes(ip)) {
       cameraIPs.push(ip);
       sessionStorage.setItem('cameraIPs',JSON.stringify(cameraIPs));
       setCameraIPState(cameraIPs);
     }
   };
-
-
-  useEffect(()=>console.log(cameraIPs))
 
   useEffect(async () => {
     if (initialRender) {
@@ -76,14 +71,11 @@ function Screen(props) {
       Promise.allSettled(tempCameraIPs).then((results) => results.forEach((result) => {
         if (result.status === "fulfilled") {
           if (result.value.status === 200) {
-
-            console.log("YUM", result)
             pushToCameraIPs(result.value.url);
           } else if (result.value.status === 401) {
             const regCall = serviceFactory.setSecurityCameraRegistration(result.value.url, homeId)
             Promise.resolve(regCall).then(res=>{
               if (res.status === 200) {
-                console.log("YUM2", result)
                 pushToCameraIPs(result.value.url);
                 serviceFactory.registerDevice(homeId,result.value.deviceId,1);
               }
@@ -92,7 +84,6 @@ function Screen(props) {
         }
       }));
       setInitialRender(false);
-      console.log("BAZINGARONI")
      } 
   })
   

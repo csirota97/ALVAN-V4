@@ -12,7 +12,6 @@ const LogInDialog = (props) => {
 
   useEffect(() => {
     if (results.result !== 'Incorrect Email or Password' && results.result?.length == 1) {
-      console.log(results.result[0])
       localStorage.setItem('userToken', results.result[0]);
       onSubmit(results.result[0]);
     }

@@ -9,7 +9,6 @@ function WeatherContainer (props) {
 
   if (Math.floor(new Date().getTime()/1000) - response?.location?.localtime_epoch >= 600 || response === '') {
     serviceFactory.weatherRequest(null, setResponse);
-    console.log(trigger);
   }
 
   useEffect(() => setDefaultWeather(response), [response, setDefaultWeather])
