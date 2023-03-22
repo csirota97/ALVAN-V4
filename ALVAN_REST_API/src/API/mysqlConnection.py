@@ -1,5 +1,5 @@
 import mysql.connector
-from db_connections import todo_connections as todo, user_connections as userC, reminder_connections as reminderC
+from db_connections import todo_connections as todo, user_connections as userC, reminder_connections as reminderC, device_connections as devices
 
 class Connector:
   def __init__(self, host, user, password):
@@ -73,8 +73,8 @@ class Connector:
   def resetRepeatingEvents(self):
     return self.__catchDBError__(todo.resetRepeatingEvents, [])
 
-  def registerDevice(self, ownerId, deviceToken):
-    return self.__catchDBError__(todo.registerDevice, [ownerId, deviceToken])
+  def registerToDoDevice(self, ownerId, deviceToken):
+    return self.__catchDBError__(todo.registerToDoDevice, [ownerId, deviceToken])
 
   #----------------------------------------------------------------
   # User Authentication
@@ -85,4 +85,11 @@ class Connector:
 
   def login(self, email, password):
     return self.__catchDBError__(userC.login, [email, password])
+  
+  #----------------------------------------------------------------
+  # User Authentication
+  #----------------------------------------------------------------
+  
+  def registerDevice(self, homeId, deviceId, deviceType):
+    return self.__catchDBError__(devices.registerDevice, [homeId, deviceId, deviceType])
   

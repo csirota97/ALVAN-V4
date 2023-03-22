@@ -71,6 +71,6 @@ class ToDoID(Resource):
     response = {"error": 404}
 
     if table.lower() == 'registertodo':
-      response = {'register': db.registerDevice(id, request.form['deviceToken']).result}
+      response = {'register': db.registerToDoDevice(id, request.form['deviceToken']).result}
 
     return response

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Clock from './clock';
 import SpeechRecognizer from './speechRecognizer.js';
 import PropTypes from 'prop-types';
@@ -9,6 +9,7 @@ import Logo from './logo';
 import ActionCard from './actionCard';
 import NewUserDialog from './Cards/newUserDialog';
 import LogInDialog from './Cards/logInDialog';
+import serviceFactory from '../utils/service-factory';
 
 /**
  * @return {Component} screen component
@@ -32,6 +33,68 @@ function Screen(props) {
   const [validationTrigger, setValidationTrigger] = useState(true);
   const [settingsCardClasses, setSettingsCardClasses] = useState('settings-wrapper settings-closing');
   const [hideSpeechRecognizer, setHideSpeechRecognizer] = useState(false);
+  const [initialRender, setInitialRender] = useState(true);
+  const [cameraIPState, setCameraIPState] = useState([]);
+  const [secondRender, setSecondRender] = useState(false);
+  const cameraToggleIndex = {};
+  
+  //TODO: GET HOME VALUE FROM DB ON STARTUP
+  const homeId = 2121;
+  
+  let cameraIPs = JSON.parse(sessionStorage.getItem('cameraIPs'));
+  if (cameraIPs === null) {
+    sessionStorage.setItem('cameraIPs', JSON.stringify([]));
+    cameraIPs = [];
+  }
+
+  const pushToCameraIPs = (ip) => {
+    console.log(`TESTS: "${cameraIPs.length}", "${ip}"`);
+    cameraIPs=JSON.parse(sessionStorage.getItem('cameraIPs'));
+    console.log("YIP",cameraIPs)
+    if (!cameraIPs.includes(ip)) {
+      cameraIPs.push(ip);
+      sessionStorage.setItem('cameraIPs',JSON.stringify(cameraIPs));
+      setCameraIPState(cameraIPs);
+    }
+  };
+
+
+  useEffect(()=>console.log(cameraIPs))
+
+  useEffect(async () => {
+    if (initialRender) {
+      sessionStorage.setItem('cameraIPs',JSON.stringify([]));
+      const tempCameraIPs = [];
+      const pushToTemp = (ip) => tempCameraIPs.push(ip)
+      const loop = async () => {
+        for (let i = 1; i<256; i++) {
+          const call = serviceFactory.securityCameraNetworkScan(i, homeId);
+          pushToTemp(call)
+        }
+      }
+      await loop();
+      Promise.allSettled(tempCameraIPs).then((results) => results.forEach((result) => {
+        if (result.status === "fulfilled") {
+          if (result.value.status === 200) {
+
+            console.log("YUM", result)
+            pushToCameraIPs(result.value.url);
+          } else if (result.value.status === 401) {
+            const regCall = serviceFactory.setSecurityCameraRegistration(result.value.url, homeId)
+            Promise.resolve(regCall).then(res=>{
+              if (res.status === 200) {
+                console.log("YUM2", result)
+                pushToCameraIPs(result.value.url);
+                serviceFactory.registerDevice(homeId,result.value.deviceId,1);
+              }
+            })
+          }
+        }
+      }));
+      setInitialRender(false);
+      console.log("BAZINGARONI")
+     } 
+  })
   
   const customProps = {
     defaultWeather: defaultWeather,
@@ -43,7 +106,13 @@ function Screen(props) {
     userToken: props.userToken
   }
   
-  const homeView = (<HomeView {...customProps} />);
+  const homeView = (
+    <HomeView
+      securityCameraIPs={cameraIPState}
+      securityCameraToggleIndex={cameraToggleIndex}
+      {...customProps}
+    />
+  );
   const calendarView = (<CalendarView {...customProps} />);
   const revalidate = () => setValidationTrigger(!validationTrigger);
   const toggleMenuCard = () => {

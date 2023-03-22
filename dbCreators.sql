@@ -65,3 +65,32 @@ CREATE TABLE `todo_list_device_keys` (
   KEY `userId_idx` (`userId`),
   CONSTRAINT `user` FOREIGN KEY (`userId`) REFERENCES `Users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- Home
+
+CREATE TABLE `alvandb`.`Home` (
+  `id` VARCHAR(36) NOT NULL,
+  `userId` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `id_idx` (`userId` ASC) VISIBLE,
+  CONSTRAINT `id`
+    FOREIGN KEY (`userId`)
+    REFERENCES `alvandb`.`Users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+-- Device
+
+CREATE TABLE `alvandb`.`Device` (
+  `id` INT NOT NULL,
+  `deviceType` INT NOT NULL,
+  `homeId` VARCHAR(36) NULL,
+  PRIMARY KEY (`id`),
+  INDEX `home_idx` (`homeId` ASC) VISIBLE,
+  CONSTRAINT `home`
+    FOREIGN KEY (`homeId`)
+    REFERENCES `alvandb`.`Home` (`id`)
+    ON DELETE SET NULL
+    ON UPDATE NO ACTION);
