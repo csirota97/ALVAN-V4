@@ -4,8 +4,6 @@ import serviceFactory from '../utils/service-factory';
 
 const SpeechRecognition = window.SpeechRecognition ||
   window.webkitSpeechRecognition;
-console.log(window.SpeechRecognition);
-console.log(window.webkitSpeechRecognition);
 
 const mic = new SpeechRecognition();
 mic.interimResults = false;
@@ -25,20 +23,15 @@ function SpeechRecognizer (props) {
   const [response, setResponse] = useState({});
 
   useEffect(() => {
-    // console.log(e);
     if (transcript.includes('Alvin') && !activated) {
       setActivated(true);
       activatedSound.play();
-      // console.log("blip"); 
     } else if (activated && transcript !== "") {
       //query api
-      console.log("Query: " + transcript);
       serviceFactory.sendQuery(transcript, props.userId, mic, setResponse);
-      
       setActivated(false);  
     }
     mic.stop();
-    // console.log("RESTART");
   }, [transcript])
 
   useEffect(() => {
@@ -73,17 +66,14 @@ function SpeechRecognizer (props) {
     if (isListening) {
       mic.start();
       mic.onend = () => {
-        // console.log('continue');
         mic.start();
       };
     } else {
       mic.stop();
       mic.onend = () => {
-        // console.log('stopped');
       };
     }
     mic.onstart = () => {
-      // console.log('mic on');
     };
 
     mic.onresult = (event) => {
@@ -110,7 +100,6 @@ function SpeechRecognizer (props) {
           <p id='response'>
             Response: {response.tts_cd}
           </p>
-          <button onClick={() => {console.log(serviceFactory.calendarRequest(props.googleUser));}} />
         </div>
       }
     </>

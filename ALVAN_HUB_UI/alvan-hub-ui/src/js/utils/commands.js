@@ -40,9 +40,6 @@ const commands = {
       const readHours = hours % 12 > 0 ? hours % 12 : 12;
       const readMinutes = minutes >= 10 ? `${minutes}` : minutes === 0 ? '' : `Oh ${minutes}`;
       const amPm = isAm ? 'AM' : 'PM';
-      console.log(hours);
-      console.log(minutes);
-      console.log(isAm);
 
       speak(`It's currently ${readHours} ${readMinutes} ${amPm}`);
     }
@@ -119,7 +116,6 @@ const commands = {
   8: {
     description: 'set a reminder',
     function: async (named_entities, userId, query, mic) => {
-      console.log(named_entities)
       const onresultOriginal = mic.onresult;
       let message = "";
       const reminderPrompt = "What would you like the reminder to be?";
@@ -135,7 +131,6 @@ const commands = {
           );
           if (message.toLowerCase() !== reminderPrompt.toLowerCase()) {
             speak(message);
-            console.log(message)
             mic.onresult=onresultOriginal;
             serviceFactory.newReminderRequest(userId, message, query)
           }

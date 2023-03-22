@@ -20,7 +20,6 @@ const serviceFactory = {
     });
     const jsonRes = await response.json();
     setResponseJson(jsonRes);
-    console.log(jsonRes);
     commands[jsonRes.tts_cd].function(jsonRes.named_entities, userId, query, mic);
   },
 
@@ -37,7 +36,6 @@ const serviceFactory = {
       method: "get",
     });
     const resJson = await response.json();
-    console.log(resJson)
     setResponseJson(resJson);
   },
 
@@ -47,7 +45,6 @@ const serviceFactory = {
     };
     const weatherUrl = `${url}alvan/api/weather`
     if (location) {
-      console.log(location)
       const response = await fetch(`${weatherUrl}/${location}`, options);
       const resJson = await response.json();
       setResponseJson(resJson);
@@ -74,7 +71,6 @@ const serviceFactory = {
     const toDoURL = `${url}alvan/api/todo`
     switch(requestType) {
       case CONSTANTS.TODO_REQUEST.GET_LIST_EVENTS:
-        // console.log(formData)
         response = await fetch(`${toDoURL}/lists/${params.id}`, {
           method: "GET",
           headers: {'mode': 'no-cors'},
@@ -84,7 +80,6 @@ const serviceFactory = {
         formData.append('ownerId', params.ownerId);
         formData.append('calendarId', params.calendarId);
         formData.append('listName', params.listName);
-        // console.log(formData)
         response = await fetch(`${toDoURL}/list`, {
           method: "POST",
           body: formData,
@@ -97,7 +92,6 @@ const serviceFactory = {
         });
         break;
       case CONSTANTS.TODO_REQUEST.GET_LISTS:
-        // console.log(formData)
         response = await fetch(`${toDoURL}/lists/-1`, {
           method: "GET",
           headers: {'mode': 'no-cors'},
@@ -145,14 +139,9 @@ const serviceFactory = {
         break;
       default:
         // code block
-        console.log("blik")
         break;
     };
-console.log(requestType)
-console.log(CONSTANTS.TODO_REQUEST.DELETE_LIST);
-console.log(CONSTANTS.TODO_REQUEST.DELETE_LIST===requestType)
     const resJson = await response.json();
-    // console.log(resJson)
     setResponseJson(resJson);
   },
 
@@ -166,8 +155,7 @@ console.log(CONSTANTS.TODO_REQUEST.DELETE_LIST===requestType)
       method: "POST",
       mode: 'cors',
       body: formData,
-    }).then(async res => res.json()).catch(e => console.log(e));
-    // console.log(response)
+    }).then(async res => res.json()).catch(e => console.error(e));
     // let resJson = response;
     
   },
@@ -180,8 +168,7 @@ console.log(CONSTANTS.TODO_REQUEST.DELETE_LIST===requestType)
       method: "POST",
       mode: 'cors',
       body: formData,
-    }).then(async res => res.json()).catch(e => console.log(e));
-    // console.log(response)
+    }).then(async res => res.json()).catch(e => console.error(e));
     // let resJson = response;
     
   },
@@ -193,7 +180,7 @@ console.log(CONSTANTS.TODO_REQUEST.DELETE_LIST===requestType)
       method: "POST",
       mode: 'cors',
       body: formData,
-    }).catch(e => console.log(e));
+    }).catch(e => console.error(e));
     const jsonRes = await response.json();
     handleJsonResponse(jsonRes);
   },
@@ -216,14 +203,14 @@ console.log(CONSTANTS.TODO_REQUEST.DELETE_LIST===requestType)
       method: "POST",
       mode: 'cors',
       body: formData,
-    }).then(async res => res.json()).catch(e => console.log(e));
+    }).then(async res => res.json()).catch(e => console.error(e));
   },
 
   getRemindersRequest:  async (ownerId, handleJsonResponse) => {
     const response = await fetch(url+"alvan/api/reminder/"+ownerId, {
       method: "GET",
       mode: 'cors',
-    }).catch(e => console.log(e));
+    }).catch(e => console.error(e));
     const jsonRes = await response.json();
     handleJsonResponse(jsonRes);
   },
@@ -232,13 +219,12 @@ console.log(CONSTANTS.TODO_REQUEST.DELETE_LIST===requestType)
     const response = await fetch(url+"alvan/api/reminder/"+ownerId+"/"+offset, {
       method: "GET",
       mode: 'cors',
-    }).catch(e => console.log(e));
+    }).catch(e => console.error(e));
     const jsonRes = await response.json();
     handleJsonResponse(jsonRes);
   },
 
   securityCameraNetworkScan: async (index, homeId) => {
-    console.log(index)
     const privateIP = await internalIpV4() || '192.168.1.155';
     const privateIPStem = privateIP.split('.').splice(0,3).join('.')
     const controller = new AbortController();
@@ -250,7 +236,6 @@ console.log(CONSTANTS.TODO_REQUEST.DELETE_LIST===requestType)
     }).then(res=> res.json()).then(res => {return {url:`http://${privateIPStem}.${index}:5001`, deviceId: res.deviceKey, status: res.status}})
     clearTimeout(id);
 
-    console.log(index, response)
     return {status: response.status, url:response.url.split('/network')[0], deviceId: response.deviceId}
   },
 
