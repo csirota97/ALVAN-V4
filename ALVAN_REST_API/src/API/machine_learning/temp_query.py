@@ -77,7 +77,6 @@ def query(query):
   for index, line in enumerate(training_lines):
     points = 0
     line_list = []
-    # print(words, 555)
     for wrd in query_words:
       if wrd in words and line[words.index(wrd)] == 1:
         points += 1

@@ -10,8 +10,6 @@ class Reminders(Resource):
     self.scheduler = scheduler
 
   def post(self, id):
-    for m in request.form:
-      print(m)
     response = {'reminders': db.newReminder(id,request.form['reminder'],request.form['query'], self.scheduler).result}
     return response
 
@@ -23,7 +21,6 @@ class Reminders(Resource):
     response = {"error": 404}
 
     if table.lower() == 'resetRepeatingEvents'.lower():
-      print("reset")
       response = {'events': db.resetRepeatingEvents().result}
 
     return response

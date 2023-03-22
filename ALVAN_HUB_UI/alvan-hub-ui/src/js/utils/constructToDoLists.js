@@ -1,10 +1,8 @@
 const constructToDoLists = (listQueryResults) => {
   const listHash = {};
-  console.log(listQueryResults)
 
   if (listQueryResults.lists) {
     listQueryResults.lists.forEach(row => {
-      console.log(row)
       if (listHash[row[0]]) {
         listHash[row[0]].tasks.push({
           id: row[4],

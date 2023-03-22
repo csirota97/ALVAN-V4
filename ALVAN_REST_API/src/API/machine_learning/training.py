@@ -74,7 +74,6 @@ hist = model.fit(np.array(train_x), np.array(train_y), epochs=200, batch_size=5,
 # model.save('training_data{}alvan_response_trained_model.h5'.format(os.sep), hist)
 model.save('chatbotmodel.h5', hist)
 
-print('done')
 
 
 
