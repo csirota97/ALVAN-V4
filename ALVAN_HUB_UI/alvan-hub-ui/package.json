@@ -4,14 +4,16 @@
   "version": "4.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
+    "babel-polyfill": "^6.26.0",
     "gapi-script": "^1.2.0",
     "hash.js": "^1.1.7",
     "howler": "^2.2.3",
     "internal-ip": "^7.0.0",
+    "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-google-login": "^5.2.2",
@@ -24,7 +26,7 @@
     "style-loader": "^3.3.1",
     "terra-button-group": "^3.61.0",
     "web-vitals": "^2.1.4",
-    "webpack": "^5.70.0"
+    "webpack": "^5.76.3"
   },
   "scripts": {
     "clean:install": "npm clean-install",
@@ -53,8 +55,14 @@
     ]
   },
   "devDependencies": {
-    "babel-polyfill": "^6.26.0",
     "enzyme": "^3.11.0",
+    "eslint": "^8.36.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-compat": "^4.1.2",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "gh-pages": "^4.0.0",
     "jest": "^28.1.1",
     "jest-scss-transform": "^1.0.3",

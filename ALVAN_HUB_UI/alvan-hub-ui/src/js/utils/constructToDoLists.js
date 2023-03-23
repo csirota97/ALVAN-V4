@@ -11,8 +11,8 @@ const constructToDoLists = (listQueryResults) => {
           inProgress: !!row[8],
           repeatInterval: row[9],
           repeatUnit: row[10],
-          repeatStartDate: row[11] ? new Date(row[11]): null,
-        })
+          repeatStartDate: row[11] ? new Date(row[11]) : null,
+        });
       } else {
         listHash[row[0]] = {
           key: row[0],
@@ -24,18 +24,16 @@ const constructToDoLists = (listQueryResults) => {
             inProgress: !!row[8],
             repeatInterval: row[9],
             repeatUnit: row[10],
-            repeatStartDate: row[11] ? new Date(row[11]): null,
-          }] : []
-        }
+            repeatStartDate: row[11] ? new Date(row[11]) : null,
+          }] : [],
+        };
       }
-    })
+    });
   }
 
   const constructedListTasks = Object.keys(listHash)
-    .map(function(key) {
-        return listHash[key];
-    });
+    .map((key) => listHash[key]);
   return constructedListTasks;
-}
+};
 
 export default constructToDoLists;

@@ -2,31 +2,31 @@ import 'jsdom-global/register';
 import getConstants from '../../../src/js/utils/constants';
 
 describe('Constants', () => {
-  const env = process.env;
-  
+  const { env } = process;
+
   beforeEach(() => {
-    jest.resetModules()
-    process.env = { ...env }
+    jest.resetModules();
+    process.env = { ...env };
   });
 
   afterEach(() => {
-    process.env = env
+    process.env = env;
   });
 
   it('should have the correct dev server url', () => {
-    process.env.NODE_ENV = 'development'
+    process.env.NODE_ENV = 'development';
     const constants = getConstants();
     expect(constants.SERVER_URL).toBe('http://localhost:5000/');
   });
 
   it('should have the correct test server url', () => {
-    process.env.NODE_ENV = 'test'
+    process.env.NODE_ENV = 'test';
     const constants = getConstants();
     expect(constants.SERVER_URL).toBe('http://localhost:5000/');
   });
 
   it('should have the correct prod server url', () => {
-    process.env.NODE_ENV = 'production'
+    process.env.NODE_ENV = 'production';
     const constants = getConstants();
     expect(constants.SERVER_URL).toBe('https://server.ALVANPROJECT.com/');
   });

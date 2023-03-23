@@ -12,8 +12,8 @@ const mockToDoLists = [
         id: 2,
         description: 'Groceries',
         completed: false,
-      }
-    ]
+      },
+    ],
   },
   {
     key: 2,
@@ -28,8 +28,8 @@ const mockToDoLists = [
         id: 4,
         description: 'Chores',
         completed: false,
-      }
-    ]
+      },
+    ],
   },
   {
     key: 3,
@@ -54,14 +54,14 @@ const mockToDoLists = [
         id: 8,
         description: 'Bribe kids not to tell mom I forgot them at daycare',
         completed: false,
-      }
-    ]
+      },
+    ],
   },
   {
     key: 4,
     value: 'fourth to-do list',
-    tasks: []
-  }
+    tasks: [],
+  },
 ];
 
 export default mockToDoLists;
