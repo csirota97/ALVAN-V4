@@ -13,59 +13,57 @@ function ReminderListBody(props) {
   } = props;
 
   return (
-    listOptions && listOptions.reminders.length > 0
-      ? (
-        <div className="task-list">
-          {(
-            <div>
-              <h3>Reminders</h3>
-              {listOptions.reminders.map((task => (
-                <ReminderRow
-                  task={task}
-                  updateTask={updateTask}
-                  openReminderSettingsCard={openReminderSettingsCard}
-                  setActiveTask={setActiveTask}
-                />
-              )
-              ))}
+    <>
+      <h2 className="task-section-heading">Reminders</h2>
+      {
+        listOptions && listOptions.reminders.length > 0
+          ? (
+            <div className="task-list">
+              {(
+                <div>
+                  {listOptions.reminders.map((task => (
+                    <ReminderRow
+                      task={task}
+                      updateTask={updateTask}
+                      openReminderSettingsCard={openReminderSettingsCard}
+                      setActiveTask={setActiveTask}
+                    />
+                  )
+                  ))}
 
-              {/* Completed Tasks? */}
-              {/* {selectedListOption.tasks.some(task => task.completed)
-              && selectedListOption.tasks.some(task => !task.completed) ? <><br /><hr /></>:undefined}
-              {selectedListOption.tasks.some(task => task.completed) ? "Completed Tasks":""}
-              {selectedListOption.tasks.map((task =>
-                task.completed ?
-                  <TaskRow
-                    task={task}
-                    updateTask={updateTask}
-                    openTaskSettingsCard={openTaskSettingsCard}
-                    setActiveTask={setActiveTask}
-                  /> :
-                  undefined
-              ))} */}
+                  {/* Completed Tasks? */}
+                  {/* {selectedListOption.tasks.some(task => task.completed)
+                  && selectedListOption.tasks.some(task => !task.completed) ? <><br /><hr /></>:undefined}
+                  {selectedListOption.tasks.some(task => task.completed) ? "Completed Tasks":""}
+                  {selectedListOption.tasks.map((task =>
+                    task.completed ?
+                      <TaskRow
+                        task={task}
+                        updateTask={updateTask}
+                        openTaskSettingsCard={openTaskSettingsCard}
+                        setActiveTask={setActiveTask}
+                      /> :
+                      undefined
+                  ))} */}
+                </div>
+              )}
             </div>
-          )}
-          <div className="add-new-task" onClick={openNewReminderDialog}>
-            <div className="add-new-task-icon">
-              <ion-icon name="add-circle" />
-            </div>
-            Add New Reminder
-          </div>
+          )
+          : (
+            <>
+              No Reminders
+              <br />
+            </>
+          )
+      }
+
+      <div className="add-new-task" onClick={openNewReminderDialog}>
+        <div className="add-new-task-icon">
+          <ion-icon name="add-circle" />
         </div>
-      )
-      : (
-        <>
-          No Reminders
-          <br />
-          <div className="add-new-task" onClick={openNewReminderDialog}>
-            <div className="add-new-task-icon">
-              <ion-icon name="add-circle" />
-            </div>
-            Add New Reminder
-          </div>
-        </>
-      )
-
+        Add New Reminder
+      </div>
+    </>
   );
 }
 

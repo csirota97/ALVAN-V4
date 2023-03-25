@@ -6,7 +6,7 @@ function Logo(props) {
   const { toggleMenuCard } = props;
 
   return (
-    <div onClick={toggleMenuCard} onTouchStart={toggleMenuCard}>
+    <div onClick={toggleMenuCard}>
       <img className="logo" alt="logo" src={logo} />
       <img className="logo-back" alt="logo back" src={logo2} />
     </div>
