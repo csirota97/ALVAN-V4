@@ -74,12 +74,13 @@
 }
 
 .task-list {
-  max-height:10%;
+  max-height:75vh;
   margin-top: 10px;
   overflow-y:auto;
-  height: 80vh;
+  height: min-content;
   background-color: var(--text-color);
   border-radius: 10px;
+  padding: 10px 0 10px 0;
 }
 
 .settings-wrapper {

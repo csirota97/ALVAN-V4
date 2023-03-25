@@ -68,9 +68,14 @@ function ListBody(props) {
                         </>
                       ) : undefined
                   }
-                  <h3 className="task-section-heading">
-                    {selectedListOption.tasks.some(task => task.inProgress) ? 'In Progress Tasks' : ''}
-                  </h3>
+                  {
+                    selectedListOption.tasks.some(task => task.inProgress)
+                      ? (
+                        <h3 className="task-section-heading">
+                          In Progress Tasks
+                        </h3>
+                      ) : null
+                  }
                   {selectedListOption.tasks.map((task => (task.inProgress
                     ? (
                       <TaskRow
@@ -93,9 +98,15 @@ function ListBody(props) {
                         </>
                       ) : undefined
                   }
-                  <h3 className="task-section-heading">
-                    {selectedListOption.tasks.some(task => task.completed) ? 'Completed Tasks' : ''}
-                  </h3>
+                  {
+                    selectedListOption.tasks.some(task => task.completed)
+                      ? (
+                        <h3 className="task-section-heading">
+                          Completed Tasks
+                        </h3>
+                      )
+                      : null
+                  }
                   {selectedListOption.tasks.map((task => (task.completed
                     ? (
                       <TaskRow
