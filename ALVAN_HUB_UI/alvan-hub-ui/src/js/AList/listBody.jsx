@@ -41,12 +41,11 @@ function ListBody(props) {
           showSettingsButton
           settingsButtonOnClick={() => { onListSettingsButtonClick(); }}
         />
-        <div className="task-list">
+        <div>
           {
             selectedListOption.tasks.length > 0
-
               ? (
-                <div>
+                <div className="task-list">
 
                   {selectedListOption.tasks.map((task => (task.completed || task.inProgress
                     ? undefined
@@ -65,11 +64,13 @@ function ListBody(props) {
                       && selectedListOption.tasks.some(task => !task.inProgress) ? (
                         <>
                           <br />
-                          <hr />
+                          <hr className="task-divider" />
                         </>
                       ) : undefined
                   }
-                  {selectedListOption.tasks.some(task => task.inProgress) ? 'In Progress Tasks' : ''}
+                  <h3 className="task-section-heading">
+                    {selectedListOption.tasks.some(task => task.inProgress) ? 'In Progress Tasks' : ''}
+                  </h3>
                   {selectedListOption.tasks.map((task => (task.inProgress
                     ? (
                       <TaskRow
@@ -88,11 +89,13 @@ function ListBody(props) {
                       ? (
                         <>
                           <br />
-                          <hr />
+                          <hr className="task-divider" />
                         </>
                       ) : undefined
                   }
-                  {selectedListOption.tasks.some(task => task.completed) ? 'Completed Tasks' : ''}
+                  <h3 className="task-section-heading">
+                    {selectedListOption.tasks.some(task => task.completed) ? 'Completed Tasks' : ''}
+                  </h3>
                   {selectedListOption.tasks.map((task => (task.completed
                     ? (
                       <TaskRow
@@ -114,13 +117,15 @@ function ListBody(props) {
                 </div>
               )
           }
-          <div className="add-new-task" onClick={openNewTaskDialog}>
-            <div className="add-new-task-icon">
-              <ion-icon name="add-circle" />
-            </div>
-            Add New Task
-          </div>
         </div>
+
+        <div className="add-new-task" onClick={openNewTaskDialog}>
+          <div className="add-new-task-icon">
+            <ion-icon name="add-circle" />
+          </div>
+          Add New Task
+        </div>
+
       </>
     )
       : (

@@ -61,6 +61,7 @@
   padding-top: 5px;
   padding-left: 6px;
   padding-right: 6px;
+  margin-top: 0;
   color: var(--text-color);
 }
 
@@ -74,8 +75,11 @@
 
 .task-list {
   max-height:10%;
+  margin-top: 10px;
   overflow-y:auto;
   height: 80vh;
+  background-color: var(--text-color);
+  border-radius: 10px;
 }
 
 .settings-wrapper {
@@ -113,4 +117,13 @@ hr.row-break {
   border-color: var(--task-hover);
   margin-block-start: 0em;
   margin-block-end: 0em;
+}
+
+hr.task-divider {
+  border-color: var(--emphasis);
+  border-width: 0 0 5px 0;
+}
+
+.task-section-heading {
+  margin-left: 30px;
 }
