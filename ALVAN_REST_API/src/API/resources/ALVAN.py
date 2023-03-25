@@ -12,5 +12,8 @@ class ALVAN(Resource):
     if request.form['query']:
       #TODO get tts response from ML training set
       tts_response, follow_up = ML_model.query(request.form['query'])
-      named_entities = NEE.request(request.form['query'])['result']
+      try:
+        named_entities = NEE.request(request.form['query'])['result']
+      except KeyError:
+        named_entities = []
     return {"tts_cd": tts_response, "named_entities": named_entities, "follow_up": follow_up}

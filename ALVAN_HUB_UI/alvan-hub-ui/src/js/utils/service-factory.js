@@ -252,7 +252,7 @@ const serviceFactory = {
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), 2000);
     let status = 0;
-    const response = await fetch(`${url}/device`, {
+    const response = await fetch(`${url}alvan/api/device`, {
       method: 'POST',
       mode: 'cors',
       signal: controller.signal,
