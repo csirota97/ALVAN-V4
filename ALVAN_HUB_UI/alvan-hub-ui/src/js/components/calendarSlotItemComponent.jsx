@@ -7,10 +7,13 @@ const STATUS_INDICATOR_COLOR = {
 function CalendarSlotItemComponent(props) {
   return (
     <div
-      className="calendar-slot-item-component"
+      className={`calendar-slot-item-component calendar-slot-status-${props.eventStatus.toLowerCase()}`}
       style={{ borderLeftColor: STATUS_INDICATOR_COLOR[props.eventStatus] }}
     >
-      {props.summary}
+      <b>{props.time}</b>
+      <span>
+        {props.summary}
+      </span>
     </div>
   );
 }

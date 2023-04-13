@@ -41,11 +41,16 @@
 }
 
 .card-header {
+  font-size: x-large;
   background-color: var(--card-header);
   color: var(--card-text);
   border-radius: 5px 5px 0px 0px;
   text-align: right;
   overflow: hidden;
+}
+
+.card-header > .padding {
+  padding: 6px;
 }
 
 .padding {

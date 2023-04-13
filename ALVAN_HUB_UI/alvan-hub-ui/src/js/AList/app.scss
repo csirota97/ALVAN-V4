@@ -14,6 +14,10 @@
   --emphasis: #606060;
 }
 
+.default-margin {
+  margin: 8px;
+}
+
 .completed-status-icon {
   vertical-align: baseline;
   margin-right: 10px;
@@ -84,12 +88,21 @@
 }
 
 .settings-wrapper {
-  transition: .5s;
+  transition: .25s;
   transition-timing-function: ease-in-out;
-  transform-origin: right bottom;
-  position: relative;
+  transform-origin: left top;
+  position: absolute;
+  width: 100%;
   z-index: 1;
-  top:-40px;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(0,-50px);
+}
+
+.settings-wrapper > .card-base {
+  height: fit-content;
+  transform: translate(-50%, -50%);
 }
 
 .settings-closing {

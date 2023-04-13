@@ -4,7 +4,13 @@ import { Watch } from 'react-loader-spinner';
 import serviceFactory from '../utils/service-factory';
 
 function WeatherCalendarView(props) {
-  const { defaultWeather, setDefaultWeather } = props;
+  const {
+    defaultWeather,
+    setDefaultWeather,
+    todayEvents,
+    tomorrowEvents,
+    inTwoDaysEvents,
+  } = props;
   const [response, setResponse] = useState(defaultWeather);
   const dayName = {
     0: 'Sunday',
@@ -41,38 +47,44 @@ function WeatherCalendarView(props) {
   );
 
   return (
-    <>
+    <div className="calendar-weather-container">
 
       <div className="calendar-weather-view weather-1">
         <h2>Today</h2>
         {
           response?.current?.condition?.icon
             ? slotWeatherInfo(slot2Icon, 0)
-            : <Watch color="#5A6060" />
+            : <Watch className="watch-padding" color="#5A6060" />
         }
+        {todayEvents}
       </div>
+      <div className="calendar-separator" />
       <div className="calendar-weather-view weather-2">
         <h2>Tomorrow</h2>
         {
           response?.current?.condition?.icon
             ? slotWeatherInfo(slot3Icon, 1)
-            : <Watch color="#5A6060" />
+            : <Watch className="watch-padding" color="#5A6060" />
         }
+        {tomorrowEvents}
       </div>
+      <div className="calendar-separator" />
       <div className="calendar-weather-view weather-3">
         <h2>{dayName[(new Date().getDay() + 2) % 7]}</h2>
         {
           response?.current?.condition?.icon
             ? slotWeatherInfo(slot4Icon, 2)
-            : <Watch className="centered" color="#5A6060" />
+            : <Watch className="watch-padding" color="#5A6060" />
         }
+        {inTwoDaysEvents}
       </div>
+      <div className="calendar-separator" />
       <div className="calendar-weather-view weather-4">
         <h2>Current</h2>
         {
           response?.current?.condition?.icon
             ? <img className="weather-icon" src={response?.current?.condition?.icon} alt="" draggable="false" />
-            : <Watch color="#5A6060" />
+            : <Watch className="watch-padding" color="#5A6060" />
         }
         {
           response?.current?.condition
@@ -80,26 +92,19 @@ function WeatherCalendarView(props) {
             <div id="current-data">
               <h3>{response.current.condition.text}</h3>
               <h3>
-                Temp:
-                {response.current.temp_f}
-                °F
+                {`Temp: ${response.current.temp_f}°F`}
               </h3>
               <h3>
-                Feels Like:
-                {response.current.feelslike_f}
-                °F
+                {`Feels Like: ${response.current.feelslike_f}°F`}
               </h3>
               <h3>
-                Wind Speed:
-                {response.current.wind_mph}
-                {' '}
-                mph
+                {`Wind Speed: ${response.current.wind_mph}mph`}
               </h3>
             </div>
           )
         }
       </div>
-    </>
+    </div>
   );
 }
 

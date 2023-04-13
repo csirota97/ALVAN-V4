@@ -60,6 +60,7 @@ function Screen(props) {
   useEffect(async () => {
     if (initialRender) {
       sessionStorage.setItem('cameraIPs', JSON.stringify([]));
+      setHideSpeechRecognizer(true);
       const tempCameraIPs = [];
       const pushToTemp = (ip) => tempCameraIPs.push(ip);
       const loop = async () => {
@@ -119,8 +120,9 @@ function Screen(props) {
 
   const newUserCard = (isNewUserCardShown && (
     <ActionCard
-      confirmAction={revalidate()}
-      confirmText="Add User"
+      name="Register"
+      confirmAction={revalidate}
+      confirmText="Register"
       cancelAction={() => { setIsNewUserCardShown(false); }}
       cancelText="Cancel"
     >
@@ -135,6 +137,7 @@ function Screen(props) {
 
   const loginCard = (isLogInCardShown && (
     <ActionCard
+      name="Sign In"
       confirmAction={revalidate}
       confirmText="Sign In"
       cancelAction={() => { setIsLogInCardShown(false); }}
@@ -212,15 +215,22 @@ function Screen(props) {
                 </>
               )
           }
-          <br />
-          <div
-            className="close-button secondary button"
-            onClick={() => {
-              setHideSpeechRecognizer(!hideSpeechRecognizer);
-            }}
-          >
-            {hideSpeechRecognizer ? 'Show Speech Recognizer' : 'Hide Speech Recognizer'}
-          </div>
+          {
+            props.userToken
+              ? (
+                <>
+                  <br />
+                  <div
+                    className="close-button secondary button"
+                    onClick={() => {
+                      setHideSpeechRecognizer(!hideSpeechRecognizer);
+                    }}
+                  >
+                    {hideSpeechRecognizer ? 'Show Speech Recognizer' : 'Hide Speech Recognizer'}
+                  </div>
+                </>
+              ) : undefined
+          }
         </div>
       </Card>
     </div>
@@ -243,6 +253,7 @@ function Screen(props) {
               id={-2}
               zIndex={{ '-2': hideSpeechRecognizer ? -1000 : 1000 }}
               className={hideSpeechRecognizer ? 'hidden' : ''}
+              hasBeenClicked={() => {}}
             >
               <SpeechRecognizer userId={props.userToken[0]} />
             </Card>
@@ -254,7 +265,13 @@ function Screen(props) {
             { displayCalendar ? calendarView : homeView }
           </>
         )
-        : 'Tap the logo to sign in or register'}
+        : (
+          <span id="please-sign-in">
+            Tap the logo in the
+            <br />
+            corner to get started
+          </span>
+        )}
     </div>
   );
 }

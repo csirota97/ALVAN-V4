@@ -62,6 +62,8 @@ function Screen(props) {
   const [settingsCardClasses, setSettingsCardClasses] = useState('settings-wrapper settings-closing');
   const [activeTask, setActiveTask] = useState(null);
   const [isTodoListShown, setIsTodoListShown] = useState(!props.remindersScreenActive);
+  const [createTaskReminder, setCreateTaskReminder] = useState(false);
+
   const revalidate = () => setValidationTrigger(!validationTrigger);
   const toggleMenuCard = () => {
     if (isMenuShown) {
@@ -79,7 +81,14 @@ function Screen(props) {
     return setSelectedListOption(newList);
   };
 
-  const openNewTaskDialog = () => { setIsNewTaskDialogShown(true); setIsEventRepeating(false); };
+  const openNewTaskDialog = (reminderTask) => {
+    setIsNewTaskDialogShown(true);
+    setIsEventRepeating(false);
+    setCreateTaskReminder(!!reminderTask);
+    if (reminderTask) {
+      setNewReminderName(activeTask.description);
+    }
+  };
   const openNewListDialog = () => setIsNewListDialogShown(true);
 
   const updateTask = (task) => {
@@ -104,7 +113,7 @@ function Screen(props) {
   };
 
   const onNewTaskConfirmButtonClick = () => {
-    if (isTodoListShown) {
+    if (isTodoListShown && !createTaskReminder) {
       if (newTaskName) {
         serviceFactory.toDoRequest(
           CONSTANTS.TODO_REQUEST.NEW_EVENT,
@@ -226,7 +235,7 @@ function Screen(props) {
     }
   };
 
-  const newTaskCard = (isNewTaskDialogShown && (isTodoListShown ? (
+  const newTaskCard = (isNewTaskDialogShown && ((isTodoListShown && !createTaskReminder) ? (
     <ActionCard
       confirmAction={onNewTaskConfirmButtonClick}
       confirmText={newTaskConfirmText}
@@ -313,7 +322,7 @@ function Screen(props) {
     : (
       <ActionCard
         confirmAction={onNewTaskConfirmButtonClick}
-        confirmText={newTaskConfirmText}
+        confirmText="Create Reminder"
         cancelAction={onNewTaskCancelButtonClick}
         cancelText={newTaskCancelText}
         name="New Reminder"
@@ -324,13 +333,16 @@ function Screen(props) {
           type="text"
           id="newReminder"
           name="newReminder"
+          disabled={createTaskReminder}
           onChange={(event) => {
             if (showNewReminderErrorText) {
               setShowNewReminderErrorText(false);
             }
             setNewReminderName(event.target.value);
           }}
+          value={createTaskReminder ? activeTask.description : newReminderName}
         />
+        {console.log(activeTask)}
         <br />
         {showNewReminderErrorText && <div className="error-text">A Name Must Be Entered To Create A New Reminder</div>}
 
@@ -525,6 +537,13 @@ function Screen(props) {
         <br />
         <div
           className="create-button secondary button"
+          onClick={() => { setIsTaskSettingsCardShown(false); openNewTaskDialog(true); }}
+        >
+          Create Task Reminder
+        </div>
+        <br />
+        <div
+          className="create-button secondary button"
           onClick={() => { setIsTaskSettingsCardShown(false); setIsDeleteTaskCardShown(true); }}
         >
           Delete Task
@@ -640,7 +659,7 @@ function Screen(props) {
                   isNewListDialogShown={isNewListDialogShown}
                   isLogInCardShown={isLogInCardShown}
                   isNewUserCardShown={isNewUserCardShown}
-                  openNewTaskDialog={openNewTaskDialog}
+                  openNewTaskDialog={() => openNewTaskDialog(false)}
                   openNewListDialog={openNewListDialog}
                   openTaskSettingsCard={() => setIsTaskSettingsCardShown(true)}
                   updateTask={updateTask}
@@ -654,7 +673,7 @@ function Screen(props) {
                   listOptions={props.remindersList}
                   selectedListOption={{}}
                   openNewTaskDialog={{}}
-                  openNewReminderDialog={openNewTaskDialog}
+                  openNewReminderDialog={() => openNewTaskDialog(false)}
                   openReminderSettingsCard={{}}
                   openTaskSettingsCard={{}}
                   updateTask={() => {}}

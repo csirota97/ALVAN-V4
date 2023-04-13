@@ -62,42 +62,49 @@ function CalendarView(props) {
   }, [reminders]);
 
   return (
-    <>
-      <WeatherCalendarView defaultWeather={defaultWeather} setDefaultWeather={setDefaultWeather} />
-      <CalendarSlotComponent column={1}>
-        {
-          calendarData.today.map(event => (
-            <CalendarSlotItemComponent
-              summary={event.description}
-              eventStatus={event.status}
-            />
-          ))
-        }
-      </CalendarSlotComponent>
-      <div className="calendar-separator line-1" />
-      <CalendarSlotComponent column={2}>
-        {
-          calendarData.tomorrow.map(event => (
-            <CalendarSlotItemComponent
-              summary={event.description}
-              eventStatus={event.status}
-            />
-          ))
-        }
-      </CalendarSlotComponent>
-      <div className="calendar-separator line-2" />
-      <CalendarSlotComponent column={3}>
-        {
-          calendarData.inTwoDays.map(event => (
-            <CalendarSlotItemComponent
-              summary={event.description}
-              eventStatus={event.status}
-            />
-          ))
-        }
-      </CalendarSlotComponent>
-      <div className="calendar-separator line-3" />
-    </>
+    <WeatherCalendarView
+      defaultWeather={defaultWeather}
+      setDefaultWeather={setDefaultWeather}
+      todayEvents={(
+        <CalendarSlotComponent column={1}>
+          {
+            calendarData.today.map(event => (
+              <CalendarSlotItemComponent
+                time={event.startDateTime.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}
+                summary={event.description}
+                eventStatus={event.status}
+              />
+            ))
+          }
+        </CalendarSlotComponent>
+      )}
+      tomorrowEvents={(
+        <CalendarSlotComponent column={2}>
+          {
+            calendarData.tomorrow.map(event => (
+              <CalendarSlotItemComponent
+                time={event.startDateTime.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}
+                summary={event.description}
+                eventStatus={event.status}
+              />
+            ))
+          }
+        </CalendarSlotComponent>
+      )}
+      inTwoDaysEvents={(
+        <CalendarSlotComponent column={3}>
+          {
+            calendarData.inTwoDays.map(event => (
+              <CalendarSlotItemComponent
+                time={event.startDateTime.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}
+                summary={event.description}
+                eventStatus={event.status}
+              />
+            ))
+          }
+        </CalendarSlotComponent>
+      )}
+    />
   );
 }
 

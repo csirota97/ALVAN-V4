@@ -48,6 +48,7 @@ module.exports = {
     'react/forbid-prop-types': 'off',
     'prefer-destructuring': 'off',
     'react/prop-types': 'off',
+    'no-unused-vars': 'warn',
   },
   settings: {
     polyfills: [

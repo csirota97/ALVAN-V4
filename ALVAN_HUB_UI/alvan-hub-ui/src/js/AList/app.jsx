@@ -73,16 +73,18 @@ function App() {
   return (
     ((lists && constructedToDoLists) || !userToken)
     && (
-      <Screen
-        toDoLists={constructedToDoLists}
-        remindersList={remindersList}
-        defaultSelection={defaultSelectedList}
-        triggerListsReconstruction={() => setReconstructTrigger(true)}
-        userToken={userToken}
-        setUserToken={setUserToken}
-        unloaded={!lists || !constructedToDoLists}
-        remindersScreenActive={currentActivePage === 'reminders'}
-      />
+      <div className="default-margin">
+        <Screen
+          toDoLists={constructedToDoLists}
+          remindersList={remindersList}
+          defaultSelection={defaultSelectedList}
+          triggerListsReconstruction={() => setReconstructTrigger(true)}
+          userToken={userToken}
+          setUserToken={setUserToken}
+          unloaded={!lists || !constructedToDoLists}
+          remindersScreenActive={currentActivePage === 'reminders'}
+        />
+      </div>
     )
   );
 }

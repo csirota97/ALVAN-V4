@@ -5,7 +5,8 @@
   --emphasis: #606060;
   --secondary-emphasis: #aeaeae;
   --active: #888888;
-  --card-blue: #0EADFF;
+  // --card-blue: #0EADFF;
+  --card-blue: #008787;
   color: var(--clock-color);
   user-select: none;
 }
@@ -15,8 +16,11 @@ html, body {
 }
 
 body {
-  background-color: var(--background);
+  background: linear-gradient(145deg, var(--background), 75%,#003d3d);
+  background-repeat: no-repeat;
+  background-size: 100vw 100vh;
   overflow:hidden;
+  margin: 0;
 }
 
 h1 {
@@ -86,69 +90,62 @@ h1 {
 }
 
 .calendar-separator {
-  position: absolute;
-  top: 15%;
-  height: 75%;
+  position: relative;
+  display: flex;
+  height: 75vh;
   width: 2px;
   background-color: var(--card-blue);
 }
 
 .calendar-weather-view {
-  transform: translate(-50%, -50px);
-  position: absolute;
+  position: relative;
   top: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: fit-content;
   text-align: center;
-  user-select: none
+  user-select: none;
+  flex: 1;
 }
 
-.weather-1 {
-  left: 12.5%;
+.calendar-weather-view > h2 {
+  display: flex;
 }
 
-.weather-2 {
-  left: 37.5%;
+.weather-icon {
+  display: flex;
+  align-self: center;
+  background: radial-gradient(rgba(255, 255, 255, 0.2) 5%, transparent 74%);
+  padding: 5px;
+  margin-right: 5px;
 }
 
-.weather-3 {
-  left: 62.5%;
+.calendar-weather-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: calc(25vh / 2);
 }
 
-.weather-4 {
-  left: 87.5%;
+.calendar-slot-status-confirmed {
+  background: linear-gradient(90deg, green, 1%, transparent);
 }
 
-.line-1 {
-  left: 25%;
+.calendar-slot-status-tentative {
+  background: linear-gradient(90deg, yellow, 1%, transparent);
 }
 
-.line-2 {
-  left: 50%;
+.calendar-slot-status-canceled {
+  background: linear-gradient(90deg, red, 1%, transparent);
 }
 
-.line-3 {
-  left: 75%;
+.calendar-slot-status-undefined {
+  background: linear-gradient(90deg, green, 1%, transparent);
 }
 
 .centered {
-  position:absolute;
-  transform: translate(-50%, 50%);
-  top: 50%;
-}
-
-.inline-text {
-  display: inline;
-  position: absolute;
-  top: 50%;
-  transform: translate(0, -50%);
-  width: 200px;
-}
-
-.inline-text > h3 {
-  justify-content: left;
-  position: relative;
-  left: -50px;
-  width: 200px;
+  display: flex;
 }
 
 .center-items {
@@ -157,23 +154,33 @@ h1 {
   left: 0;
 }
 
+.calendar-slot-container {
+  margin-top: 10px;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .calendar-slot-component {
-  position: absolute;
-  top: 33%;
-  width: 25%;
   word-wrap: normal;
   height: 100px;
+  max-width: 90%;
+  display: flex;
+  flex-direction: column;
+  width: calc(25vw/1);
 }
 
 .calendar-slot-item-component {
-  position: static;
-  margin-left: 10px;
   margin-bottom: 10px;
-  padding-left: 5px;
-  padding-bottom: 5px;
   border-style: none none solid solid;
   border-color: #9C9E9B;
   height: fit-content;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px 0 0 15px;
+  padding: 5px;
 }
 
 .calendar-slot-item-indicator {
@@ -189,4 +196,24 @@ h1 {
   padding: 3px;
   background-color: var(--active-background);
   border-radius: 5px;
+}
+
+.calendar-slot-item-component > b {
+  display: flex;
+}
+.calendar-slot-item-component > span {
+  display: flex;
+  margin-left: 15%;
+  border-left: 3px solid var(--card-background);
+  padding-left: 5px;
+}
+
+.screen-container > span#please-sign-in{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size:xx-large;
+  filter: drop-shadow(#121212 -2px 2px 2px );
 }
