@@ -1,6 +1,5 @@
 import React from 'react';
 import Card from './card';
-import './actionCard.scss';
 
 function ActionCard(props) {
   const newTaskDialogFooter = (
@@ -31,6 +30,7 @@ function ActionCard(props) {
 
   return (
     <>
+      <link rel="stylesheet" href="./actionCard.scss" />
       <div className="action-card-background" onClick={props.cancelAction} />
       <div id="new-task-dialog" className="center action-card">
         <Card

@@ -2,9 +2,12 @@ import 'jsdom-global/register';
 import React from 'react';
 import { Watch } from 'react-loader-spinner';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import PropTypes from 'prop-types';
 import { mount, configure } from 'enzyme';
 import WeatherContainer from '../../../src/js/components/weatherCardContainer';
 import mockWeatherCall from '../../../src/js/utils/mockWeatherCall';
+
+console.log(PropTypes.string);
 
 configure({ adapter: new Adapter() });
 
@@ -13,8 +16,7 @@ jest.mock('../../../src/js/utils/service-factory.js');
 describe('WeatherContainer', () => {
   let setDefaultWeather = () => {};
   beforeEach(() => {
-    defaultWeather = [];
-    setDefaultWeather = (newWeather) => defaultWeather = newWeather;
+    setDefaultWeather = jest.fn();
   });
   describe('weather data has not been loaded', () => {
     it('should display a loader', () => {

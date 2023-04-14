@@ -1,7 +1,7 @@
 import 'jsdom-global/register';
 import React from 'react';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-import { configure, shallow } from 'enzyme';
+import { configure, mount } from 'enzyme';
 import CalendarView from '../../../../src/js/components/views/calendarView';
 import WeatherCalendarView from '../../../../src/js/components/weatherCalendarView';
 
@@ -11,7 +11,7 @@ describe('CalendarView', () => {
   let calendarView;
   const mockSetDefaultWeather = jest.fn();
   beforeEach(() => {
-    calendarView = shallow(<CalendarView defaultWeather="" setDefaultWeather={mockSetDefaultWeather} />);
+    calendarView = mount(<CalendarView defaultWeather="" setDefaultWeather={mockSetDefaultWeather} />);
   });
 
   it('should render a WeatherCalendarView', () => {

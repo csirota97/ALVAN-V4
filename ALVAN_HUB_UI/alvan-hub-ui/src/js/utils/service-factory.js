@@ -2,7 +2,7 @@
 
 import 'babel-polyfill';
 import hash from 'hash.js';
-import { internalIpV4 } from 'internal-ip';
+// import { internalIpV4 } from 'internal-ip';
 // eslint-disable-next-line import/no-cycle
 import commands from './commands';
 import getConstants from './constants';
@@ -226,7 +226,7 @@ const serviceFactory = {
   },
 
   securityCameraNetworkScan: async (index, homeId) => {
-    const privateIP = await internalIpV4() || '192.168.1.155';
+    const privateIP = /* await internalIpV4() || */ '192.168.1.155';
     const privateIPStem = privateIP.split('.').splice(0, 3).join('.');
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), 2000);

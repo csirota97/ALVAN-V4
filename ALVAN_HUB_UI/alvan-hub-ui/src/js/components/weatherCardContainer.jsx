@@ -7,6 +7,7 @@ function WeatherContainer(props) {
   const { trigger, defaultWeather, setDefaultWeather } = props;
   const [response, setResponse] = useState(defaultWeather);
 
+  // eslint-disable-next-line no-unsafe-optional-chaining
   if (Math.floor(new Date().getTime() / 1000) - response?.location?.localtime_epoch >= 600 || response === '') {
     serviceFactory.weatherRequest(null, setResponse);
   }
@@ -34,12 +35,12 @@ function WeatherContainer(props) {
 
 WeatherContainer.defaultProps = {
   trigger: false,
-  defaultWeather: '',
+  // defaultWeather: '',
 };
 
 WeatherContainer.propTypes = {
   trigger: PropTypes.bool,
-  defaultWeather: PropTypes.oneOf(PropTypes.string, PropTypes.object),
+  // defaultWeather: PropTypes.oneOf([PropTypes.string, PropTypes.object]),
 };
 
 export default WeatherContainer;

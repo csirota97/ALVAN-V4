@@ -113,7 +113,7 @@ WeatherCalendarView.defaultProps = {
 };
 
 WeatherCalendarView.propTypes = {
-  defaultWeather: PropTypes.oneOf(PropTypes.string, PropTypes.object),
+  // defaultWeather: PropTypes.oneOf([PropTypes.string, PropTypes.object]),
 };
 
 export default WeatherCalendarView;

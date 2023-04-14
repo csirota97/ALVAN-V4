@@ -61,7 +61,7 @@ describe('WeatherCalendarView', () => {
       });
 
       it('should render current weather data text', () => {
-        expect(WCVWrapper.find('#current-data').text()).toBe('OvercastTemp: 66.9°FFeels Like: 66.9°FWind Speed: 9.4 mph');
+        expect(WCVWrapper.find('#current-data').text()).toBe('OvercastTemp: 66.9°FFeels Like: 66.9°FWind Speed: 9.4mph');
       });
 
       it('should render 3 min temperatures', () => {
