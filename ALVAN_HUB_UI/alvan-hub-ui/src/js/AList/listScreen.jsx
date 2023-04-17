@@ -75,6 +75,8 @@ function Screen(props) {
     }
   };
 
+  useState(() => { console.log(999999, reminderTime); });
+
   const onListSelectorChange = (newList) => {
     console.log(newList);
     sessionStorage.setItem('currentListSelection', JSON.stringify(newList));
@@ -137,13 +139,16 @@ function Screen(props) {
     } else {
       if (newReminderName) {
         let amPm = '';
-        if (
-          parseInt(reminderTime.split(':')[0], 10) < 12
-          || (parseInt(reminderTime.split(':')[0], 10) === 12
-          && parseInt(reminderTime.split(':')[1], 10) === 0)
-        ) {
+        if (parseInt(reminderTime.split(':')[0], 10) < 12) {
           amPm = 'am';
+          console.log(
+            111,
+            parseInt(reminderTime.split(':')[0], 10) < 12,
+            parseInt(reminderTime.split(':')[0], 10) === 12,
+            parseInt(reminderTime.split(':')[1], 10) === 0,
+          );
         }
+        console.log(88888, `${reminderTime} ${amPm}`);
         const amPmReminderTime = isAllDayReminder ? '08:00 am' : `${reminderTime} ${amPm}`;
         serviceFactory.newReminderRequest(
           props.userToken[0],
