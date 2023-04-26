@@ -62,11 +62,16 @@ const commands = {
    */
   4: {
     description: 'turn on the lights',
-    function: async () => {
-      speak('Turning on lights');
-      await fetch('https://maker.ifttt.com/trigger/bedroom_lights_on/with/key/dhl8zRZHBF8v8n_HgpJi1E', {
-        method: 'get',
-      });
+    function: async (named_entities, userId, query) => {
+      const res = await serviceFactory.toggleLights('111', query, 'ON');
+
+      if (res.room === 'No Matching Room Found In Home') {
+        speak('Could not find matching room');
+      } else if (res.room !== 'No Matching Room Found In Home' && res.lights.length === 0) {
+        speak(`No lights were found in ${res.room}`);
+      } else {
+        speak(`Turning on ${res.room} lights`);
+      }
     },
   },
   /**
@@ -74,11 +79,16 @@ const commands = {
    */
   5: {
     description: 'turn off the lights',
-    function: async () => {
-      speak('Turning off lights');
-      await fetch('https://maker.ifttt.com/trigger/bedroom_lights_off/with/key/dhl8zRZHBF8v8n_HgpJi1E', {
-        method: 'get',
-      });
+    function: async (named_entities, userId, query) => {
+      const res = await serviceFactory.toggleLights('111', query, 'OFF');
+
+      if (res.room === 'No Matching Room Found In Home') {
+        speak('Could not find matching room');
+      } else if (res.room !== 'No Matching Room Found In Home' && res.lights.length === 0) {
+        speak(`No lights were found in ${res.room}`);
+      } else {
+        speak(`Turning off ${res.room} lights`);
+      }
     },
   },
   /**

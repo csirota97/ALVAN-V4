@@ -1,5 +1,5 @@
 import mysql.connector
-from db_connections import todo_connections as todo, user_connections as userC, reminder_connections as reminderC, device_connections as devices
+from db_connections import todo_connections as todo, user_connections as userC, reminder_connections as reminderC, device_connections as devices, admin_connections as admin
 
 class Connector:
   def __init__(self, host, user, password):
@@ -92,4 +92,25 @@ class Connector:
   
   def registerDevice(self, homeId, deviceId, deviceType):
     return self.__catchDBError__(devices.registerDevice, [homeId, deviceId, deviceType])
+    
+  #----------------------------------------------------------------
+  # Devices
+  #----------------------------------------------------------------
+  
+  def toggleLights(self, query, homeId, status):
+    return self.__catchDBError__(devices.toggleLights, [query, homeId, status])
+    
+  #----------------------------------------------------------------
+  # Admin
+  #----------------------------------------------------------------
+  
+  def adminGet(self, table):
+    return self.__catchDBError__(admin.get, [table])
+  
+  def adminPost(self, table, params, columns, columnTypes):
+    return self.__catchDBError__(admin.post, [table, params, columns, columnTypes])
+  
+  def adminDelete(self, table, primaryKey):
+    return self.__catchDBError__(admin.delete, [table, primaryKey])
+  
   

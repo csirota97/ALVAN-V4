@@ -81,16 +81,34 @@ CREATE TABLE `alvandb`.`Home` (
     ON UPDATE NO ACTION);
 
 
--- Device
+-- Rooms
 
-CREATE TABLE `alvandb`.`Device` (
-  `id` INT NOT NULL,
-  `deviceType` INT NOT NULL,
+CREATE TABLE `alvandb`.`Rooms` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
   `homeId` VARCHAR(36) NULL,
   PRIMARY KEY (`id`),
-  INDEX `home_idx` (`homeId` ASC) VISIBLE,
-  CONSTRAINT `home`
+  INDEX `homeId_idx` (`homeId` ASC) VISIBLE,
+  CONSTRAINT `homeId`
     FOREIGN KEY (`homeId`)
     REFERENCES `alvandb`.`Home` (`id`)
     ON DELETE SET NULL
     ON UPDATE NO ACTION);
+
+
+-- Device
+
+CREATE TABLE `Device` (
+  `id` int NOT NULL,
+  `deviceType` int NOT NULL,
+  `homeId` varchar(36) DEFAULT NULL,
+  `roomId` int DEFAULT NULL,
+  `webHookKey` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `homeId_idx` (`homeId`),
+  KEY `roomId_idx` (`roomId`),
+  CONSTRAINT `home` FOREIGN KEY (`homeId`) REFERENCES `Home` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `room` FOREIGN KEY (`roomId`) REFERENCES `Rooms` (`id`) ON DELETE SET NULL
+);
+
+

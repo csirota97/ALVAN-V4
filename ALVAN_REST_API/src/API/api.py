@@ -5,7 +5,7 @@ from flask_restful import Api, Resource
 from flask_cors import CORS
 import json
 from mysqlConnection import Connector
-from resources import Weather, ToDo, UserAuth, ALVAN, Reminders, Device
+from resources import Weather, ToDo, UserAuth, ALVAN, Reminders, Device, Lights, Admin
 
 from flask_apscheduler import APScheduler
 
@@ -33,6 +33,8 @@ api.add_resource(ToDo.ToDo, '/alvan/api/todo/<table>', resource_class_kwargs={'s
 api.add_resource(Reminders.Reminders, '/alvan/api/reminder/<id>', '/alvan/api/reminder/<id>/<offset>', resource_class_kwargs={'scheduler': scheduler})
 api.add_resource(UserAuth.UserAuth, '/alvan/api/auth/<method>')
 api.add_resource(Device.Device, '/alvan/api/device')
+api.add_resource(Lights.Lights, '/alvan/api/lights')
+api.add_resource(Admin.Admin, '/alvan/api/admin/<table>')
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', debug=True, port=5000)

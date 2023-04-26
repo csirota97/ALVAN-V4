@@ -6,12 +6,14 @@ db = CONSTANTS.db
 
 #TODO get tensorflow working on M1 chip
 
-class Device(Resource):
+class Lights(Resource):
   '''
   DeviceType:
   1: security camera
   2: light
   '''
   def post(self):
-    response = {'devices': db.registerDevice(request.form['homeId'],request.form['deviceId'], request.form['deviceType'])}
+    print(request.form)
+    lights, room = db.toggleLights(request.form['query'],request.form['homeId'], request.form['status'])
+    response = {'lights': lights, 'room': room}
     return response

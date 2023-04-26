@@ -277,6 +277,18 @@ const serviceFactory = {
     return { status: response.response.status, url, body: response.response };
   },
 
+  toggleLights: async (homeId, query, status) => {
+    const formData = new FormData();
+    formData.append('homeId', homeId);
+    formData.append('query', query);
+    formData.append('status', status);
+    return fetch(`${url}alvan/api/lights`, {
+      method: 'POST',
+      mode: 'cors',
+      body: formData,
+    }).then(async res => res.json()).catch(e => console.error(e));
+  },
+
 };
 
 export default serviceFactory;
