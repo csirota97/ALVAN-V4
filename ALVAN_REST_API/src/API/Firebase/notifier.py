@@ -19,7 +19,7 @@ def notify(title, body, reg_id, tag):
       "title": title,
       "tag": tag,
       "icon":"notification_icon",
-      "sound": "chime",
+      "sound": "notification_ding",
       "color": "#FFFFFF"
     }
   })
