@@ -28,7 +28,7 @@ function SpeechRecognizer(props) {
       activatedSound.play();
     } else if (activated && transcript !== '') {
       // query api
-      serviceFactory.sendQuery(transcript, props.userId, mic, setResponse);
+      serviceFactory.sendQuery(transcript, props.userId, mic, setResponse, props.callbackFunctions);
       setActivated(false);
     }
     mic.stop();

@@ -129,7 +129,7 @@ const commands = {
    */
   8: {
     description: 'set a reminder',
-    function: async (named_entities, userId, query, mic) => {
+    function: async (named_entities, userId, query, mic, callbackFunctions) => {
       const onresultOriginal = mic.onresult;
       let message = '';
       const reminderPrompt = 'What would you like the reminder to be?';
@@ -137,7 +137,7 @@ const commands = {
         mic.stop();
 
         speak(reminderPrompt);
-        mic.onresult = (event) => {
+        mic.onresult = async (event) => {
           const resultsArray = Array.from(event.results);
           message = (resultsArray
             .map((result) => result[0])
@@ -146,7 +146,8 @@ const commands = {
           if (message.toLowerCase() !== reminderPrompt.toLowerCase()) {
             speak(message);
             mic.onresult = onresultOriginal;
-            serviceFactory.newReminderRequest(userId, message, query);
+            await serviceFactory.newReminderRequest(userId, message, query);
+            callbackFunctions.rerenderReminders();
           }
         };
         mic.start();
@@ -159,17 +160,19 @@ const commands = {
    */
   9: {
     description: 'list your reminders',
-    function: async (named_entities, userId) => {
+    function: async (named_entities, userId, query, mic, callbackFunctions) => {
       if (!userId) {
         speak('Please sign in and try again.');
         return;
       }
 
       serviceFactory.getRemindersRequest(userId, json => {
+        let remindersString = '';
         if (json.reminders.length === 0) {
-          speak('You have no reminders');
+          remindersString = 'You have no reminders';
         } else {
-          speak(`You have ${json.reminders.length} ${json.reminders.length > 1 ? 'reminders' : 'reminder'}.`);
+          // eslint-disable-next-line max-len
+          remindersString = `You have ${json.reminders.length} ${json.reminders.length > 1 ? 'reminders' : 'reminder'}.`;
 
           json.reminders.forEach(reminder => {
             const reminderDate = new Date(reminder[3] * 1000);
@@ -183,10 +186,13 @@ const commands = {
               6: 'Saturday',
             };
             // eslint-disable-next-line max-len
-            speak(`${reminder[2]} on ${days[reminderDate.getDay()]} ${reminderDate.toLocaleDateString()} at ${reminderDate.toLocaleTimeString()}`);
+            remindersString = `${remindersString} ${reminder[2]} on ${days[reminderDate.getDay()]} ${reminderDate.toLocaleDateString()} at ${reminderDate.toLocaleTimeString()}. `;
           });
         }
+        speak(remindersString);
       });
+
+      callbackFunctions.rerenderReminders();
     },
   },
 };

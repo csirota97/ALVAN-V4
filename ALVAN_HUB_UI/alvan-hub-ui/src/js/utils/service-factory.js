@@ -13,7 +13,7 @@ const url = CONSTANTS.SERVER_URL;
 const calendar_url = CONSTANTS.CALENDAR_URL;
 
 const serviceFactory = {
-  sendQuery: async (query, userId, mic, setResponseJson) => {
+  sendQuery: async (query, userId, mic, setResponseJson, callbackFunctions) => {
     const formData = new FormData();
     formData.append('query', query);
     const response = await fetch(`${url}alvan/api/query`, {
@@ -23,7 +23,7 @@ const serviceFactory = {
     });
     const jsonRes = await response.json();
     setResponseJson(jsonRes);
-    commands[jsonRes.tts_cd].function(jsonRes.named_entities, userId, query, mic);
+    commands[jsonRes.tts_cd].function(jsonRes.named_entities, userId, query, mic, callbackFunctions);
   },
 
   calendarRequest: async (user_id, setResponseJson) => {
@@ -229,7 +229,7 @@ const serviceFactory = {
     const privateIP = /* await internalIpV4() || */ '192.168.1.155';
     const privateIPStem = privateIP.split('.').splice(0, 3).join('.');
     const controller = new AbortController();
-    const id = setTimeout(() => controller.abort(), 2000);
+    const id = setTimeout(() => controller.abort(), 20000);
     const response = await fetch(`http://${privateIPStem}.${index}:5001/networkScan/${homeId}`, {
       method: 'GET',
       mode: 'cors',

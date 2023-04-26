@@ -5,14 +5,23 @@ import CalendarSlotItemComponent from '../calendarSlotItemComponent';
 import WeatherCalendarView from '../weatherCalendarView';
 
 function CalendarView(props) {
-  const { defaultWeather, setDefaultWeather, userToken } = props;
+  const {
+    defaultWeather,
+    setDefaultWeather,
+    userToken,
+    updateRemindersToggle,
+  } = props;
 
   const [initialRender, setInitialRender] = useState(true);
   const [reminders, setReminders] = useState({ reminders: [] });
   const [calendarData, setCalendarData] = useState({ today: [], tomorrow: [], inTwoDays: [] });
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const resetReminders = () => serviceFactory.getRemindersWithOffsetRequest(userToken[0], 86400, setReminders);
+
+  useEffect(() => {
+    resetReminders();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [updateRemindersToggle]);
 
   const currentDate = new Date();
   const tomorrowDate = new Date((new Date()).setDate(currentDate.getDate() + 1));

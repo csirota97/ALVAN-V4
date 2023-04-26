@@ -11,6 +11,7 @@ import ActionCard from './actionCard';
 import NewUserDialog from './Cards/newUserDialog';
 import LogInDialog from './Cards/logInDialog';
 import serviceFactory from '../utils/service-factory';
+import hashStringToInt from '../utils/hashStringToInt';
 
 /**
  * @return {Component} screen component
@@ -36,6 +37,7 @@ function Screen(props) {
   const [hideSpeechRecognizer, setHideSpeechRecognizer] = useState(false);
   const [initialRender, setInitialRender] = useState(true);
   const [cameraIPState, setCameraIPState] = useState([]);
+  const [rerenderReminders, setRerenderReminders] = useState(false);
   const cameraToggleIndex = {};
 
   // TODO: GET HOME VALUE FROM DB ON STARTUP
@@ -70,18 +72,16 @@ function Screen(props) {
         }
       };
       await loop();
-      Promise.allSettled(tempCameraIPs).then((results) => results.forEach((result) => {
+      Promise.allSettled(tempCameraIPs).then((results) => results.forEach(async (result) => {
         if (result.status === 'fulfilled') {
           if (result.value.status === 200) {
             pushToCameraIPs(result.value.url);
           } else if (result.value.status === 401) {
-            const regCall = serviceFactory.setSecurityCameraRegistration(result.value.url, homeId);
-            Promise.resolve(regCall).then(res => {
-              if (res.status === 200) {
-                pushToCameraIPs(result.value.url);
-                serviceFactory.registerDevice(homeId, result.value.deviceId, 1);
-              }
-            });
+            const regCall = await serviceFactory.setSecurityCameraRegistration(result.value.url, homeId);
+            if (regCall.status === 200) {
+              pushToCameraIPs(result.value.url);
+              serviceFactory.registerDevice(homeId, hashStringToInt(result.value.deviceId), 1);
+            }
           }
         }
       }));
@@ -106,7 +106,7 @@ function Screen(props) {
       {...customProps}
     />
   );
-  const calendarView = (<CalendarView {...customProps} />);
+  const calendarView = (<CalendarView {...customProps} updateRemindersToggle={rerenderReminders} />);
   const revalidate = () => setValidationTrigger(!validationTrigger);
   const toggleMenuCard = () => {
     if (isMenuShown) {
@@ -236,6 +236,10 @@ function Screen(props) {
     </div>
   );
 
+  const callbackFunctions = {
+    rerenderReminders: () => setRerenderReminders(!rerenderReminders),
+  };
+
   return (
     <div className="screen-container">
       {/* <Clock /> */}
@@ -255,7 +259,7 @@ function Screen(props) {
               className={hideSpeechRecognizer ? 'hidden' : ''}
               hasBeenClicked={() => {}}
             >
-              <SpeechRecognizer userId={props.userToken[0]} />
+              <SpeechRecognizer userId={props.userToken[0]} callbackFunctions={callbackFunctions} />
             </Card>
             <div className="view-swap-button" onClick={() => setDisplayCalendar(!displayCalendar)}>
               <h3 className="view-swap-label nonselectable">
