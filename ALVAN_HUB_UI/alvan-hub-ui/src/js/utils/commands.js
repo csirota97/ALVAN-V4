@@ -63,7 +63,7 @@ const commands = {
   4: {
     description: 'turn on the lights',
     function: async (named_entities, userId, query) => {
-      const res = await serviceFactory.toggleLights('111', query, 'ON');
+      const res = await serviceFactory.toggleLights('2121', query, 'ON');
 
       if (res.room === 'No Matching Room Found In Home') {
         speak('Could not find matching room');
@@ -80,7 +80,7 @@ const commands = {
   5: {
     description: 'turn off the lights',
     function: async (named_entities, userId, query) => {
-      const res = await serviceFactory.toggleLights('111', query, 'OFF');
+      const res = await serviceFactory.toggleLights('2121', query, 'OFF');
 
       if (res.room === 'No Matching Room Found In Home') {
         speak('Could not find matching room');
