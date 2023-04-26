@@ -19,8 +19,13 @@ def notify(title, body, reg_id, tag):
       "title": title,
       "tag": tag,
       "icon":"notification_icon",
-      "sound": "notification_ding.mp3",
       "color": "#FFFFFF"
-    }
+    },
+    "android": {
+      "notification": {
+        "sound": "notification_ding.mp3",
+        "click_action": "TOP_STORY_ACTIVITY"
+      }
+    },
   })
   response = requests.request("POST", url, headers=headers, data=payload)
