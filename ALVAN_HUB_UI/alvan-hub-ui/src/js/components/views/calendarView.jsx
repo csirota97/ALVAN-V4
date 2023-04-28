@@ -10,8 +10,9 @@ function CalendarView(props) {
     setDefaultWeather,
     userToken,
     updateRemindersToggle,
+    updateWeatherToggle,
   } = props;
-
+  console.log('CALENDAR:');
   const [initialRender, setInitialRender] = useState(true);
   const [reminders, setReminders] = useState({ reminders: [] });
   const [calendarData, setCalendarData] = useState({ today: [], tomorrow: [], inTwoDays: [] });
@@ -113,6 +114,7 @@ function CalendarView(props) {
           }
         </CalendarSlotComponent>
       )}
+      updateWeatherToggle={updateWeatherToggle}
     />
   );
 }

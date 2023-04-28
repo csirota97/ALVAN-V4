@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 // eslint-disable-next-line no-unused-vars
 import Clock from './clock';
@@ -38,6 +38,7 @@ function Screen(props) {
   const [initialRender, setInitialRender] = useState(true);
   const [cameraIPState, setCameraIPState] = useState([]);
   const [rerenderReminders, setRerenderReminders] = useState(false);
+  const [rerenderWeather, setRerenderWeather] = useState(false);
   const cameraToggleIndex = {};
 
   // TODO: GET HOME VALUE FROM DB ON STARTUP
@@ -58,6 +59,14 @@ function Screen(props) {
     }
   };
 
+  useEffect(() => {
+    if (!initialRender) {
+      setRerenderReminders(!rerenderReminders);
+      setRerenderWeather(!rerenderWeather);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.tenMinuteTimer]);
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(async () => {
     if (initialRender) {
@@ -75,14 +84,18 @@ function Screen(props) {
       Promise.allSettled(tempCameraIPs).then((results) => results.forEach(async (result) => {
         if (result.status === 'fulfilled') {
           if (result.value.status === 200) {
+            console.log('200', result.value.url);
             pushToCameraIPs(result.value.url);
           } else if (result.value.status === 401) {
             const regCall = await serviceFactory.setSecurityCameraRegistration(result.value.url, homeId);
             if (regCall.status === 200) {
+              console.log('401 200', result.value.url);
               pushToCameraIPs(result.value.url);
               serviceFactory.registerDevice(homeId, hashStringToInt(result.value.deviceId), 1);
             }
+            console.log('401 ?200', result.value.url);
           }
+          console.log('?200', result.value.url);
         }
       }));
       setInitialRender(false);
@@ -106,7 +119,14 @@ function Screen(props) {
       {...customProps}
     />
   );
-  const calendarView = (<CalendarView {...customProps} updateRemindersToggle={rerenderReminders} />);
+  const calendarView = (
+    <CalendarView
+      {...customProps}
+      updateRemindersToggle={rerenderReminders}
+      updateWeatherToggle={rerenderWeather}
+    />
+  );
+
   const revalidate = () => setValidationTrigger(!validationTrigger);
   const toggleMenuCard = () => {
     if (isMenuShown) {
@@ -238,6 +258,7 @@ function Screen(props) {
 
   const callbackFunctions = {
     rerenderReminders: () => setRerenderReminders(!rerenderReminders),
+    rerenderWeather: () => setRerenderWeather(!rerenderWeather),
   };
 
   return (

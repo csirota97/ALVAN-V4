@@ -10,6 +10,7 @@ function WeatherCalendarView(props) {
     todayEvents,
     tomorrowEvents,
     inTwoDaysEvents,
+    updateWeatherToggle,
   } = props;
   const [response, setResponse] = useState(defaultWeather);
   const dayName = {
@@ -22,13 +23,16 @@ function WeatherCalendarView(props) {
     6: 'Saturday',
   };
 
-  if ((
-    response?.location?.localtime_epoch
-    && Math.floor(new Date().getTime() / 1000) - response.location.localtime_epoch >= 600)
-    || response === ''
-  ) {
-    serviceFactory.weatherRequest(null, setResponse);
-  }
+  // if ((
+  //   response?.location?.localtime_epoch
+  //   && Math.floor(new Date().getTime() / 1000) - response.location.localtime_epoch >= 600)
+  //   || response === ''
+  // ) {
+  //   serviceFactory.weatherRequest(null, setResponse);
+  // }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps, max-len
+  useEffect(() => serviceFactory.weatherRequest(null, setResponse), [updateWeatherToggle]);
 
   useEffect(() => setDefaultWeather(response), [response, setDefaultWeather]);
 

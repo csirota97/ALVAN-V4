@@ -8,6 +8,11 @@ function App() {
       ? undefined
       : localStorage.getItem('userToken').split(','),
   );
+  const [timerToggle, setTimerToggle] = useState(false);
+
+  setInterval(() => {
+    setTimerToggle(!timerToggle);
+  }, 600000);
 
   return (
     <Screen
@@ -15,6 +20,7 @@ function App() {
       forceRerender={forceRerender}
       userToken={userToken}
       setUserToken={setUserToken}
+      tenMinuteTimer={timerToggle}
     />
   );
 }

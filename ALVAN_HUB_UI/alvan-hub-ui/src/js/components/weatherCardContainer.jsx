@@ -8,9 +8,9 @@ function WeatherContainer(props) {
   const [response, setResponse] = useState(defaultWeather);
 
   // eslint-disable-next-line no-unsafe-optional-chaining
-  if (Math.floor(new Date().getTime() / 1000) - response?.location?.localtime_epoch >= 600 || response === '') {
-    serviceFactory.weatherRequest(null, setResponse);
-  }
+  // if (Math.floor(new Date().getTime() / 1000) - response?.location?.localtime_epoch >= 600 || response === '') {
+  //   serviceFactory.weatherRequest(null, setResponse);
+  // }
 
   useEffect(() => setDefaultWeather(response), [response, setDefaultWeather]);
 

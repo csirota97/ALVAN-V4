@@ -96,7 +96,7 @@ const commands = {
    */
   6: {
     description: 'tell you the temperature',
-    function: async (named_entities) => {
+    function: async (named_entities, userId, query, mic, callbackFunctions) => {
       let weatherData = {};
       const setWeatherData = (data) => {
         weatherData = data;
@@ -107,6 +107,7 @@ const commands = {
       } else {
         await serviceFactory.weatherRequest('philadelphia', setWeatherData);
       }
+      callbackFunctions.rerenderWeather();
       // eslint-disable-next-line max-len
       const resultSpeech = `It's currently ${weatherData.current.temp_f} degrees ${named_entities?.GEO ? `in ${weatherData.location.name}` : ''}`;
       speak(resultSpeech);
