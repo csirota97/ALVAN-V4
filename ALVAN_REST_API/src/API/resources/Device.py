@@ -15,3 +15,9 @@ class Device(Resource):
   def post(self):
     response = {'devices': db.registerDevice(request.form['homeId'],request.form['deviceId'], request.form['deviceType'])}
     return response
+
+  def get(self):
+    id = request.args.get('userId')
+    devices = db.getDevicesByRoom(id)
+    response = {'devices': devices}
+    return response

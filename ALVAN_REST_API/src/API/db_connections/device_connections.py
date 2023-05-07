@@ -24,3 +24,10 @@ def toggleLights(self, query, homeId, status):
       return devices, room[1]
 
   return [], 'No Matching Room Found In Home'
+
+def getDevicesByRoom(self, userId):
+  self.cursor.execute('Select d.id, d.name, d.deviceType, d.webHookKey, r.id, r.name, h.id, h.name from `alvandb`.`Device` d JOIN `alvandb`.`Rooms` r on d.roomId=r.id JOIN `alvandb`.`Home` h on d.homeId = h.id WHERE h.userId = {0};'.format(userId))
+  
+  result = self.cursor.fetchall()
+  return result
+

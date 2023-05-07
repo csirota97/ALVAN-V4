@@ -99,6 +99,9 @@ class Connector:
   
   def toggleLights(self, query, homeId, status):
     return self.__catchDBError__(devices.toggleLights, [query, homeId, status])
+  
+  def getDevicesByRoom(self, userId):
+    return self.__catchDBError__(devices.getDevicesByRoom, [userId])
     
   #----------------------------------------------------------------
   # Admin
