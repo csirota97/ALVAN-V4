@@ -19,12 +19,12 @@ def notify(title, body, reg_id, tag):
       "title": title,
       "tag": tag,
       "icon":"notification_icon",
-      "color": "#FFFFFF"
+      "color": "#FFFFFF",
+      "android_channel_id": "ALVAN_CHANNEL"
     },
     "android": {
       "notification": {
-        "sound": "notification_ding.mp3",
-        "click_action": "TOP_STORY_ACTIVITY"
+        "sound": "notification_ding",
       }
     },
   })
