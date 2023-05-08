@@ -29,7 +29,7 @@ def getDevicesByRoom(self, userId):
   self.cursor.execute('Select d.id, d.name, d.deviceType, d.webHookKey, r.id, r.name, h.id, h.name from `alvandb`.`Device` d JOIN `alvandb`.`Rooms` r on d.roomId=r.id JOIN `alvandb`.`Home` h on d.homeId = h.id WHERE h.userId = {0};'.format(userId))
   result = self.cursor.fetchall()
   self.cursor.execute('Select d.id, d.name, d.deviceType, d.webHookKey, r.id, r.name, h.id, h.name From `alvandb`.`Rooms` r LEFT OUTER JOIN `alvandb`.`Device` d on r.id = d.roomId JOIN `alvandb`.`Home` h on r.homeId = h.id where d.roomId is null and h.userId = {0};'.format(userId))
-  result += self.curosr.fetchall()
+  result += self.cursor.fetchall()
   self.cursor.execute('Select d.id, d.name, d.deviceType, d.webHookKey, r.id, r.name, h.id, h.name from `alvandb`.`Home` h LEFT OUTER JOIN `alvandb`.`Device` d on d.homeId = h.id LEFT OUTER JOIN `alvandb`.`Rooms` r on d.roomId=r.id WHERE d.id is NULL and r.id is null and h.userId = {0};'.format(userId))
   result += self.cursor.fetchall()
   
