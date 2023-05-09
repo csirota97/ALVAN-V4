@@ -25,17 +25,17 @@ class Device(Resource):
   def patch(self):
     id = request.args.get('deviceId')
     try:
-      newHomeId = request.form['homeId']
+      newHomeId = request.json['homeId']
     except KeyError:
       newHomeId = None
 
     try:
-      newRoomId = request.form['roomId']
+      newRoomId = request.json['roomId']
     except KeyError:
       newRoomId = None
 
     try:
-      newName = request.form['name']
+      newName = request.json['name']
     except KeyError:
       newName = None
 

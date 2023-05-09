@@ -36,6 +36,7 @@ def getDevicesByRoom(self, userId):
   return result
 
 def updateDevice(self, deviceId, newHomeId, newRoomId, newName):
+  result = ''
   if newHomeId:
     self.cursor.execute("UPDATE `alvandb`.`Device` d SET d.homeId='{0}' WHERE d.id={1};".format(newHomeId, deviceId))
     result = self.cursor.fetchall()
