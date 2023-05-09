@@ -102,6 +102,9 @@ class Connector:
   
   def getDevicesByRoom(self, userId):
     return self.__catchDBError__(devices.getDevicesByRoom, [userId])
+
+  def updateDevice(self, deviceId, newHomeId=None, newRoomId=None, newName=None):
+    return self.__catchDBError__(devices.updateDevice, [deviceId, newHomeId, newRoomId, newName])
     
   #----------------------------------------------------------------
   # Admin

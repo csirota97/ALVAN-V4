@@ -21,3 +21,25 @@ class Device(Resource):
     devices = db.getDevicesByRoom(id)
     response = {'devices': devices}
     return response
+  
+  def patch(self):
+    id = request.args.get('deviceId')
+    try:
+      newHomeId = request.form['homeId']
+    except KeyError:
+      newHomeId = None
+
+    try:
+      newRoomId = request.form['roomId']
+    except KeyError:
+      newRoomId = None
+
+    try:
+      newName = request.form['name']
+    except KeyError:
+      newName = None
+
+    response = {'res': db.updateDevice(id, newHomeId=newHomeId, newRoomId=newRoomId, newName=newName)}
+    return response
+
+
