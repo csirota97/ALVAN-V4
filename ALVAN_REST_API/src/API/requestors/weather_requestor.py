@@ -1,5 +1,7 @@
 import requests
 
+location_cache = []
+
 def location_requestor(location):
 
   url = "https://forward-reverse-geocoding.p.rapidapi.com/v1/search"
@@ -11,7 +13,11 @@ def location_requestor(location):
     "X-RapidAPI-Host": "forward-reverse-geocoding.p.rapidapi.com"
   }
 
-  response = requests.request("GET", url, headers=headers, params=querystring)
+  response = check_location_cache(location)
+  if response == None:
+    response = requests.request("GET", url, headers=headers, params=querystring)
+    cache_location(location, response)
+    return response[0]
 
   return response.json()[0]
 
@@ -30,3 +36,14 @@ def requestor(location):
 
   response = requests.request("GET", url, headers=headers, params=querystring)
   return response
+
+def cache_location(location, response):
+  location_cache.insert(0, (location, response))
+  location_cache = location_cache[:50]
+
+def check_location_cache(location):
+  for location_tuple in location_cache:
+    if location_tuple[0] == location_cache:
+      return location_tuple[1]
+    
+  return None
